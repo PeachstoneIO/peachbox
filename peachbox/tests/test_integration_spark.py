@@ -1,34 +1,37 @@
 import unittest                            
-#import json                                                               
-#from utils import TestHelper
 
 import peachbox.spark
 import pyspark
+import time
                                        
 class TestIntegrationSpark(unittest.TestCase):  
-    #def setUp(self):                          
-        #self.spark = Spark(app_name="sparktest")
 
-    #def tearDown(self):
-        #self.spark.stop()                
-                      
-    #def test_context(self):
-        #sc = self.spark.context()
-        #assert (self.spark is not None)             
-                                   
-    #def test_app_name(self):      
-        #sc = self.spark.context()                  
-        #self.assertEqual("sparktest",sc.appName)
+    def test__context_init(self):
+        with peachbox.spark.Instance() as spark:
+            self.assertIsInstance(spark.context(), pyspark.context.SparkContext)
 
-    #def test_rdd_creation(self):
-        #rdd = self.spark.context().parallelize([1,2])
-        #self.assertEqual([1,2], rdd.collect())
-                          
-    #def test_rdd_readout_explicit_filename(self):
-        #input_path = TestHelper.create_temp_dir()
-        #filename = TestHelper.write_json('my_file', [{'foo':'bar'}])
-        #rdd = self.spark.context().textFile(filename).map(lambda line: json.loads(line))
-        #self.assertEqual(rdd.collect()[0]['foo'], 'bar')    
+    def test_default_conf(self):
+        with peachbox.spark.Instance() as spark:
+            conf = dict(spark.get_spark_conf().getAll())
+            self.assertEqual('peachbox', conf.get('spark.app.name'))
+            self.assertEqual('local[2]', conf.get('spark.master'))
 
-    def test_spark_initialization(self):
-        self.assertIsInstance(peachbox.spark.context(), pyspark.context.SparkContext)
+    def test_spark_conf(self):
+        conf = {'spark.app.name':'test_name', 'spark.master':'local[*]'}
+        with peachbox.spark.Spark(conf) as spark:
+            spark_conf = dict(spark.get_spark_conf().getAll())
+            self.assertEqual('test_name', spark_conf.get('spark.app.name'))
+            self.assertEqual('local[*]', spark_conf.get('spark.master'))
+
+    def test_stop_and_relaunch(self):
+        with peachbox.spark.Spark() as spark:
+            spark.context()
+            spark.stop()
+            spark.spark_conf = {'spark.app.name':'new_launch'}
+            self.assertEqual('new_launch', spark.context().appName)
+
+    def test_rdd_creation(self):
+        with peachbox.spark.Spark() as spark:
+            rdd = spark.context().parallelize([1,2])
+            self.assertEqual([1,2], rdd.collect())
+
