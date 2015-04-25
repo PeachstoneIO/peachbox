@@ -1,0 +1,180 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>peachbox.pipeline package &mdash; peachbox 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="peachbox 0.1 documentation" href="index.html" />
+    <link rel="up" title="peachbox package" href="peachbox.html" />
+    <link rel="next" title="peachbox.scheduler package" href="peachbox.scheduler.html" />
+    <link rel="prev" title="peachbox.model package" href="peachbox.model.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="peachbox.scheduler.html" title="peachbox.scheduler package"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="peachbox.model.html" title="peachbox.model package"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">peachbox 0.1 documentation</a> &raquo;</li>
+          <li><a href="peachbox.html" accesskey="U">peachbox package</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="peachbox-pipeline-package">
+<h1>peachbox.pipeline package<a class="headerlink" href="#peachbox-pipeline-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-peachbox.pipeline.pipeline">
+<span id="peachbox-pipeline-pipeline-module"></span><h2>peachbox.pipeline.pipeline module<a class="headerlink" href="#module-peachbox.pipeline.pipeline" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="peachbox.pipeline.pipeline.Pipeline">
+<em class="property">class </em><tt class="descclassname">peachbox.pipeline.pipeline.</tt><tt class="descname">Pipeline</tt><a class="reference internal" href="_modules/peachbox/pipeline/pipeline.html#Pipeline"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.pipeline.pipeline.Pipeline" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<p>Base class for data pipelines.
+&gt;&gt;&gt; class ExamplePipelineImplementation(peachbox.pipelines.Pipeline):
+&gt;&gt;&gt;     def __init__(object):
+&gt;&gt;&gt;         # connector can be pre-defined or manually defined
+&gt;&gt;&gt;         self.source = peachbox.connector.source.JSON()
+&gt;&gt;&gt;         # MasterDataSet: model has target, which is determined by partition_time_range
+&gt;&gt;&gt;         self.sink   = peachbox.connector.sink.MasterDataSet(model=ReviewEdge)
+&gt;&gt;&gt; 
+&gt;&gt;&gt;     # param are passed to source and sink beforehand
+&gt;&gt;&gt;     # super class has execute(): Sets params in connectors and sends out &#8220;ImportReviewsFinished&#8221;
+&gt;&gt;&gt;     def _execute(self):
+&gt;&gt;&gt;         df = self.source.data_frame()
+&gt;&gt;&gt;         reviews = df.validate([&#8216;user_id&#8217;, &#8216;product_id&#8217;, &#8216;time&#8217;]) 
+&gt;&gt;&gt;             .map(lambda entry: ReviewEdge(user_id=entry[&#8216;user_id&#8217;], 
+&gt;&gt;&gt;                 product_id=entry[&#8216;product_id&#8217;], 
+&gt;&gt;&gt;                 true_as_of_seconds=entry[&#8216;time&#8217;])
+&gt;&gt;&gt;         self.sink.absorb(reviews)
+&gt;&gt;&gt; 
+&gt;&gt;&gt;     # optional: is called by execute()
+&gt;&gt;&gt;     def tear_down(self):
+&gt;&gt;&gt;         pass</p>
+<dl class="method">
+<dt id="peachbox.pipeline.pipeline.Pipeline.execute">
+<tt class="descname">execute</tt><big>(</big><em>param</em><big>)</big><a class="reference internal" href="_modules/peachbox/pipeline/pipeline.html#Pipeline.execute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.pipeline.pipeline.Pipeline.execute" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="peachbox.pipeline.pipeline.Pipeline.notify_scheduler">
+<tt class="descname">notify_scheduler</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/peachbox/pipeline/pipeline.html#Pipeline.notify_scheduler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.pipeline.pipeline.Pipeline.notify_scheduler" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="peachbox.pipeline.pipeline.Pipeline.tear_down">
+<tt class="descname">tear_down</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/peachbox/pipeline/pipeline.html#Pipeline.tear_down"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.pipeline.pipeline.Pipeline.tear_down" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-peachbox.pipeline">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-peachbox.pipeline" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">peachbox.pipeline package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-peachbox.pipeline.pipeline">peachbox.pipeline.pipeline module</a></li>
+<li><a class="reference internal" href="#module-peachbox.pipeline">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="peachbox.model.html"
+                        title="previous chapter">peachbox.model package</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="peachbox.scheduler.html"
+                        title="next chapter">peachbox.scheduler package</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/peachbox.pipeline.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="peachbox.scheduler.html" title="peachbox.scheduler package"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="peachbox.model.html" title="peachbox.model package"
+             >previous</a> |</li>
+        <li><a href="index.html">peachbox 0.1 documentation</a> &raquo;</li>
+          <li><a href="peachbox.html" >peachbox package</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2015, Philipp Pahl, Sven Schubert.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+    </div>
+  </body>
+</html>

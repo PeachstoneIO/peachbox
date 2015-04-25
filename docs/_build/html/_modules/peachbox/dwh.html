@@ -1,0 +1,213 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>peachbox.dwh &mdash; peachbox 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="peachbox 0.1 documentation" href="../../index.html" />
+    <link rel="up" title="Module code" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">peachbox 0.1 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for peachbox.dwh</h1><div class="highlight"><pre>
+<span class="c"># Copyright 2015 Philipp Pahl, Sven Schubert</span>
+<span class="c"># </span>
+<span class="c"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c"># you may not use this file except in compliance with the License.</span>
+<span class="c"># You may obtain a copy of the License at</span>
+<span class="c"># </span>
+<span class="c">#     http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c"># </span>
+<span class="c"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c"># See the License for the specific language governing permissions and</span>
+<span class="c"># limitations under the License.</span>
+
+
+<span class="kn">import</span> <span class="nn">peachbox</span>
+<span class="kn">import</span> <span class="nn">peachbox.fs</span>
+
+<span class="c">#import simplejson as json</span>
+
+<div class="viewcode-block" id="DWH"><a class="viewcode-back" href="../../peachbox.html#peachbox.dwh.DWH">[docs]</a><span class="k">class</span> <span class="nc">DWH</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Interface to the data warehouse.&quot;&quot;&quot;</span>
+
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="DWH.Instance"><a class="viewcode-back" href="../../peachbox.html#peachbox.dwh.DWH.Instance">[docs]</a>    <span class="k">def</span> <span class="nf">Instance</span><span class="p">():</span>
+        <span class="sd">&quot;&quot;&quot;DWH is singleton. Access via Instance()&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">DWH</span><span class="o">.</span><span class="n">_active_instance</span><span class="p">:</span>
+            <span class="n">DWH</span><span class="o">.</span><span class="n">_active_instance</span> <span class="o">=</span> <span class="n">DWH</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">DWH</span><span class="o">.</span><span class="n">_active_instance</span>
+</div>
+    <span class="n">_active_instance</span> <span class="o">=</span> <span class="bp">None</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fs</span><span class="o">=</span><span class="n">peachbox</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">S3</span><span class="p">()):</span>
+        <span class="sd">&quot;&quot;&quot;Data warehouse constructor. fs is the underlying file system. Default is S3.&quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">DWH</span><span class="o">.</span><span class="n">_active_instance</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s">&quot;Cannot run multiple DWH instances at once.&quot;</span>
+                <span class="s">&quot;Use peachbox.dwh.Instance() to access existing instance.&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">fs</span> <span class="o">=</span> <span class="n">fs</span>
+        <span class="n">DWH</span><span class="o">.</span><span class="n">_active_instance</span> <span class="o">=</span> <span class="bp">self</span>
+
+    <span class="c">#def query(self, model, from_utime, before_utime):</span>
+        <span class="c">#pass</span>
+        <span class="c">#self.fs.mart = model.mart</span>
+        <span class="c">#sources = &#39;,&#39;.join(self.fs.dirs_of_period(model, from, before))</span>
+        <span class="c">#rdd     = self.retrieve(sources) </span>
+        <span class="c">#return self.load_json(rdd)</span>
+
+    <span class="c"># Writes data</span>
+    <span class="c"># The model defines:</span>
+    <span class="c">#   * mart, output path (including the index, eg. timestamp and time range)</span>
+    <span class="c">#   * output format, eg. JSON, parquet</span>
+    <span class="c"># deprecated</span>
+<div class="viewcode-block" id="DWH.absorb"><a class="viewcode-back" href="../../peachbox.html#peachbox.dwh.DWH.absorb">[docs]</a>    <span class="k">def</span> <span class="nf">absorb</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">pail</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Deprecated: Moved to peachbox.connector.sink</span>
+<span class="sd">        </span>
+<span class="sd">        Absorbs data into the data warehouse</span>
+
+<span class="sd">        :param pail: The pail the data goes to</span>
+<span class="sd">        :param model: Data is stored with respect to the model properties, ie. type, id and schema</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">mart</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">mart</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">path</span><span class="p">(),</span> <span class="n">pail</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">rm_r</span><span class="p">(</span><span class="n">mart</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
+        <span class="n">schema_rdd</span> <span class="o">=</span> <span class="n">peachbox</span><span class="o">.</span><span class="n">spark</span><span class="o">.</span><span class="n">Instance</span><span class="p">()</span><span class="o">.</span><span class="n">sql_context</span><span class="p">()</span><span class="o">.</span><span class="n">applySchema</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">schema</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">model</span><span class="o">.</span><span class="n">output_format</span> <span class="o">==</span> <span class="n">peachbox</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">FileFormat</span><span class="o">.</span><span class="n">Parquet</span><span class="p">:</span>
+            <span class="n">scheam_rdd</span><span class="o">.</span><span class="n">saveAsParquetFile</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">uri</span><span class="p">(</span><span class="n">mart</span><span class="p">,</span> <span class="n">path</span><span class="p">))</span>
+
+    <span class="c">## TODO: Handle target times properly</span>
+    <span class="c">#def write(self, model, rdd, seconds=0):</span>
+        <span class="c">#self.fs.mart = model.mart</span>
+        <span class="c">#path = model.path() + &#39;/&#39; + str(seconds)</span>
+        <span class="c">#self.fs.rm_fr(path)</span>
+        <span class="c">#json_rdd = self.dump_json(rdd)</span>
+        <span class="c">#json_rdd.saveAsTextFile(self.fs.url_prefix() + path)</span>
+
+    <span class="c">#def retrieve(self, sources):</span>
+        <span class="c">#return self.spark.context().textFile(sources)</span>
+
+    <span class="c">#def load_json(self, rdd)</span>
+        <span class="c">#return rdd.map(lambda line: json.loads(line))</span>
+
+    <span class="c">#def dump_json(self, rdd):</span>
+        <span class="c">#return rdd.map(lambda line: json.dumps(line))</span>
+
+
+    <span class="c">##U##</span>
+
+    <span class="c">#def get_rdd(self, model, from_date, before_date):</span>
+        <span class="c">#self.file_system.bucket_name = model.bucket</span>
+        <span class="c">#dirs = self.file_system.sub_directories_in_date_range(model.path(), from_date, before_date)</span>
+        <span class="c">#sources = &#39;,&#39;.join(dirs)</span>
+        <span class="c">#rdd = self.spark.context().textFile(sources).map(lambda line: json.loads(line))</span>
+        <span class="c">#return rdd</span>
+
+    <span class="c">#def write(self, model=None, data=None, seconds=0):</span>
+        <span class="c">#data = data.map(lambda entry: json.dumps(entry))</span>
+        <span class="c">#self.file_system.bucket_name = model.bucket </span>
+        <span class="c">#path = model.path() + &#39;/&#39; + str(seconds)</span>
+        <span class="c">#self.file_system.remove_directory(path)</span>
+        <span class="c">#data.saveAsTextFile(self.file_system.url_prefix() + path)</span>
+
+    <span class="c">#def read_parquet(self, model, from_date, before_date):</span>
+        <span class="c">#self.file_system.bucket_name = model.bucket</span>
+        <span class="c">#dirs = self.file_system.sub_directories_in_date_range(model.path(), from_date, before_date)</span>
+        <span class="c">#sources = &#39;,&#39;.join(dirs)</span>
+        <span class="c">#schema_rdd = self.spark.sql_context().parquetFile(sources)</span>
+        <span class="c">#return schema_rdd</span>
+</div>
+<div class="viewcode-block" id="DWH.stop"><a class="viewcode-back" href="../../peachbox.html#peachbox.dwh.DWH.stop">[docs]</a>    <span class="k">def</span> <span class="nf">stop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">DWH</span><span class="o">.</span><span class="n">_active_instance</span> <span class="o">=</span> <span class="bp">None</span>
+
+    <span class="c"># TODO: Context manager is only used for testing, move it to utils</span></div>
+    <span class="k">def</span> <span class="nf">__exit__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">err</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">__enter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span>
+</pre></div></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">peachbox 0.1 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2015, Philipp Pahl, Sven Schubert.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+    </div>
+  </body>
+</html>

@@ -6,6 +6,14 @@ from peachbox.utils.test_helper import TestHelper
 
 def decodeAndFilter(jsonString):
     review = json.loads(jsonString)
+    review = models.Review()
+
+    review.values[review.user_id] =  review['user_id']
+
+    review.set("user_id", review['user_id'])
+    review.set('product_id', review['product_id'])
+    review.set('true_as_of_seconds', review['time'])
+
     return {
         'user_id': review['user_id'], 
         'product_id': review['product_id'],
@@ -31,9 +39,10 @@ class ImportReviews(object):
         distinctHours = reviewsGroupedByHours.keys()
         print "distinct hours: %d" % (distinctHours.count())
 
+
+
         for hour in distinctHours.take(10):
             reviewsOfHour = pairReviews.filter(lambda (hr, review): hr == hour).values()
             filename = "output/output_hr%d" % hour
             reviewsOfHour.saveAsTextFile(filename)
         
-

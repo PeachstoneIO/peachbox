@@ -1,4 +1,4 @@
-# Copyright 2015 Philipp Pahl 
+# Copyright 2015 Philipp Pahl, Sven Schubert
 # 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -6,30 +6,68 @@
 # 
 #     http://www.apache.org/licenses/LICENSE-2.0
 # 
-#     Unless required by applicable law or agreed to in writing, software
-#     distributed under the License is distributed on an "AS IS" BASIS,
-#     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-#     See the License for the specific language governing permissions and
-#     limitations under the License.
-"""
-Data warehouse
-"""
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
 
 import peachbox
 import peachbox.fs
 
-import simplejson as json
+#import simplejson as json
 
 class DWH(object):
-    def __init__(self, fs):
-        self.fs    = fs
+    """ Interface to the data warehouse."""
 
-    def query(self, model, from_utime, before_utime):
-        pass
+    @staticmethod
+    def Instance():
+        """DWH is singleton. Access via Instance()"""
+        if not DWH._active_instance:
+            DWH._active_instance = DWH()
+        return DWH._active_instance
+
+    _active_instance = None
+
+    def __init__(self, fs=peachbox.fs.S3()):
+        """Data warehouse constructor. fs is the underlying file system. Default is S3."""
+
+        if DWH._active_instance:
+            raise ValueError(
+                "Cannot run multiple DWH instances at once."
+                "Use peachbox.dwh.Instance() to access existing instance.")
+
+        self.fs = fs
+        DWH._active_instance = self
+
+    #def query(self, model, from_utime, before_utime):
+        #pass
         #self.fs.mart = model.mart
         #sources = ','.join(self.fs.dirs_of_period(model, from, before))
         #rdd     = self.retrieve(sources) 
         #return self.load_json(rdd)
+
+    # Writes data
+    # The model defines:
+    #   * mart, output path (including the index, eg. timestamp and time range)
+    #   * output format, eg. JSON, parquet
+    # deprecated
+    def absorb(self, model, data, pail):
+        """Deprecated: Moved to peachbox.connector.sink
+        
+        Absorbs data into the data warehouse
+
+        :param pail: The pail the data goes to
+        :param model: Data is stored with respect to the model properties, ie. type, id and schema
+        """
+        mart = model.mart
+        path = os.path.join(model.path(), pail)
+        self.fs.rm_r(mart, path)
+        schema_rdd = peachbox.spark.Instance().sql_context().applySchema(data, model.schema)
+
+        if model.output_format == peachbox.models.FileFormat.Parquet:
+            scheam_rdd.saveAsParquetFile(self.fs.uri(mart, path))
 
     ## TODO: Handle target times properly
     #def write(self, model, rdd, seconds=0):
@@ -65,14 +103,6 @@ class DWH(object):
         #self.file_system.remove_directory(path)
         #data.saveAsTextFile(self.file_system.url_prefix() + path)
 
-    #def write_parquet(self, model=None, data=None, seconds=0):
-        #self.file_system.bucket_name = model.bucket 
-        #path = model.path() + '/' + str(seconds)
-        #self.file_system.remove_directory(path)
-        #schema_rdd = self.spark.sql_context().applySchema(data, model.schema)
-        #print 'saving parquet file: ' + self.file_system.url_prefix() + path
-        #schema_rdd.saveAsParquetFile(self.file_system.url_prefix() + path)
-
     #def read_parquet(self, model, from_date, before_date):
         #self.file_system.bucket_name = model.bucket
         #dirs = self.file_system.sub_directories_in_date_range(model.path(), from_date, before_date)
@@ -80,5 +110,14 @@ class DWH(object):
         #schema_rdd = self.spark.sql_context().parquetFile(sources)
         #return schema_rdd
 
+    def stop(self):
+        DWH._active_instance = None
+
+    # TODO: Context manager is only used for testing, move it to utils
+    def __exit__(self, *err):
+        self.stop()
+
+    def __enter__(self):
+        return self
 
 

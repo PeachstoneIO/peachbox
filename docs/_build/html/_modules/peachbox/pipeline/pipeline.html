@@ -1,0 +1,152 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>peachbox.pipeline.pipeline &mdash; peachbox 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="peachbox 0.1 documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">peachbox 0.1 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for peachbox.pipeline.pipeline</h1><div class="highlight"><pre>
+<span class="c"># Copyright 2015 Philipp Pahl, Sven Schubert</span>
+<span class="c"># </span>
+<span class="c"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c"># you may not use this file except in compliance with the License.</span>
+<span class="c"># You may obtain a copy of the License at</span>
+<span class="c"># </span>
+<span class="c">#     http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c"># </span>
+<span class="c"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c"># See the License for the specific language governing permissions and</span>
+<span class="c"># limitations under the License.</span>
+
+<div class="viewcode-block" id="Pipeline"><a class="viewcode-back" href="../../../peachbox.pipeline.html#peachbox.pipeline.pipeline.Pipeline">[docs]</a><span class="k">class</span> <span class="nc">Pipeline</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Base class for data pipelines.</span>
+<span class="sd">    &gt;&gt;&gt; class ExamplePipelineImplementation(peachbox.pipelines.Pipeline):</span>
+<span class="sd">    &gt;&gt;&gt;     def __init__(object):</span>
+<span class="sd">    &gt;&gt;&gt;         # connector can be pre-defined or manually defined</span>
+<span class="sd">    &gt;&gt;&gt;         self.source = peachbox.connector.source.JSON()</span>
+<span class="sd">    &gt;&gt;&gt;         # MasterDataSet: model has target, which is determined by partition_time_range</span>
+<span class="sd">    &gt;&gt;&gt;         self.sink   = peachbox.connector.sink.MasterDataSet(model=ReviewEdge)</span>
+<span class="sd">    &gt;&gt;&gt; </span>
+<span class="sd">    &gt;&gt;&gt;     # param are passed to source and sink beforehand</span>
+<span class="sd">    &gt;&gt;&gt;     # super class has execute(): Sets params in connectors and sends out &quot;ImportReviewsFinished&quot;</span>
+<span class="sd">    &gt;&gt;&gt;     def _execute(self):</span>
+<span class="sd">    &gt;&gt;&gt;         df = self.source.data_frame()</span>
+<span class="sd">    &gt;&gt;&gt;         reviews = df.validate([&#39;user_id&#39;, &#39;product_id&#39;, &#39;time&#39;]) \ </span>
+<span class="sd">    &gt;&gt;&gt;             .map(lambda entry: ReviewEdge(user_id=entry[&#39;user_id&#39;], </span>
+<span class="sd">    &gt;&gt;&gt;                 product_id=entry[&#39;product_id&#39;], </span>
+<span class="sd">    &gt;&gt;&gt;                 true_as_of_seconds=entry[&#39;time&#39;])</span>
+<span class="sd">    &gt;&gt;&gt;         self.sink.absorb(reviews)</span>
+<span class="sd">    &gt;&gt;&gt; </span>
+<span class="sd">    &gt;&gt;&gt;     # optional: is called by execute()</span>
+<span class="sd">    &gt;&gt;&gt;     def tear_down(self):</span>
+<span class="sd">    &gt;&gt;&gt;         pass&quot;&quot;&quot;</span>
+    
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">source</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sink</span>   <span class="o">=</span> <span class="bp">None</span>
+
+<div class="viewcode-block" id="Pipeline.execute"><a class="viewcode-back" href="../../../peachbox.pipeline.html#peachbox.pipeline.pipeline.Pipeline.execute">[docs]</a>    <span class="k">def</span> <span class="nf">execute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">param</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">source</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">sink</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">source</span><span class="o">.</span><span class="n">param</span> <span class="o">=</span> <span class="n">param</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sink</span><span class="o">.</span><span class="n">param</span>   <span class="o">=</span> <span class="n">param</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&quot;Source/Sink not defined.&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_execute</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">notify_scheduler</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tear_down</span><span class="p">()</span>
+</div>
+    <span class="k">def</span> <span class="nf">_execute</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+
+<div class="viewcode-block" id="Pipeline.tear_down"><a class="viewcode-back" href="../../../peachbox.pipeline.html#peachbox.pipeline.pipeline.Pipeline.tear_down">[docs]</a>    <span class="k">def</span> <span class="nf">tear_down</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+</div>
+<div class="viewcode-block" id="Pipeline.notify_scheduler"><a class="viewcode-back" href="../../../peachbox.pipeline.html#peachbox.pipeline.pipeline.Pipeline.notify_scheduler">[docs]</a>    <span class="k">def</span> <span class="nf">notify_scheduler</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span> <span class="o">+</span> <span class="s">&quot;Finished&quot;</span>
+</pre></div></div></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">peachbox 0.1 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2015, Philipp Pahl, Sven Schubert.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+    </div>
+  </body>
+</html>

@@ -55,3 +55,7 @@ class TestHelper(object):
         j = [json.loads(line) for line in content]
         return j
 
+    @staticmethod
+    def write_string(filename, input):
+        with open(filename, 'w') as f:
+            f.write(input)

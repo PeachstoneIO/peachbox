@@ -1,7 +1,3 @@
-from .local_fs import LocalFs
-from .file_system import FileSystem
-from .amazon_dfs import AmazonDfs
-
-#__all__ = ['LocalFs', 
-           #'AmazonDfs', 
-           #'FileSystem']
+from .local import Local
+from .fs import Fs
+from .s3 import S3
