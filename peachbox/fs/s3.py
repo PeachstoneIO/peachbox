@@ -22,11 +22,16 @@ from boto.s3.key import Key
 class S3(Fs):
     """Interface to Amazon S3. Operations work on s3n://<mart>/, where <mart> is a bucket on S3."""
     def __init__(self):
-        self.connection = boto.connect_s3()
         self.uri_scheme = 's3n://'
+        self._connection = None
+
+    def connection(self):
+        if not self._connection:
+            self._connection = boto.connect_s3()
+        return self._connection
 
     def bucket(self, mart):
-        return self.connection.get_bucket(mart)
+        return self.connection().get_bucket(mart)
 
     def ls(self, mart, path=''):
         return [self.uri(mart, file.name) for file in self.bucket(mart).list(path)]
