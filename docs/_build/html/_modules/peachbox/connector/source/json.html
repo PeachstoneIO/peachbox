@@ -61,15 +61,22 @@
 <span class="c"># See the License for the specific language governing permissions and</span>
 <span class="c"># limitations under the License.</span>
 
+<span class="kn">import</span> <span class="nn">peachbox</span>
+
 <div class="viewcode-block" id="JSON"><a class="viewcode-back" href="../../../../peachbox.connector.source.html#peachbox.connector.source.json.JSON">[docs]</a><span class="k">class</span> <span class="nc">JSON</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Source for JSON files.&quot;&quot;&quot;</span>
+
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">path</span> <span class="o">=</span> <span class="bp">None</span>
 
 <div class="viewcode-block" id="JSON.set_param"><a class="viewcode-back" href="../../../../peachbox.connector.source.html#peachbox.connector.source.json.JSON.set_param">[docs]</a>    <span class="k">def</span> <span class="nf">set_param</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">param</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">param</span><span class="o">.</span><span class="n">key</span><span class="p">(</span><span class="s">&#39;path&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Expects param[&#39;path&#39;]&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">param</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;path&#39;</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">path</span> <span class="o">=</span> <span class="n">param</span><span class="p">[</span><span class="s">&#39;path&#39;</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&#39;Missing key in param: path&#39;</span><span class="p">)</span>
 </div>
-<div class="viewcode-block" id="JSON.data_frame"><a class="viewcode-back" href="../../../../peachbox.connector.source.html#peachbox.connector.source.json.JSON.data_frame">[docs]</a>    <span class="k">def</span> <span class="nf">data_frame</span><span class="p">():</span>
+<div class="viewcode-block" id="JSON.data_frame"><a class="viewcode-back" href="../../../../peachbox.connector.source.html#peachbox.connector.source.json.JSON.data_frame">[docs]</a>    <span class="k">def</span> <span class="nf">data_frame</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">peachbox</span><span class="o">.</span><span class="n">Spark</span><span class="o">.</span><span class="n">Instance</span><span class="p">()</span><span class="o">.</span><span class="n">sql_context</span><span class="p">()</span><span class="o">.</span><span class="n">jsonFile</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">)</span></div></div>
 </pre></div>
 

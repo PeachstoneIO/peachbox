@@ -47,7 +47,7 @@ def define_edge(data_unit_index, name, name_node1, name_node2):
             'node2':node2.identifier, 
             'data_unit_index':data_unit_index}
 
-    m.write(name, 'model', 'edge', substitutes)
+    m.write(name+"Edge", 'model', 'edge', substitutes)
 
 def define_property(data_unit_index, name, name_node, name_property, type):
     m = Model()

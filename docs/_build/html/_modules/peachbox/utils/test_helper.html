@@ -89,8 +89,9 @@
         <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">json_input</span><span class="p">:</span>
             <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">line</span><span class="p">)</span> <span class="o">+</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
         <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-        <span class="n">call</span><span class="p">([</span><span class="s">&#39;gzip&#39;</span><span class="p">,</span> <span class="n">filename</span><span class="p">])</span>
-        <span class="k">return</span> <span class="n">filename</span> <span class="o">+</span> <span class="s">&#39;.gz&#39;</span>
+        <span class="c">#call([&#39;gzip&#39;, filename])</span>
+        <span class="c">#return filename + &#39;.gz&#39;</span>
+        <span class="k">return</span> <span class="n">filename</span>
 </div>
     <span class="nd">@staticmethod</span>
 <div class="viewcode-block" id="TestHelper.random_name"><a class="viewcode-back" href="../../../peachbox.utils.html#peachbox.utils.test_helper.TestHelper.random_name">[docs]</a>    <span class="k">def</span> <span class="nf">random_name</span><span class="p">():</span>

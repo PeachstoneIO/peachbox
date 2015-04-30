@@ -146,7 +146,7 @@
 <span id="peachbox-dwh-module"></span><h2>peachbox.dwh module<a class="headerlink" href="#module-peachbox.dwh" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="peachbox.dwh.DWH">
-<em class="property">class </em><tt class="descclassname">peachbox.dwh.</tt><tt class="descname">DWH</tt><big>(</big><em>fs=&lt;peachbox.fs.s3.S3 object at 0x2b113a67fa10&gt;</em><big>)</big><a class="reference internal" href="_modules/peachbox/dwh.html#DWH"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.dwh.DWH" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><tt class="descclassname">peachbox.dwh.</tt><tt class="descname">DWH</tt><big>(</big><em>fs=&lt;peachbox.fs.s3.S3 object at 0x2afb229cca10&gt;</em><big>)</big><a class="reference internal" href="_modules/peachbox/dwh.html#DWH"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.dwh.DWH" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
 <p>Interface to the data warehouse.</p>
 <dl class="staticmethod">
@@ -189,11 +189,15 @@
 <em class="property">class </em><tt class="descclassname">peachbox.spark.</tt><tt class="descname">Spark</tt><big>(</big><em>spark_conf={}</em><big>)</big><a class="reference internal" href="_modules/peachbox/spark.html#Spark"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.spark.Spark" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
 <p>Interface to Apache Spark. Singleton. After initialization use peachbox.spark.Instance()
-to access the existing instance.</p>
+to access the existing instance.:</p>
+<div class="highlight-python"><div class="highlight"><pre>class HelloWorld()
+    def __init__():
+</pre></div>
+</div>
 <dl class="staticmethod">
 <dt id="peachbox.spark.Spark.Instance">
 <em class="property">static </em><tt class="descname">Instance</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/peachbox/spark.html#Spark.Instance"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.spark.Spark.Instance" title="Permalink to this definition">¶</a></dt>
-<dd><p>Spark is singleton. Access via Instance()</p>
+<dd><p>Spark is a singleton. Access via Instance()</p>
 </dd></dl>
 
 <dl class="method">
@@ -211,6 +215,12 @@ to access the existing instance.</p>
 <dt id="peachbox.spark.Spark.initialize">
 <tt class="descname">initialize</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/peachbox/spark.html#Spark.initialize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.spark.Spark.initialize" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
+
+<dl class="method">
+<dt id="peachbox.spark.Spark.sql_context">
+<tt class="descname">sql_context</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/peachbox/spark.html#Spark.sql_context"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.spark.Spark.sql_context" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a SQLContext, which is the entry point to PySparks&#8217; data frames.</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="peachbox.spark.Spark.stop">

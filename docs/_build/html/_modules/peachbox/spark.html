@@ -66,13 +66,17 @@
 
 <div class="viewcode-block" id="Spark"><a class="viewcode-back" href="../../peachbox.html#peachbox.spark.Spark">[docs]</a><span class="k">class</span> <span class="nc">Spark</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; Interface to Apache Spark. Singleton. After initialization use peachbox.spark.Instance()</span>
-<span class="sd">    to access the existing instance.</span>
+<span class="sd">    to access the existing instance.::</span>
+
+<span class="sd">        class HelloWorld()</span>
+<span class="sd">            def __init__():</span>
+
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c">#TODO: Move Singleton functionality into base class in utils</span>
     <span class="nd">@staticmethod</span>
 <div class="viewcode-block" id="Spark.Instance"><a class="viewcode-back" href="../../peachbox.html#peachbox.spark.Spark.Instance">[docs]</a>    <span class="k">def</span> <span class="nf">Instance</span><span class="p">():</span>
-        <span class="sd">&quot;&quot;&quot;Spark is singleton. Access via Instance()&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Spark is a singleton. Access via Instance()&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">Spark</span><span class="o">.</span><span class="n">_active_instance</span><span class="p">:</span>
             <span class="n">Spark</span><span class="o">.</span><span class="n">_active_instance</span> <span class="o">=</span> <span class="n">Spark</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">Spark</span><span class="o">.</span><span class="n">_active_instance</span>
@@ -91,12 +95,20 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">spark_conf</span> <span class="o">=</span> <span class="n">spark_conf</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_spark_context</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_sql_context</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="n">Spark</span><span class="o">.</span><span class="n">_active_instance</span> <span class="o">=</span> <span class="bp">self</span>
 
 <div class="viewcode-block" id="Spark.context"><a class="viewcode-back" href="../../peachbox.html#peachbox.spark.Spark.context">[docs]</a>    <span class="k">def</span> <span class="nf">context</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Spark context&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spark_context</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">initialize</span><span class="p">()</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spark_context</span>
+</div>
+<div class="viewcode-block" id="Spark.sql_context"><a class="viewcode-back" href="../../peachbox.html#peachbox.spark.Spark.sql_context">[docs]</a>    <span class="k">def</span> <span class="nf">sql_context</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns a SQLContext, which is the entry point to PySparks&#39; data frames.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sql_context</span><span class="p">:</span>
+            <span class="kn">import</span> <span class="nn">pyspark.sql</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_sql_context</span> <span class="o">=</span> <span class="n">pyspark</span><span class="o">.</span><span class="n">sql</span><span class="o">.</span><span class="n">SQLContext</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="p">())</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sql_context</span>
 </div>
 <div class="viewcode-block" id="Spark.initialize"><a class="viewcode-back" href="../../peachbox.html#peachbox.spark.Spark.initialize">[docs]</a>    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">conf</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_spark_conf</span><span class="p">()</span>
@@ -116,6 +128,7 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spark_context</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="p">()</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_spark_context</span> <span class="o">=</span> <span class="bp">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_sql_context</span> <span class="o">=</span> <span class="bp">None</span>
     </div>
 <div class="viewcode-block" id="Spark.stop"><a class="viewcode-back" href="../../peachbox.html#peachbox.spark.Spark.stop">[docs]</a>    <span class="k">def</span> <span class="nf">stop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">stop_context</span><span class="p">()</span>

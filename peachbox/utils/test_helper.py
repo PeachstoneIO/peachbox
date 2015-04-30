@@ -40,8 +40,9 @@ class TestHelper(object):
         for line in json_input:
             f.write(json.dumps(line) + '\n')
         f.close()
-        call(['gzip', filename])
-        return filename + '.gz'
+        #call(['gzip', filename])
+        #return filename + '.gz'
+        return filename
 
     @staticmethod
     def random_name():

@@ -62,28 +62,33 @@
 <span class="c"># limitations under the License.</span>
 
 <div class="viewcode-block" id="Pipeline"><a class="viewcode-back" href="../../../peachbox.pipeline.html#peachbox.pipeline.pipeline.Pipeline">[docs]</a><span class="k">class</span> <span class="nc">Pipeline</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Base class for data pipelines.</span>
-<span class="sd">    &gt;&gt;&gt; class ExamplePipelineImplementation(peachbox.pipelines.Pipeline):</span>
-<span class="sd">    &gt;&gt;&gt;     def __init__(object):</span>
-<span class="sd">    &gt;&gt;&gt;         # connector can be pre-defined or manually defined</span>
-<span class="sd">    &gt;&gt;&gt;         self.source = peachbox.connector.source.JSON()</span>
-<span class="sd">    &gt;&gt;&gt;         # MasterDataSet: model has target, which is determined by partition_time_range</span>
-<span class="sd">    &gt;&gt;&gt;         self.sink   = peachbox.connector.sink.MasterDataSet(model=ReviewEdge)</span>
-<span class="sd">    &gt;&gt;&gt; </span>
-<span class="sd">    &gt;&gt;&gt;     # param are passed to source and sink beforehand</span>
-<span class="sd">    &gt;&gt;&gt;     # super class has execute(): Sets params in connectors and sends out &quot;ImportReviewsFinished&quot;</span>
-<span class="sd">    &gt;&gt;&gt;     def _execute(self):</span>
-<span class="sd">    &gt;&gt;&gt;         df = self.source.data_frame()</span>
-<span class="sd">    &gt;&gt;&gt;         reviews = df.validate([&#39;user_id&#39;, &#39;product_id&#39;, &#39;time&#39;]) \ </span>
-<span class="sd">    &gt;&gt;&gt;             .map(lambda entry: ReviewEdge(user_id=entry[&#39;user_id&#39;], </span>
-<span class="sd">    &gt;&gt;&gt;                 product_id=entry[&#39;product_id&#39;], </span>
-<span class="sd">    &gt;&gt;&gt;                 true_as_of_seconds=entry[&#39;time&#39;])</span>
-<span class="sd">    &gt;&gt;&gt;         self.sink.absorb(reviews)</span>
-<span class="sd">    &gt;&gt;&gt; </span>
-<span class="sd">    &gt;&gt;&gt;     # optional: is called by execute()</span>
-<span class="sd">    &gt;&gt;&gt;     def tear_down(self):</span>
-<span class="sd">    &gt;&gt;&gt;         pass&quot;&quot;&quot;</span>
-    
+    <span class="sd">&quot;&quot;&quot;Base class for data pipelines:</span>
+
+<span class="sd">    &gt;&gt;&gt; from model.review_edge import ReviewEdge</span>
+<span class="sd">    &gt;&gt;&gt;</span>
+<span class="sd">    &gt;&gt;&gt; class ExamplePipelineImplementation(peachbox.pipeline.Pipeline):</span>
+<span class="sd">    &gt;&gt;&gt;      def __init__(object):</span>
+<span class="sd">    &gt;&gt;&gt;          # connector can be pre-defined or manually defined</span>
+<span class="sd">    &gt;&gt;&gt;          self.source = peachbox.connector.source.JSON()</span>
+<span class="sd">    &gt;&gt;&gt;          # MasterDataSet: model has target, which is determined by partition_time_range</span>
+<span class="sd">    &gt;&gt;&gt;          self.sink   = peachbox.connector.sink.MasterDataSet(model=ReviewEdge)</span>
+<span class="sd">    &gt;&gt;&gt;</span>
+<span class="sd">    &gt;&gt;&gt;      # param are passed to source and sink beforehand</span>
+<span class="sd">    &gt;&gt;&gt;      # super class has execute(): Sets params in connectors and sends out &quot;ImportReviewsFinished&quot;</span>
+<span class="sd">    &gt;&gt;&gt;      def _execute(self):</span>
+<span class="sd">    &gt;&gt;&gt;          df = self.source.data_frame()</span>
+<span class="sd">    &gt;&gt;&gt;          reviews = df.validate([&#39;user_id&#39;, &#39;product_id&#39;, &#39;time&#39;]) \ </span>
+<span class="sd">    &gt;&gt;&gt;              .map(lambda entry: ReviewEdge(user_id=entry[&#39;user_id&#39;], </span>
+<span class="sd">    &gt;&gt;&gt;                  product_id=entry[&#39;product_id&#39;], </span>
+<span class="sd">    &gt;&gt;&gt;                  true_as_of_seconds=entry[&#39;time&#39;])</span>
+<span class="sd">    &gt;&gt;&gt;          self.sink.absorb(reviews)</span>
+<span class="sd">    &gt;&gt;&gt;</span>
+<span class="sd">    &gt;&gt;&gt;      # optional: is called by execute()</span>
+<span class="sd">    &gt;&gt;&gt;      def tear_down(self):</span>
+<span class="sd">    &gt;&gt;&gt;          pass</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+        
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">source</span> <span class="o">=</span> <span class="bp">None</span>

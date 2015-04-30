@@ -12,13 +12,20 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import peachbox
+
 class JSON(object):
+    """Source for JSON files."""
+
     def __init__(self):
         self.path = None
 
     def set_param(self, param):
-        if param.key('path'):
+        """Expects param['path']"""
+        if param.get('path'):
             self.path = param['path']
+        else:
+            raise ValueError('Missing key in param: path')
 
-    def data_frame():
+    def data_frame(self):
         return peachbox.Spark.Instance().sql_context().jsonFile(self.path)

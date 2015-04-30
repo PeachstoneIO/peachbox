@@ -6,7 +6,7 @@ import time
                                        
 class TestIntegrationSpark(unittest.TestCase):  
 
-    def test__context_init(self):
+    def test_context_init(self):
         with peachbox.Spark.Instance() as spark:
             self.assertIsInstance(spark.context(), pyspark.context.SparkContext)
 
@@ -34,4 +34,14 @@ class TestIntegrationSpark(unittest.TestCase):
         with peachbox.Spark() as spark:
             rdd = spark.context().parallelize([1,2])
             self.assertEqual([1,2], rdd.collect())
+
+    def test_sql_context(self):
+        with peachbox.Spark() as spark:
+            self.assertIsInstance(spark.sql_context(), pyspark.sql.SQLContext)
+
+    def test_stop_sql_context(self):
+        with peachbox.Spark() as spark:
+            assert spark.sql_context()
+            spark.stop()
+            assert not spark._sql_context
 

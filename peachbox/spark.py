@@ -17,13 +17,17 @@ import threading
 
 class Spark(object):
     """ Interface to Apache Spark. Singleton. After initialization use peachbox.spark.Instance()
-    to access the existing instance.
+    to access the existing instance.::
+
+        class HelloWorld()
+            def __init__():
+
     """
 
     #TODO: Move Singleton functionality into base class in utils
     @staticmethod
     def Instance():
-        """Spark is singleton. Access via Instance()"""
+        """Spark is a singleton. Access via Instance()"""
         if not Spark._active_instance:
             Spark._active_instance = Spark()
         return Spark._active_instance
@@ -42,12 +46,20 @@ class Spark(object):
 
         self.spark_conf = spark_conf
         self._spark_context = None
+        self._sql_context = None
         Spark._active_instance = self
 
     def context(self):
         """Spark context"""
         if not self._spark_context: self.initialize()
         return self._spark_context
+
+    def sql_context(self):
+        """Returns a SQLContext, which is the entry point to PySparks' data frames."""
+        if not self._sql_context:
+            import pyspark.sql
+            self._sql_context = pyspark.sql.SQLContext(self.context())
+        return self._sql_context
 
     def initialize(self):
         conf = self.get_spark_conf()
@@ -67,6 +79,7 @@ class Spark(object):
         if self._spark_context:
             self.context().stop()
             self._spark_context = None
+            self._sql_context = None
     
     def stop(self):
         self.stop_context()

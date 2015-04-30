@@ -13,28 +13,33 @@
 # limitations under the License.
 
 class Pipeline(object):
-    """Base class for data pipelines.
-    >>> class ExamplePipelineImplementation(peachbox.pipelines.Pipeline):
-    >>>     def __init__(object):
-    >>>         # connector can be pre-defined or manually defined
-    >>>         self.source = peachbox.connector.source.JSON()
-    >>>         # MasterDataSet: model has target, which is determined by partition_time_range
-    >>>         self.sink   = peachbox.connector.sink.MasterDataSet(model=ReviewEdge)
-    >>> 
-    >>>     # param are passed to source and sink beforehand
-    >>>     # super class has execute(): Sets params in connectors and sends out "ImportReviewsFinished"
-    >>>     def _execute(self):
-    >>>         df = self.source.data_frame()
-    >>>         reviews = df.validate(['user_id', 'product_id', 'time']) \ 
-    >>>             .map(lambda entry: ReviewEdge(user_id=entry['user_id'], 
-    >>>                 product_id=entry['product_id'], 
-    >>>                 true_as_of_seconds=entry['time'])
-    >>>         self.sink.absorb(reviews)
-    >>> 
-    >>>     # optional: is called by execute()
-    >>>     def tear_down(self):
-    >>>         pass"""
-    
+    """Base class for data pipelines:
+
+    >>> from model.review_edge import ReviewEdge
+    >>>
+    >>> class ExamplePipelineImplementation(peachbox.pipeline.Pipeline):
+    >>>      def __init__(object):
+    >>>          # connector can be pre-defined or manually defined
+    >>>          self.source = peachbox.connector.source.JSON()
+    >>>          # MasterDataSet: model has target, which is determined by partition_time_range
+    >>>          self.sink   = peachbox.connector.sink.MasterDataSet(model=ReviewEdge)
+    >>>
+    >>>      # param are passed to source and sink beforehand
+    >>>      # super class has execute(): Sets params in connectors and sends out "ImportReviewsFinished"
+    >>>      def _execute(self):
+    >>>          df = self.source.data_frame()
+    >>>          reviews = df.validate(['user_id', 'product_id', 'time']) \ 
+    >>>              .map(lambda entry: ReviewEdge(user_id=entry['user_id'], 
+    >>>                  product_id=entry['product_id'], 
+    >>>                  true_as_of_seconds=entry['time'])
+    >>>          self.sink.absorb(reviews)
+    >>>
+    >>>      # optional: is called by execute()
+    >>>      def tear_down(self):
+    >>>          pass
+
+    """
+        
 
     def __init__(self):
         self.source = None
@@ -58,6 +63,4 @@ class Pipeline(object):
 
     def notify_scheduler(self):
         message = self.__class__.__name__ + "Finished"
-
-
 

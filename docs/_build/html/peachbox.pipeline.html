@@ -65,27 +65,31 @@
 <dt id="peachbox.pipeline.pipeline.Pipeline">
 <em class="property">class </em><tt class="descclassname">peachbox.pipeline.pipeline.</tt><tt class="descname">Pipeline</tt><a class="reference internal" href="_modules/peachbox/pipeline/pipeline.html#Pipeline"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.pipeline.pipeline.Pipeline" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
-<p>Base class for data pipelines.
-&gt;&gt;&gt; class ExamplePipelineImplementation(peachbox.pipelines.Pipeline):
-&gt;&gt;&gt;     def __init__(object):
-&gt;&gt;&gt;         # connector can be pre-defined or manually defined
-&gt;&gt;&gt;         self.source = peachbox.connector.source.JSON()
-&gt;&gt;&gt;         # MasterDataSet: model has target, which is determined by partition_time_range
-&gt;&gt;&gt;         self.sink   = peachbox.connector.sink.MasterDataSet(model=ReviewEdge)
-&gt;&gt;&gt; 
-&gt;&gt;&gt;     # param are passed to source and sink beforehand
-&gt;&gt;&gt;     # super class has execute(): Sets params in connectors and sends out &#8220;ImportReviewsFinished&#8221;
-&gt;&gt;&gt;     def _execute(self):
-&gt;&gt;&gt;         df = self.source.data_frame()
-&gt;&gt;&gt;         reviews = df.validate([&#8216;user_id&#8217;, &#8216;product_id&#8217;, &#8216;time&#8217;]) 
-&gt;&gt;&gt;             .map(lambda entry: ReviewEdge(user_id=entry[&#8216;user_id&#8217;], 
-&gt;&gt;&gt;                 product_id=entry[&#8216;product_id&#8217;], 
-&gt;&gt;&gt;                 true_as_of_seconds=entry[&#8216;time&#8217;])
-&gt;&gt;&gt;         self.sink.absorb(reviews)
-&gt;&gt;&gt; 
-&gt;&gt;&gt;     # optional: is called by execute()
-&gt;&gt;&gt;     def tear_down(self):
-&gt;&gt;&gt;         pass</p>
+<p>Base class for data pipelines:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">model.review_edge</span> <span class="kn">import</span> <span class="n">ReviewEdge</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">ExamplePipelineImplementation</span><span class="p">(</span><span class="n">peachbox</span><span class="o">.</span><span class="n">pipeline</span><span class="o">.</span><span class="n">Pipeline</span><span class="p">):</span>
+<span class="gp">&gt;&gt;&gt; </span>     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<span class="gp">&gt;&gt;&gt; </span>         <span class="c"># connector can be pre-defined or manually defined</span>
+<span class="gp">&gt;&gt;&gt; </span>         <span class="bp">self</span><span class="o">.</span><span class="n">source</span> <span class="o">=</span> <span class="n">peachbox</span><span class="o">.</span><span class="n">connector</span><span class="o">.</span><span class="n">source</span><span class="o">.</span><span class="n">JSON</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span>         <span class="c"># MasterDataSet: model has target, which is determined by partition_time_range</span>
+<span class="gp">&gt;&gt;&gt; </span>         <span class="bp">self</span><span class="o">.</span><span class="n">sink</span>   <span class="o">=</span> <span class="n">peachbox</span><span class="o">.</span><span class="n">connector</span><span class="o">.</span><span class="n">sink</span><span class="o">.</span><span class="n">MasterDataSet</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="n">ReviewEdge</span><span class="p">)</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span>     <span class="c"># param are passed to source and sink beforehand</span>
+<span class="gp">&gt;&gt;&gt; </span>     <span class="c"># super class has execute(): Sets params in connectors and sends out &quot;ImportReviewsFinished&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span>     <span class="k">def</span> <span class="nf">_execute</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="gp">&gt;&gt;&gt; </span>         <span class="n">df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">source</span><span class="o">.</span><span class="n">data_frame</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span>         <span class="n">reviews</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">validate</span><span class="p">([</span><span class="s">&#39;user_id&#39;</span><span class="p">,</span> <span class="s">&#39;product_id&#39;</span><span class="p">,</span> <span class="s">&#39;time&#39;</span><span class="p">])</span> \ 
+<span class="gp">&gt;&gt;&gt; </span>             <span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">entry</span><span class="p">:</span> <span class="n">ReviewEdge</span><span class="p">(</span><span class="n">user_id</span><span class="o">=</span><span class="n">entry</span><span class="p">[</span><span class="s">&#39;user_id&#39;</span><span class="p">],</span> 
+<span class="gp">&gt;&gt;&gt; </span>                 <span class="n">product_id</span><span class="o">=</span><span class="n">entry</span><span class="p">[</span><span class="s">&#39;product_id&#39;</span><span class="p">],</span> 
+<span class="gp">&gt;&gt;&gt; </span>                 <span class="n">true_as_of_seconds</span><span class="o">=</span><span class="n">entry</span><span class="p">[</span><span class="s">&#39;time&#39;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span>         <span class="bp">self</span><span class="o">.</span><span class="n">sink</span><span class="o">.</span><span class="n">absorb</span><span class="p">(</span><span class="n">reviews</span><span class="p">)</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span>     <span class="c"># optional: is called by execute()</span>
+<span class="gp">&gt;&gt;&gt; </span>     <span class="k">def</span> <span class="nf">tear_down</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="gp">&gt;&gt;&gt; </span>         <span class="k">pass</span>
+</pre></div>
+</div>
 <dl class="method">
 <dt id="peachbox.pipeline.pipeline.Pipeline.execute">
 <tt class="descname">execute</tt><big>(</big><em>param</em><big>)</big><a class="reference internal" href="_modules/peachbox/pipeline/pipeline.html#Pipeline.execute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.pipeline.pipeline.Pipeline.execute" title="Permalink to this definition">¶</a></dt>
