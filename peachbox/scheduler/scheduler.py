@@ -12,6 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import sched, time
+from pubsub import pub
+from peachbox.scheduler.event import Event
+from peachbox.scheduler.event import TimedEvent
+
+
 class Scheduler(object):
     """Scheduler handles task management.
 
@@ -36,3 +42,28 @@ class Scheduler(object):
                 "Cannot run multiple Scheduler instances at once."
                 "Use peachbox.Scheduler.Instance() to access existing instance.")
         Scheduler._active_instance = self
+
+        self._scheduler = sched.scheduler(time.time, time.sleep)
+        self._timedEvents = {}
+
+    def run(self):
+        self._scheduler.run()
+
+    def _registerTimedEvent(self, event):
+        self._scheduler.enterabs(event.getNextTimestamp(time.time()), 1, self.publish, (event,))
+
+    def publish(self, event):
+        if isinstance(event, TimedEvent):
+            if event.getId() in self._timedEvents:
+                pub.sendMessage(event.getId(), param=event.getParam())
+            else:
+                self._timedEvents[event.getId()] = event
+
+            self._registerTimedEvent(event)
+        else:
+            pub.sendMessage(event.getId(), param=event.getParam())
+            
+
+    def subscribe(self, task, event):
+        pub.subscribe(task.execute, event.getId())
+        
