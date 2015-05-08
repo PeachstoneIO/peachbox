@@ -3,6 +3,9 @@ import unittest
 import peachbox
 import pyspark
 import time
+
+import peachbox.utils
+from pyspark.sql.types import *
                                        
 class TestIntegrationSpark(unittest.TestCase):  
 

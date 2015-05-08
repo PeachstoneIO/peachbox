@@ -39,6 +39,13 @@ class App(Generator):
             dir = os.path.join(self.project_home(), d)
             subprocess.call(['mkdir', '-p', dir])
 
+    def create_init_files(self):
+        """Create the init files in created dirs."""
+        dirs = ['model']
+        for d in dirs:
+            init_file = os.path.join(self.project_home(), d, '__init__.py')
+            subprocess.call(['touch', init_file])
+
 
 def create_app(name, project_home='.'):
     """Create app with name in project_home. Default is current work directory."""
@@ -46,5 +53,6 @@ def create_app(name, project_home='.'):
     App.PROJECT_HOME = project_home
     app = App()
     app.create_dirs()
+    app.create_init_files()
     app.create_app(name)
     app.create_model_setup()

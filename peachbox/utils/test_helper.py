@@ -29,19 +29,22 @@ class TestHelper(object):
 
     @staticmethod
     def write_json(filename, json_input, dir_name=''):
-        if not dir_name: dir_name = TestHelper.create_temp_dir()
+        if not dir_name: dir_name = TestHelper.mkdir_tmp()
 
         if( not os.path.exists(dir_name)): call(['mkdir', '-p', dir_name]) 
 
         filename = dir_name + '/' + filename
-        if filename.endswith('.gz'): filename = filename[0:-3]
-        print "writing json to: " + filename
-        f = open(filename, 'w')
+        
+        base_filename = filename[0:-3] if filename.endswith('.gz') else filename
+
+        f = open(base_filename, 'w')
         for line in json_input:
             f.write(json.dumps(line) + '\n')
         f.close()
-        #call(['gzip', filename])
-        #return filename + '.gz'
+
+        if filename.endswith('.gz'):
+            call(['gzip', filename])
+
         return filename
 
     @staticmethod

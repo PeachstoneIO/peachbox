@@ -2,6 +2,7 @@ import unittest
 import boto
 from boto.s3.key import Key
 from boto.s3.bucket import Bucket
+import boto.s3.connection
 
 import peachbox.fs
 import peachbox.utils
@@ -83,6 +84,12 @@ class TestIntegrationS3(unittest.TestCase):
         uri_prefix = 's3n://' + TestIntegrationS3.mart + '/'
         self.assertEqual([uri_prefix + temp_dir + '/' + str(date1.seconds())], dirs)
 
+    def test_connection_on_demand(self):
+        assert not self.fs._connection
+        self.assertIsInstance(self.fs.connection(), boto.s3.connection.S3Connection)
+
+    def test_path_exists(self):
+        assert False
 
 
 

@@ -18,10 +18,13 @@ class Fs(object):
     """Base class of the file system."""
 
     def ls(self, mart,  path=''):
-        NotImplementedError
+        raise NotImplementedError
 
     def ls_d(self, mart, path=''):
-        NotImplementedError
+        raise NotImplementedError
+
+    def test_path_exists(self):
+        raise NotImplementedError
 
     def dirs_of_period(self, mart, path, from_utime, before_utime):
         """Lists directories of a given time period."""

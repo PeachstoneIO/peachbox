@@ -41,8 +41,11 @@ class Local(Fs):
         return dirs, files
 
     def rm_r(self, mart, path):
-        if os.path.exists(self.uri(mart,path)):
+        if self.path_exists(mart, path):
             shutil.rmtree(self.uri(mart,path))
+
+    def path_exists(self, mart, path):
+        return os.path.exists(self.uri(mart,path))
 
     def uri(self, mart, filename):
         uri_parts = [self.dwh_path, mart, filename]

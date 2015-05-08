@@ -41,33 +41,53 @@ class DWH(object):
         self.fs = fs
         DWH._active_instance = self
 
+    #TODO: Thread safety; atomic changes to the fs!
+    def append(self, pail):
+        mart = pail.model.mart
+        path = pail.target()
+        df = pail.data
+        if self.fs.path_exists(mart, path):
+            current_df = self.read_data_frame(mart, path)
+            df = current_df.unionAll(pail.data)
+            self.fs.rm_f(mart, path)
+        print 'saving to: ' + self.fs.uri(mart, path)
+        df.saveAsParquetFile(self.fs.uri(mart, path))
+
+    def read_data_frame(self, mart, path):
+        uri = self.fs.uri(mart, path)
+        return peachbox.Spark.Instance().sql_context().parquetFile(uri)
+
+
+
+    #TODO: Clean up legacy code
+    #
+    # Writes data
+    # The model defines:
+    #   * mart, output path (including the index, eg. timestamp and time range)
+    #   * output format, eg. JSON, parquet
+    # deprecated
+    #def absorb(self, model, data, pail):
+        #"""Deprecated: Moved to peachbox.connector.sink
+        
+        #Absorbs data into the data warehouse
+
+        #:param pail: The pail the data goes to
+        #:param model: Data is stored with respect to the model properties, ie. type, id and schema
+        #"""
+        #mart = model.mart
+        #path = os.path.join(model.path(), pail)
+        #self.fs.rm_r(mart, path)
+        #schema_rdd = peachbox.spark.Instance().sql_context().applySchema(data, model.schema)
+
+        #if model.output_format == peachbox.models.FileFormat.Parquet:
+            #scheam_rdd.saveAsParquetFile(self.fs.uri(mart, path))
+
     #def query(self, model, from_utime, before_utime):
         #pass
         #self.fs.mart = model.mart
         #sources = ','.join(self.fs.dirs_of_period(model, from, before))
         #rdd     = self.retrieve(sources) 
         #return self.load_json(rdd)
-
-    # Writes data
-    # The model defines:
-    #   * mart, output path (including the index, eg. timestamp and time range)
-    #   * output format, eg. JSON, parquet
-    # deprecated
-    def absorb(self, model, data, pail):
-        """Deprecated: Moved to peachbox.connector.sink
-        
-        Absorbs data into the data warehouse
-
-        :param pail: The pail the data goes to
-        :param model: Data is stored with respect to the model properties, ie. type, id and schema
-        """
-        mart = model.mart
-        path = os.path.join(model.path(), pail)
-        self.fs.rm_r(mart, path)
-        schema_rdd = peachbox.spark.Instance().sql_context().applySchema(data, model.schema)
-
-        if model.output_format == peachbox.models.FileFormat.Parquet:
-            scheam_rdd.saveAsParquetFile(self.fs.uri(mart, path))
 
     ## TODO: Handle target times properly
     #def write(self, model, rdd, seconds=0):

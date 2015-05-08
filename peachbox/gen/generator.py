@@ -31,8 +31,13 @@ class Generator(object):
         return base
 
     def write_class(self, name, module, input):
-        with open(self.path(name, module), 'w') as f:
-            f.write(input)
+        print 'writing to: ' + self.path(name, module)
+        dir = os.path.dirname(self.path(name, module))
+        if os.path.exists(dir):
+            with open(self.path(name, module), 'w') as f:
+                f.write(input)
+        else:
+            raise IOError("Trying to write to non-existing path: %s" % (dir,))
 
     def path(self, name, module):
         filename = self.underscore(name)+'.py'

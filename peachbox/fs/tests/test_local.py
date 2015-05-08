@@ -40,3 +40,12 @@ class TestLocal(unittest.TestCase):
     def test_url_prefix_default(self):
         self.assertEqual('/tmp/mart/1/2/time', self.fs.uri('mart', '1/2/time'))
 
+    def test_path_exists(self):
+        tmp_dir = TestHelper.mkdir_tmp()
+        TestHelper.mkdir_p(tmp_dir + '/mart/123')
+        self.fs.dwh_path = tmp_dir
+
+        assert self.fs.path_exists('mart', '')
+        assert self.fs.path_exists('mart', '123')
+        assert not self.fs.path_exists('mart', '12')
+        assert not self.fs.path_exists('mart2', '123')

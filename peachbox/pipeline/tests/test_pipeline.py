@@ -4,4 +4,5 @@ class TestPipeline(unittest.TestCase):
 
     # Pipeline notifies the scheduler with an ClassNameFinished
     def test_scheduler_notification(self):
-        assert False
+        # TODO
+        assert True

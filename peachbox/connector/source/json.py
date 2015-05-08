@@ -27,5 +27,6 @@ class JSON(object):
         else:
             raise ValueError('Missing key in param: path')
 
-    def data_frame(self):
-        return peachbox.Spark.Instance().sql_context().jsonFile(self.path)
+    def emit(self):
+        df = peachbox.Spark.Instance().sql_context().jsonFile(self.path)
+        return {'data':df}

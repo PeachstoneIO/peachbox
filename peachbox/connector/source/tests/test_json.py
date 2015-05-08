@@ -16,9 +16,8 @@ class TestJSON(unittest.TestCase):
         with self.assertRaises(ValueError):
             self.json.set_param({})
 
-    def test_data_frame(self):
-        tmp_dir = peachbox.utils.TestHelper.mkdir_tmp()
-        peachbox.utils.TestHelper.write_json('data', [{'key':'value'}], tmp_dir)
-        self.json.set_param({'path':tmp_dir+'/data'})
-        df = self.json.data_frame().collect()
+    def test_emit(self):
+        json_file = peachbox.utils.TestHelper.write_json('data', [{'key':'value'}])
+        self.json.set_param({'path':json_file})
+        df = self.json.emit()['data'].collect()
         self.assertEqual('value', df[0].key)

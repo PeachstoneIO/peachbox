@@ -12,14 +12,27 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-class MasterDataSet(object):
+import peachbox.connector
+import peachbox
+
+class MasterData(object):
     """Absorbs data into the master data set"""
 
-    def __init__(self, model=None):
-        self.model = model
 
-    def absorb(self, data):
-        """Absorbs data corresponding to target of model. Takes into account vertical partitioning 
-        wrt. true_as_of_seconds"""
+    def absorb(self, param):
+        """Absorbs data corresponding to target and partition key of model."""
+
+        data   = param['data']
+        model  = param['model']
+        schema = model.spark_schema()
+
+        df = peachbox.Spark.Instance().sql_context().createDataFrame(data, schema=schema)
+
+        pails = peachbox.connector.Pail.create_pails(df, model)
+
+        for pail in pails:
+            peachbox.DWH.Instance().append(pail)
+
+    def set_param(self, param):
         pass
 

@@ -14,6 +14,7 @@
 
 from peachbox.gen.generator import Generator
 import imp 
+import sys
 
 class Model(Generator):
     """Model generator."""
@@ -37,7 +38,9 @@ def define_node(name, identifier, type):
             'type':type}
     m.write(name, 'model', 'node', substitutes)
 
-def define_edge(data_unit_index, name, name_node1, name_node2):
+def define_edge(data_unit_index, name, name_node1, name_node2, partition_key='true_as_of_seconds', 
+        partition_granularity=3600):
+    
     m = Model()
     node1 = m.load_node(name_node1, 'model')
     node2 = m.load_node(name_node2, 'model')
@@ -45,9 +48,15 @@ def define_edge(data_unit_index, name, name_node1, name_node2):
     substitutes = {'ClassName':name,
             'node1':node1.identifier,
             'node2':node2.identifier, 
-            'data_unit_index':data_unit_index}
+            'data_unit_index':data_unit_index,
+            'partition_key':partition_key,
+            'partition_granularity':partition_granularity,
+            'output_format':'peachbox.model.FileFormat.Parquet'}
 
-    m.write(name+"Edge", 'model', 'edge', substitutes)
+    m.write(name+"Edge", 'model', 'master_data_set_edge', substitutes)
+
+    # Existing model module might interfere with later usage of proper model module
+    if sys.modules.get('model'): del sys.modules['model']
 
 def define_property(data_unit_index, name, name_node, name_property, type):
     m = Model()
@@ -59,6 +68,9 @@ def define_property(data_unit_index, name, name_node, name_property, type):
             'property':name_property,
             'type':type}
     m.write(name, 'model', 'property', substitutes)
+
+    # Existing model module might interfere with later usage of proper model module
+    if sys.modules.get('model'): del sys.modules['model']
 
 
     

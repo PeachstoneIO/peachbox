@@ -46,6 +46,9 @@ class S3(Fs):
         for key in self.bucket(mart).list(prefix=path): 
             key.delete() 
 
+    def path_exists(self, mart, path):
+        pass
+
     def uri(self, mart, filename):
         uri_parts = [self.uri_scheme, mart, filename]
         uri       = os.path.join(*uri_parts)
