@@ -89,7 +89,12 @@ class TestIntegrationS3(unittest.TestCase):
         self.assertIsInstance(self.fs.connection(), boto.s3.connection.S3Connection)
 
     def test_path_exists(self):
-        assert False
+        self.key.key = 'path_exists/file'
+        self.key.set_contents_from_string('content')
+        assert self.fs.path_exists(self.mart, '/path_exists')
+        assert not self.fs.path_exists(self.mart, 'path_does_not_exist')
+        assert self.fs.path_exists(self.mart, 'path_exists/file')
+        assert self.fs.path_exists(self.mart, '/path_exists/file')
 
 
 

@@ -30,15 +30,15 @@ class DWH(object):
 
     _active_instance = None
 
-    def __init__(self, fs=peachbox.fs.S3()):
-        """Data warehouse constructor. fs is the underlying file system. Default is S3."""
+    def __init__(self):
+        """Data warehouse constructor. Default for underlying file system is S3."""
 
         if DWH._active_instance:
             raise ValueError(
                 "Cannot run multiple DWH instances at once."
                 "Use peachbox.dwh.Instance() to access existing instance.")
 
-        self.fs = fs
+        self.fs = peachbox.fs.S3()
         DWH._active_instance = self
 
     #TODO: Thread safety; atomic changes to the fs!

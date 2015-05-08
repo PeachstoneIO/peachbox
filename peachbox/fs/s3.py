@@ -47,10 +47,12 @@ class S3(Fs):
             key.delete() 
 
     def path_exists(self, mart, path):
-        pass
+        keys = self.ls(mart)
+        return any( (self.uri(mart, path) in key ) for key in keys)
 
     def uri(self, mart, filename):
-        uri_parts = [self.uri_scheme, mart, filename]
+        f = filename.strip('/')
+        uri_parts = [self.uri_scheme, mart, f]
         uri       = os.path.join(*uri_parts)
         return uri
 

@@ -15,23 +15,30 @@
 import peachbox.connector
 import peachbox
 
-class MasterData(object):
+class MasterData(peachbox.connector.Connector):
     """Absorbs data into the master data set"""
 
+    def __init__(self):
+        print 'in masterdata'
 
-    def absorb(self, param):
+    def absorb(self, data_descriptor):
         """Absorbs data corresponding to target and partition key of model."""
 
-        data   = param['data']
-        model  = param['model']
+        data   = data_descriptor['data']
+        model  = data_descriptor['model']
         schema = model.spark_schema()
+        df = self.data_frame(data, schema)
 
-        df = peachbox.Spark.Instance().sql_context().createDataFrame(data, schema=schema)
-
-        pails = peachbox.connector.Pail.create_pails(df, model)
-
+        pails = self.create_pails(df, model)
         for pail in pails:
             peachbox.DWH.Instance().append(pail)
+
+    def data_frame(self, data, schema):
+        return peachbox.Spark.Instance().sql_context().createDataFrame(data, schema=schema)
+        
+
+    def create_pails(self, df, model):
+        return peachbox.connector.Pail.create_pails(df, model)
 
     def set_param(self, param):
         pass

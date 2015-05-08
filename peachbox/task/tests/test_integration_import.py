@@ -39,9 +39,9 @@ class ImportReviews(peachbox.task.Task):
         #review_for_product = product_chain.invoke(df)
         #user_properties = pipeline.UserProperties.invoke(df)
 
-        self.sink.absorb([{'data':review_by_user,     'model':Edge},
-                          {'data':review_for_product, 'model':ReviewForProductEdge}, 
-                           'data':user_properties,    'model':UserProperties}]
+        #self.sink.absorb([{'data':review_by_user,     'model':Edge},
+                          #{'data':review_for_product, 'model':ReviewForProductEdge}, 
+                           #'data':user_properties,    'model':UserProperties}]
         
         self.sink.absorb({'data':reviews_by_user, 'model':ReviewByUserEdge})
 
@@ -54,18 +54,20 @@ class TestIntegrationImport(unittest.TestCase):
         self.dwh.fs.dwh_path = peachbox.utils.TestHelper().mkdir_tmp() 
 
         # Write mocked data
-        self.json_file = peachbox.utils.TestHelper().write_json('movie_reviews.json', [{'user_id':'u1', 
-            'product_id':'p1', 'time':123}])
+        input = [{'user_id':'u1', 'product_id':'p1', 'time':123}, 
+                 {'user_id':'u2', 'product_id':'p2', 'time':3700}]
 
-        self.importer = ImportReviews()
+        self.json_file = peachbox.utils.TestHelper().write_json('movie_reviews.json', input)
+        self.importer  = ImportReviews()
+        self.importer.execute(param={'path':self.json_file})
 
     def test_execution(self):
-        self.importer.execute(param={'path':self.json_file})
-        #print 'dwh path: ' + peachbox.DWH.Instance().fs.dwh_path
-        result = peachbox.DWH.Instance().read_data_frame(self.importer.sink.model.mart, '0/3600')
-        #print result.collect()
+        result = peachbox.DWH.Instance().read_data_frame(ReviewByUserEdge.mart, '0/3600').collect()
+        self.assertEqual(u'u1', result[0].user_id)
+        self.assertEqual(u'p1', result[0].product_id)
+        self.assertEqual(123, result[0].true_as_of_seconds)
 
-        ## Test the output
-        assert False
+        result2 = peachbox.DWH.Instance().read_data_frame(ReviewByUserEdge.mart, '0/7200').collect()
+        self.assertEqual(u'u2', result2[0].user_id)
 
 

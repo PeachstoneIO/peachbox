@@ -11,3 +11,4 @@ class TestS3(unittest.TestCase):
 
     def test_uri(self):
         self.assertEqual('s3n://mart/filename', self.dfs.uri('mart', 'filename'))
+        self.assertEqual('s3n://mart/filename/f2', self.dfs.uri('mart', '/filename/f2'))
