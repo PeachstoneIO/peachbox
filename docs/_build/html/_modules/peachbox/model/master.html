@@ -47,19 +47,90 @@
           <div class="body">
             
   <h1>Source code for peachbox.model.master</h1><div class="highlight"><pre>
-<span class="k">class</span> <span class="nc">MasterDataSetModel</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-<div class="viewcode-block" id="MasterDataSetModel"><a class="viewcode-back" href="../../../peachbox.model.html#peachbox.model.master.MasterDataSetModel">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_id</span>     <span class="o">=</span> <span class="bp">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_schema</span> <span class="o">=</span> <span class="bp">None</span>
-        
-        <span class="c">#eg. peachbox.models.FileFormat.parquet</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">output_format</span> <span class="o">=</span> <span class="bp">None</span>
+<span class="c">#from peachbox.model import Data</span>
+<span class="kn">import</span> <span class="nn">pyspark.sql.types</span>
+<span class="kn">from</span> <span class="nn">peachbox.model.file_format</span> <span class="kn">import</span> <span class="n">FileFormat</span>
+<span class="kn">import</span> <span class="nn">peachbox.model</span>
 
-    <span class="k">def</span> <span class="nf">path</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="MasterDataSetModel.path"><a class="viewcode-back" href="../../../peachbox.model.html#peachbox.model.master.MasterDataSetModel.path">[docs]</a>        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+<div class="viewcode-block" id="MasterDataSet"><a class="viewcode-back" href="../../../peachbox.model.html#peachbox.model.master.MasterDataSet">[docs]</a><span class="k">class</span> <span class="nc">MasterDataSet</span><span class="p">():</span>
 
-    <span class="k">def</span> <span class="nf">schema</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
-<div class="viewcode-block" id="MasterDataSetModel.schema"><a class="viewcode-back" href="../../../peachbox.model.html#peachbox.model.master.MasterDataSetModel.schema">[docs]</a>        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+    <span class="n">data_unit_index</span>       <span class="o">=</span> <span class="bp">None</span>
+    <span class="n">partition_key</span>         <span class="o">=</span> <span class="bp">None</span>
+    <span class="n">partition_granularity</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="n">output_format</span>         <span class="o">=</span> <span class="n">FileFormat</span><span class="o">.</span><span class="n">Parquet</span>
+    <span class="n">schema</span>                <span class="o">=</span> <span class="bp">None</span>
+    <span class="n">mart</span>                  <span class="o">=</span> <span class="s">&#39;master&#39;</span>
+
+    <span class="n">_spark_schema</span>         <span class="o">=</span> <span class="bp">None</span>
+    <span class="n">_spark_row</span>            <span class="o">=</span> <span class="bp">None</span>
+    <span class="n">_spark_indices</span>        <span class="o">=</span> <span class="bp">None</span>
+    <span class="n">_types</span>                <span class="o">=</span> <span class="bp">None</span>
+
+    <span class="n">_initialized</span>          <span class="o">=</span> <span class="bp">False</span>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="MasterDataSet.target"><a class="viewcode-back" href="../../../peachbox.model.html#peachbox.model.master.MasterDataSet.target">[docs]</a>    <span class="k">def</span> <span class="nf">target</span><span class="p">(</span><span class="n">cls</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">cls</span><span class="o">.</span><span class="n">data_unit_index</span><span class="p">)</span>
+</div>
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="MasterDataSet.spark_schema"><a class="viewcode-back" href="../../../peachbox.model.html#peachbox.model.master.MasterDataSet.spark_schema">[docs]</a>    <span class="k">def</span> <span class="nf">spark_schema</span><span class="p">(</span><span class="n">cls</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">cls</span><span class="o">.</span><span class="n">_spark_schema</span><span class="p">:</span> <span class="n">cls</span><span class="o">.</span><span class="n">generate_spark_schema</span><span class="p">()</span> 
+        <span class="k">return</span> <span class="n">cls</span><span class="o">.</span><span class="n">_spark_schema</span>
+</div>
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="MasterDataSet.initialize"><a class="viewcode-back" href="../../../peachbox.model.html#peachbox.model.master.MasterDataSet.initialize">[docs]</a>    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">cls</span><span class="p">):</span>
+        <span class="n">cls</span><span class="o">.</span><span class="n">generate_spark_schema</span><span class="p">()</span>
+        <span class="n">cls</span><span class="o">.</span><span class="n">generate_spark_row_definition</span><span class="p">()</span>
+        <span class="n">cls</span><span class="o">.</span><span class="n">_initialized</span> <span class="o">=</span> <span class="bp">True</span>
+</div>
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="MasterDataSet.spark_row"><a class="viewcode-back" href="../../../peachbox.model.html#peachbox.model.master.MasterDataSet.spark_row">[docs]</a>    <span class="k">def</span> <span class="nf">spark_row</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">cls</span><span class="o">.</span><span class="n">_initialized</span><span class="p">:</span> <span class="n">cls</span><span class="o">.</span><span class="n">initialize</span><span class="p">()</span> 
+
+        <span class="n">values</span> <span class="o">=</span> <span class="p">[</span><span class="bp">None</span><span class="p">]</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">field</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+            <span class="n">idx</span> <span class="o">=</span> <span class="n">cls</span><span class="o">.</span><span class="n">_spark_indices</span><span class="p">[</span><span class="n">field</span><span class="p">]</span>
+            <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="p">(</span><span class="n">cls</span><span class="o">.</span><span class="n">_types</span><span class="p">[</span><span class="n">idx</span><span class="p">]):</span>
+                <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s">&quot;</span><span class="si">%s</span><span class="s">:</span><span class="si">%s</span><span class="s"> (type:</span><span class="si">%s</span><span class="s">) must be of type </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> 
+                        <span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">value</span><span class="p">),</span> <span class="n">cls</span><span class="o">.</span><span class="n">_types</span><span class="p">[</span><span class="n">idx</span><span class="p">]))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">values</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="k">return</span> <span class="n">cls</span><span class="o">.</span><span class="n">_spark_row</span><span class="p">(</span><span class="o">*</span><span class="n">values</span><span class="p">)</span>
+
+</div>
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="MasterDataSet.generate_spark_schema"><a class="viewcode-back" href="../../../peachbox.model.html#peachbox.model.master.MasterDataSet.generate_spark_schema">[docs]</a>    <span class="k">def</span> <span class="nf">generate_spark_schema</span><span class="p">(</span><span class="n">cls</span><span class="p">):</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">types</span> <span class="o">=</span> <span class="p">[</span><span class="bp">None</span><span class="p">]</span><span class="o">*</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">cls</span><span class="o">.</span><span class="n">schema</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">indices</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">current_idx</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="n">type_int</span> <span class="o">=</span> <span class="n">peachbox</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">Types</span><span class="o">.</span><span class="n">spark_type</span><span class="p">(</span><span class="s">&#39;IntegerType&#39;</span><span class="p">)</span> 
+        <span class="n">fields</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pyspark</span><span class="o">.</span><span class="n">sql</span><span class="o">.</span><span class="n">types</span><span class="o">.</span><span class="n">StructField</span><span class="p">(</span><span class="s">&#39;true_as_of_seconds&#39;</span><span class="p">,</span> <span class="n">type_int</span><span class="p">,</span> <span class="bp">True</span><span class="p">))</span>
+        <span class="n">types</span><span class="p">[</span><span class="n">current_idx</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span>
+        <span class="n">indices</span><span class="p">[</span><span class="s">&#39;true_as_of_seconds&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">current_idx</span>
+        <span class="n">current_idx</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="n">cls</span><span class="o">.</span><span class="n">schema</span><span class="p">:</span>
+            <span class="n">spark_type</span> <span class="o">=</span> <span class="n">peachbox</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">Types</span><span class="o">.</span><span class="n">spark_type</span><span class="p">(</span><span class="n">field</span><span class="p">[</span><span class="s">&#39;type&#39;</span><span class="p">])</span>
+            <span class="n">fields</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pyspark</span><span class="o">.</span><span class="n">sql</span><span class="o">.</span><span class="n">types</span><span class="o">.</span><span class="n">StructField</span><span class="p">(</span><span class="n">field</span><span class="p">[</span><span class="s">&#39;field&#39;</span><span class="p">],</span> <span class="n">spark_type</span><span class="p">,</span> <span class="bp">True</span><span class="p">))</span>
+            <span class="n">types</span><span class="p">[</span><span class="n">current_idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">peachbox</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">Types</span><span class="o">.</span><span class="n">python_type</span><span class="p">(</span><span class="n">field</span><span class="p">[</span><span class="s">&#39;type&#39;</span><span class="p">])</span>
+            <span class="n">indices</span><span class="p">[</span><span class="n">field</span><span class="p">[</span><span class="s">&#39;field&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">current_idx</span>
+
+            <span class="n">current_idx</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="n">cls</span><span class="o">.</span><span class="n">_spark_schema</span> <span class="o">=</span> <span class="n">pyspark</span><span class="o">.</span><span class="n">sql</span><span class="o">.</span><span class="n">types</span><span class="o">.</span><span class="n">StructType</span><span class="p">(</span><span class="n">fields</span><span class="p">)</span>
+        <span class="n">cls</span><span class="o">.</span><span class="n">_spark_indices</span> <span class="o">=</span> <span class="n">indices</span>
+        <span class="n">cls</span><span class="o">.</span><span class="n">_types</span> <span class="o">=</span> <span class="n">types</span>
+</div>
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="MasterDataSet.generate_spark_row_definition"><a class="viewcode-back" href="../../../peachbox.model.html#peachbox.model.master.MasterDataSet.generate_spark_row_definition">[docs]</a>    <span class="k">def</span> <span class="nf">generate_spark_row_definition</span><span class="p">(</span><span class="n">cls</span><span class="p">):</span>
+        <span class="n">names</span> <span class="o">=</span> <span class="p">[</span><span class="n">field</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="n">cls</span><span class="o">.</span><span class="n">spark_schema</span><span class="p">()</span><span class="o">.</span><span class="n">fields</span><span class="p">]</span>
+        <span class="n">cls</span><span class="o">.</span><span class="n">_spark_row</span> <span class="o">=</span> <span class="n">pyspark</span><span class="o">.</span><span class="n">sql</span><span class="o">.</span><span class="n">Row</span><span class="p">(</span><span class="o">*</span><span class="n">names</span><span class="p">)</span>
+    
+
+
+     
 </pre></div></div></div>
 
           </div>

@@ -20,14 +20,6 @@ peachbox.gen.generator module
     :undoc-members:
     :show-inheritance:
 
-peachbox.gen.model module
--------------------------
-
-.. automodule:: peachbox.gen.model
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
 peachbox.gen.substitutor module
 -------------------------------
 

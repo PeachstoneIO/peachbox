@@ -27,14 +27,9 @@ class App(Generator):
         replaced = self.substitutor.substitute('app', {'ClassName':name})
         self.write_class(name, '', replaced)
 
-    def create_model_setup(self):
-        """Create template for model setup."""
-        replaced = self.substitutor.substitute('model', {})
-        self.write_class('Model', 'setup', replaced)
-
     def create_dirs(self):
         """Create the project folders."""
-        dirs = ['conf', 'setup', 'model', 'pipelines']
+        dirs = ['conf', 'model', 'tasks', 'pipelines']
         for d in dirs:
             dir = os.path.join(self.project_home(), d)
             subprocess.call(['mkdir', '-p', dir])
@@ -55,4 +50,3 @@ def create_app(name, project_home='.'):
     app.create_dirs()
     app.create_init_files()
     app.create_app(name)
-    app.create_model_setup()

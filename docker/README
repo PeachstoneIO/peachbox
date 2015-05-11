@@ -1,0 +1,56 @@
+##############
+# HowTo use  #
+##############
+1. Install Docker
+2. docker run -i -v <peachbox_home>:/peachbox -t peachstone/dev /bin/bash
+
+##############
+# Docker 101 #
+##############
+
+# Docker installation
+https://docs.docker.com/installation/ubuntulinux/
+
+# About Docker
+The docker engine consists of two parts: a daemon, a server process that manages all the containers and a client, 
+which acts as a remote control for the daemon. You can think of containers as a process in a box. The box contains 
+everything the process might need, so it has the filesystem, system libraries, shell and such, but by default non of 
+these are running. You 'start' a container by running a process.
+
+# Cheat-sheet
+https://github.com/wsargent/docker-cheat-sheet
+
+# Links to Docker guides
+https://docs.docker.com/userguide/dockerlinks/
+
+# Delete all containers
+docker rm $(docker ps -a -q)
+
+# Delete all images
+docker rmi $(docker images -q)
+
+# Build image with tag (Needs a Dockerfile in local directory)
+docker build -t peachstone/dev.
+
+# Run process in a container:
+docker run peachbox/dev echo 'Hello peachbox'
+
+# Run interactive shell
+docker run -i -t peachstone/dev/bin/bash
+
+# Find ID of the container which is created after every change:
+docker ps -l
+
+# Commit your changes:
+docker commit <ContainerID> peachstone/dev 
+
+# List all runing containers:
+docker ps
+
+# Inspect image:
+docker inspect <imageID>
+
+# Push:
+docker push <imageID>
+
+

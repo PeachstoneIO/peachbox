@@ -12,6 +12,7 @@ Subpackages
     peachbox.model
     peachbox.pipeline
     peachbox.scheduler
+    peachbox.task
     peachbox.utils
 
 Submodules

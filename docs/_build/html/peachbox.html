@@ -62,7 +62,7 @@
 <li class="toctree-l2"><a class="reference internal" href="peachbox.connector.html#subpackages">Subpackages</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="peachbox.connector.sink.html">peachbox.connector.sink package</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="peachbox.connector.sink.html#submodules">Submodules</a></li>
-<li class="toctree-l4"><a class="reference internal" href="peachbox.connector.sink.html#module-peachbox.connector.sink.master_data_set">peachbox.connector.sink.master_data_set module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="peachbox.connector.sink.html#module-peachbox.connector.sink.master_data">peachbox.connector.sink.master_data module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="peachbox.connector.sink.html#module-peachbox.connector.sink">Module contents</a></li>
 </ul>
 </li>
@@ -74,6 +74,9 @@
 </li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="peachbox.connector.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="peachbox.connector.html#module-peachbox.connector.connector">peachbox.connector.connector module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="peachbox.connector.html#module-peachbox.connector.pail">peachbox.connector.pail module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="peachbox.connector.html#module-peachbox.connector">Module contents</a></li>
 </ul>
 </li>
@@ -89,17 +92,16 @@
 <li class="toctree-l2"><a class="reference internal" href="peachbox.gen.html#submodules">Submodules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="peachbox.gen.html#module-peachbox.gen.app">peachbox.gen.app module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="peachbox.gen.html#module-peachbox.gen.generator">peachbox.gen.generator module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="peachbox.gen.html#module-peachbox.gen.model">peachbox.gen.model module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="peachbox.gen.html#module-peachbox.gen.substitutor">peachbox.gen.substitutor module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="peachbox.gen.html#module-peachbox.gen">Module contents</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="peachbox.model.html">peachbox.model package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="peachbox.model.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="peachbox.model.html#module-peachbox.model.data">peachbox.model.data module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="peachbox.model.html#module-peachbox.model.file_format">peachbox.model.file_format module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="peachbox.model.html#module-peachbox.model.master">peachbox.model.master module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="peachbox.model.html#module-peachbox.model.model">peachbox.model.model module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="peachbox.model.html#module-peachbox.model.types">peachbox.model.types module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="peachbox.model.html#module-peachbox.model">Module contents</a></li>
 </ul>
 </li>
@@ -113,6 +115,13 @@
 <li class="toctree-l2"><a class="reference internal" href="peachbox.scheduler.html#submodules">Submodules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="peachbox.scheduler.html#module-peachbox.scheduler.scheduler">peachbox.scheduler.scheduler module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="peachbox.scheduler.html#module-peachbox.scheduler">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="peachbox.task.html">peachbox.task package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="peachbox.task.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="peachbox.task.html#module-peachbox.task.import">peachbox.task.import module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="peachbox.task.html#module-peachbox.task.task">peachbox.task.task module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="peachbox.task.html#module-peachbox.task">Module contents</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="peachbox.utils.html">peachbox.utils package</a><ul>
@@ -146,7 +155,7 @@
 <span id="peachbox-dwh-module"></span><h2>peachbox.dwh module<a class="headerlink" href="#module-peachbox.dwh" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="peachbox.dwh.DWH">
-<em class="property">class </em><tt class="descclassname">peachbox.dwh.</tt><tt class="descname">DWH</tt><big>(</big><em>fs=&lt;peachbox.fs.s3.S3 object at 0x2afb229cca10&gt;</em><big>)</big><a class="reference internal" href="_modules/peachbox/dwh.html#DWH"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.dwh.DWH" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><tt class="descclassname">peachbox.dwh.</tt><tt class="descname">DWH</tt><a class="reference internal" href="_modules/peachbox/dwh.html#DWH"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.dwh.DWH" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
 <p>Interface to the data warehouse.</p>
 <dl class="staticmethod">
@@ -156,23 +165,14 @@
 </dd></dl>
 
 <dl class="method">
-<dt id="peachbox.dwh.DWH.absorb">
-<tt class="descname">absorb</tt><big>(</big><em>model</em>, <em>data</em>, <em>pail</em><big>)</big><a class="reference internal" href="_modules/peachbox/dwh.html#DWH.absorb"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.dwh.DWH.absorb" title="Permalink to this definition">¶</a></dt>
-<dd><p>Deprecated: Moved to peachbox.connector.sink</p>
-<p>Absorbs data into the data warehouse</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>pail</strong> &#8211; The pail the data goes to</li>
-<li><strong>model</strong> &#8211; Data is stored with respect to the model properties, ie. type, id and schema</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
+<dt id="peachbox.dwh.DWH.append">
+<tt class="descname">append</tt><big>(</big><em>pail</em><big>)</big><a class="reference internal" href="_modules/peachbox/dwh.html#DWH.append"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.dwh.DWH.append" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="peachbox.dwh.DWH.read_data_frame">
+<tt class="descname">read_data_frame</tt><big>(</big><em>mart</em>, <em>path</em><big>)</big><a class="reference internal" href="_modules/peachbox/dwh.html#DWH.read_data_frame"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.dwh.DWH.read_data_frame" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="method">
 <dt id="peachbox.dwh.DWH.stop">

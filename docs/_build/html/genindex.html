@@ -61,6 +61,7 @@
  | <a href="#L"><strong>L</strong></a>
  | <a href="#M"><strong>M</strong></a>
  | <a href="#N"><strong>N</strong></a>
+ | <a href="#O"><strong>O</strong></a>
  | <a href="#P"><strong>P</strong></a>
  | <a href="#R"><strong>R</strong></a>
  | <a href="#S"><strong>S</strong></a>
@@ -73,17 +74,9 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%" valign="top"><dl>
       
-  <dt><a href="peachbox.connector.sink.html#peachbox.connector.sink.master_data_set.MasterDataSet.absorb">absorb() (peachbox.connector.sink.master_data_set.MasterDataSet method)</a>
+  <dt><a href="peachbox.connector.sink.html#peachbox.connector.sink.master_data.MasterData.absorb">absorb() (peachbox.connector.sink.master_data.MasterData method)</a>
   </dt>
 
-      <dd><dl>
-        
-  <dt><a href="peachbox.html#peachbox.dwh.DWH.absorb">(peachbox.dwh.DWH method)</a>
-  </dt>
-
-      </dl></dd>
-  </dl></td>
-  <td style="width: 33%" valign="top"><dl>
       
   <dt><a href="peachbox.html#peachbox.app.App">App (class in peachbox.app)</a>
   </dt>
@@ -94,6 +87,12 @@
   </dt>
 
       </dl></dd>
+  </dl></td>
+  <td style="width: 33%" valign="top"><dl>
+      
+  <dt><a href="peachbox.html#peachbox.dwh.DWH.append">append() (peachbox.dwh.DWH method)</a>
+  </dt>
+
   </dl></td>
 </tr></table>
 
@@ -110,6 +109,14 @@
 <h2 id="C">C</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%" valign="top"><dl>
+      
+  <dt><a href="peachbox.fs.html#peachbox.fs.s3.S3.connection">connection() (peachbox.fs.s3.S3 method)</a>
+  </dt>
+
+      
+  <dt><a href="peachbox.connector.html#peachbox.connector.connector.Connector">Connector (class in peachbox.connector.connector)</a>
+  </dt>
+
       
   <dt><a href="peachbox.html#peachbox.spark.Spark.context">context() (peachbox.spark.Spark method)</a>
   </dt>
@@ -131,9 +138,19 @@
   </dt>
 
       
-  <dt><a href="peachbox.gen.html#peachbox.gen.app.App.create_model_setup">create_model_setup() (peachbox.gen.app.App method)</a>
+  <dt><a href="peachbox.gen.html#peachbox.gen.app.App.create_init_files">create_init_files() (peachbox.gen.app.App method)</a>
   </dt>
 
+      
+  <dt><a href="peachbox.connector.html#peachbox.connector.pail.Pail.create_pails">create_pails() (peachbox.connector.pail.Pail static method)</a>
+  </dt>
+
+      <dd><dl>
+        
+  <dt><a href="peachbox.connector.sink.html#peachbox.connector.sink.master_data.MasterData.create_pails">(peachbox.connector.sink.master_data.MasterData method)</a>
+  </dt>
+
+      </dl></dd>
   </dl></td>
 </tr></table>
 
@@ -141,39 +158,25 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%" valign="top"><dl>
       
-  <dt><a href="peachbox.model.html#peachbox.model.data.Data">Data (class in peachbox.model.data)</a>
+  <dt><a href="peachbox.model.html#peachbox.model.model.Data">Data (class in peachbox.model.model)</a>
   </dt>
 
-      <dd><dl>
-        
-  <dt><a href="peachbox.model.html#peachbox.model.model.Data">(class in peachbox.model.model)</a>
-  </dt>
-
-      </dl></dd>
       
-  <dt><a href="peachbox.connector.source.html#peachbox.connector.source.json.JSON.data_frame">data_frame() (peachbox.connector.source.json.JSON method)</a>
+  <dt><a href="peachbox.connector.sink.html#peachbox.connector.sink.master_data.MasterData.data_frame">data_frame() (peachbox.connector.sink.master_data.MasterData method)</a>
+  </dt>
+
+      
+  <dt><a href="peachbox.model.html#peachbox.model.master.MasterDataSet.data_unit_index">data_unit_index (peachbox.model.master.MasterDataSet attribute)</a>
   </dt>
 
       
   <dt><a href="peachbox.utils.html#peachbox.utils.date.Date">Date (class in peachbox.utils.date)</a>
   </dt>
 
-      
-  <dt><a href="peachbox.utils.html#peachbox.utils.date.Date.datetime">datetime() (peachbox.utils.date.Date method)</a>
-  </dt>
-
-      
-  <dt><a href="peachbox.gen.html#peachbox.gen.model.define_edge">define_edge() (in module peachbox.gen.model)</a>
-  </dt>
-
   </dl></td>
   <td style="width: 33%" valign="top"><dl>
       
-  <dt><a href="peachbox.gen.html#peachbox.gen.model.define_node">define_node() (in module peachbox.gen.model)</a>
-  </dt>
-
-      
-  <dt><a href="peachbox.gen.html#peachbox.gen.model.define_property">define_property() (in module peachbox.gen.model)</a>
+  <dt><a href="peachbox.utils.html#peachbox.utils.date.Date.datetime">datetime() (peachbox.utils.date.Date method)</a>
   </dt>
 
       
@@ -195,7 +198,13 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%" valign="top"><dl>
       
-  <dt><a href="peachbox.pipeline.html#peachbox.pipeline.pipeline.Pipeline.execute">execute() (peachbox.pipeline.pipeline.Pipeline method)</a>
+  <dt><a href="peachbox.connector.source.html#peachbox.connector.source.json.JSON.emit">emit() (peachbox.connector.source.json.JSON method)</a>
+  </dt>
+
+  </dl></td>
+  <td style="width: 33%" valign="top"><dl>
+      
+  <dt><a href="peachbox.task.html#peachbox.task.task.Task.execute">execute() (peachbox.task.task.Task method)</a>
   </dt>
 
   </dl></td>
@@ -225,11 +234,19 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%" valign="top"><dl>
       
-  <dt><a href="peachbox.gen.html#peachbox.gen.generator.Generator">Generator (class in peachbox.gen.generator)</a>
+  <dt><a href="peachbox.model.html#peachbox.model.master.MasterDataSet.generate_spark_row_definition">generate_spark_row_definition() (peachbox.model.master.MasterDataSet class method)</a>
+  </dt>
+
+      
+  <dt><a href="peachbox.model.html#peachbox.model.master.MasterDataSet.generate_spark_schema">generate_spark_schema() (peachbox.model.master.MasterDataSet class method)</a>
   </dt>
 
   </dl></td>
   <td style="width: 33%" valign="top"><dl>
+      
+  <dt><a href="peachbox.gen.html#peachbox.gen.generator.Generator">Generator (class in peachbox.gen.generator)</a>
+  </dt>
+
       
   <dt><a href="peachbox.html#peachbox.spark.Spark.get_spark_conf">get_spark_conf() (peachbox.spark.Spark method)</a>
   </dt>
@@ -241,9 +258,19 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%" valign="top"><dl>
       
-  <dt><a href="peachbox.html#peachbox.spark.Spark.initialize">initialize() (peachbox.spark.Spark method)</a>
+  <dt><a href="peachbox.task.html#peachbox.task.import.Import">Import (class in peachbox.task.import)</a>
   </dt>
 
+      
+  <dt><a href="peachbox.model.html#peachbox.model.master.MasterDataSet.initialize">initialize() (peachbox.model.master.MasterDataSet class method)</a>
+  </dt>
+
+      <dd><dl>
+        
+  <dt><a href="peachbox.html#peachbox.spark.Spark.initialize">(peachbox.spark.Spark method)</a>
+  </dt>
+
+      </dl></dd>
   </dl></td>
   <td style="width: 33%" valign="top"><dl>
       
@@ -283,10 +310,6 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%" valign="top"><dl>
       
-  <dt><a href="peachbox.gen.html#peachbox.gen.model.Model.load_node">load_node() (peachbox.gen.model.Model method)</a>
-  </dt>
-
-      
   <dt><a href="peachbox.fs.html#peachbox.fs.local.Local">Local (class in peachbox.fs.local)</a>
   </dt>
 
@@ -294,8 +317,6 @@
   <dt><a href="peachbox.utils.html#peachbox.utils.date.Date.localize">localize() (peachbox.utils.date.Date method)</a>
   </dt>
 
-  </dl></td>
-  <td style="width: 33%" valign="top"><dl>
       
   <dt><a href="peachbox.fs.html#peachbox.fs.fs.Fs.ls">ls() (peachbox.fs.fs.Fs method)</a>
   </dt>
@@ -310,6 +331,8 @@
   </dt>
 
       </dl></dd>
+  </dl></td>
+  <td style="width: 33%" valign="top"><dl>
       
   <dt><a href="peachbox.fs.html#peachbox.fs.local.Local.ls_a">ls_a() (peachbox.fs.local.Local method)</a>
   </dt>
@@ -335,29 +358,29 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%" valign="top"><dl>
       
-  <dt><a href="peachbox.connector.sink.html#peachbox.connector.sink.master_data_set.MasterDataSet">MasterDataSet (class in peachbox.connector.sink.master_data_set)</a>
+  <dt><a href="peachbox.model.html#peachbox.model.master.MasterDataSet.mart">mart (peachbox.model.master.MasterDataSet attribute)</a>
   </dt>
 
       
-  <dt><a href="peachbox.model.html#peachbox.model.master.MasterDataSetModel">MasterDataSetModel (class in peachbox.model.master)</a>
+  <dt><a href="peachbox.connector.sink.html#peachbox.connector.sink.master_data.MasterData">MasterData (class in peachbox.connector.sink.master_data)</a>
   </dt>
 
       
-  <dt><a href="peachbox.utils.html#peachbox.utils.test_helper.TestHelper.mkdir">mkdir() (peachbox.utils.test_helper.TestHelper static method)</a>
+  <dt><a href="peachbox.model.html#peachbox.model.master.MasterDataSet">MasterDataSet (class in peachbox.model.master)</a>
   </dt>
 
   </dl></td>
   <td style="width: 33%" valign="top"><dl>
+      
+  <dt><a href="peachbox.utils.html#peachbox.utils.test_helper.TestHelper.mkdir">mkdir() (peachbox.utils.test_helper.TestHelper static method)</a>
+  </dt>
+
       
   <dt><a href="peachbox.utils.html#peachbox.utils.test_helper.TestHelper.mkdir_p">mkdir_p() (peachbox.utils.test_helper.TestHelper static method)</a>
   </dt>
 
       
   <dt><a href="peachbox.utils.html#peachbox.utils.test_helper.TestHelper.mkdir_tmp">mkdir_tmp() (peachbox.utils.test_helper.TestHelper static method)</a>
-  </dt>
-
-      
-  <dt><a href="peachbox.gen.html#peachbox.gen.model.Model">Model (class in peachbox.gen.model)</a>
   </dt>
 
   </dl></td>
@@ -367,7 +390,17 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%" valign="top"><dl>
       
-  <dt><a href="peachbox.pipeline.html#peachbox.pipeline.pipeline.Pipeline.notify_scheduler">notify_scheduler() (peachbox.pipeline.pipeline.Pipeline method)</a>
+  <dt><a href="peachbox.task.html#peachbox.task.task.Task.notify_scheduler">notify_scheduler() (peachbox.task.task.Task method)</a>
+  </dt>
+
+  </dl></td>
+</tr></table>
+
+<h2 id="O">O</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%" valign="top"><dl>
+      
+  <dt><a href="peachbox.model.html#peachbox.model.master.MasterDataSet.output_format">output_format (peachbox.model.master.MasterDataSet attribute)</a>
   </dt>
 
   </dl></td>
@@ -377,6 +410,10 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%" valign="top"><dl>
       
+  <dt><a href="peachbox.connector.html#peachbox.connector.pail.Pail">Pail (class in peachbox.connector.pail)</a>
+  </dt>
+
+      
   <dt><a href="peachbox.model.html#peachbox.model.file_format.FileFormat.Parquet">Parquet (peachbox.model.file_format.FileFormat attribute)</a>
   </dt>
 
@@ -385,12 +422,24 @@
   </dt>
 
       
+  <dt><a href="peachbox.model.html#peachbox.model.master.MasterDataSet.partition_granularity">partition_granularity (peachbox.model.master.MasterDataSet attribute)</a>
+  </dt>
+
+      
+  <dt><a href="peachbox.model.html#peachbox.model.master.MasterDataSet.partition_key">partition_key (peachbox.model.master.MasterDataSet attribute)</a>
+  </dt>
+
+      
   <dt><a href="peachbox.gen.html#peachbox.gen.generator.Generator.path">path() (peachbox.gen.generator.Generator method)</a>
+  </dt>
+
+      
+  <dt><a href="peachbox.fs.html#peachbox.fs.local.Local.path_exists">path_exists() (peachbox.fs.local.Local method)</a>
   </dt>
 
       <dd><dl>
         
-  <dt><a href="peachbox.model.html#peachbox.model.master.MasterDataSetModel.path">(peachbox.model.master.MasterDataSetModel method)</a>
+  <dt><a href="peachbox.fs.html#peachbox.fs.s3.S3.path_exists">(peachbox.fs.s3.S3 method)</a>
   </dt>
 
       </dl></dd>
@@ -407,11 +456,19 @@
   </dt>
 
       
+  <dt><a href="peachbox.connector.html#module-peachbox.connector.connector">peachbox.connector.connector (module)</a>
+  </dt>
+
+      
+  <dt><a href="peachbox.connector.html#module-peachbox.connector.pail">peachbox.connector.pail (module)</a>
+  </dt>
+
+      
   <dt><a href="peachbox.connector.sink.html#module-peachbox.connector.sink">peachbox.connector.sink (module)</a>
   </dt>
 
       
-  <dt><a href="peachbox.connector.sink.html#module-peachbox.connector.sink.master_data_set">peachbox.connector.sink.master_data_set (module)</a>
+  <dt><a href="peachbox.connector.sink.html#module-peachbox.connector.sink.master_data">peachbox.connector.sink.master_data (module)</a>
   </dt>
 
       
@@ -450,14 +507,10 @@
   <dt><a href="peachbox.gen.html#module-peachbox.gen.app">peachbox.gen.app (module)</a>
   </dt>
 
-      
-  <dt><a href="peachbox.gen.html#module-peachbox.gen.generator">peachbox.gen.generator (module)</a>
-  </dt>
-
   </dl></td>
   <td style="width: 33%" valign="top"><dl>
       
-  <dt><a href="peachbox.gen.html#module-peachbox.gen.model">peachbox.gen.model (module)</a>
+  <dt><a href="peachbox.gen.html#module-peachbox.gen.generator">peachbox.gen.generator (module)</a>
   </dt>
 
       
@@ -466,10 +519,6 @@
 
       
   <dt><a href="peachbox.model.html#module-peachbox.model">peachbox.model (module)</a>
-  </dt>
-
-      
-  <dt><a href="peachbox.model.html#module-peachbox.model.data">peachbox.model.data (module)</a>
   </dt>
 
       
@@ -482,6 +531,10 @@
 
       
   <dt><a href="peachbox.model.html#module-peachbox.model.model">peachbox.model.model (module)</a>
+  </dt>
+
+      
+  <dt><a href="peachbox.model.html#module-peachbox.model.types">peachbox.model.types (module)</a>
   </dt>
 
       
@@ -502,6 +555,18 @@
 
       
   <dt><a href="peachbox.html#module-peachbox.spark">peachbox.spark (module)</a>
+  </dt>
+
+      
+  <dt><a href="peachbox.task.html#module-peachbox.task">peachbox.task (module)</a>
+  </dt>
+
+      
+  <dt><a href="peachbox.task.html#module-peachbox.task.import">peachbox.task.import (module)</a>
+  </dt>
+
+      
+  <dt><a href="peachbox.task.html#module-peachbox.task.task">peachbox.task.task (module)</a>
   </dt>
 
       
@@ -528,6 +593,14 @@
   <dt><a href="peachbox.gen.html#peachbox.gen.generator.Generator.project_home">project_home() (peachbox.gen.generator.Generator method)</a>
   </dt>
 
+      
+  <dt><a href="peachbox.model.html#peachbox.model.types.Types.python_type">python_type() (peachbox.model.types.Types static method)</a>
+  </dt>
+
+      
+  <dt><a href="peachbox.model.html#peachbox.model.types.Types.python_types">python_types (peachbox.model.types.Types attribute)</a>
+  </dt>
+
   </dl></td>
 </tr></table>
 
@@ -540,6 +613,10 @@
 
       
   <dt><a href="peachbox.utils.html#peachbox.utils.test_helper.TestHelper.random_name">random_name() (peachbox.utils.test_helper.TestHelper static method)</a>
+  </dt>
+
+      
+  <dt><a href="peachbox.html#peachbox.dwh.DWH.read_data_frame">read_data_frame() (peachbox.dwh.DWH method)</a>
   </dt>
 
       
@@ -585,7 +662,7 @@
   </dt>
 
       
-  <dt><a href="peachbox.model.html#peachbox.model.master.MasterDataSetModel.schema">schema() (peachbox.model.master.MasterDataSetModel method)</a>
+  <dt><a href="peachbox.model.html#peachbox.model.master.MasterDataSet.schema">schema (peachbox.model.master.MasterDataSet attribute)</a>
   </dt>
 
       
@@ -593,17 +670,43 @@
   </dt>
 
       
-  <dt><a href="peachbox.connector.source.html#peachbox.connector.source.json.JSON.set_param">set_param() (peachbox.connector.source.json.JSON method)</a>
+  <dt><a href="peachbox.connector.html#peachbox.connector.connector.Connector.set_param">set_param() (peachbox.connector.connector.Connector method)</a>
+  </dt>
+
+      <dd><dl>
+        
+  <dt><a href="peachbox.connector.sink.html#peachbox.connector.sink.master_data.MasterData.set_param">(peachbox.connector.sink.master_data.MasterData method)</a>
+  </dt>
+
+        
+  <dt><a href="peachbox.connector.source.html#peachbox.connector.source.json.JSON.set_param">(peachbox.connector.source.json.JSON method)</a>
+  </dt>
+
+      </dl></dd>
+      
+  <dt><a href="peachbox.model.html#peachbox.model.model.Data.set_true_as_of_seconds">set_true_as_of_seconds() (peachbox.model.model.Data method)</a>
   </dt>
 
       
-  <dt><a href="peachbox.model.html#peachbox.model.model.Data.set_true_as_of_seconds">set_true_as_of_seconds() (peachbox.model.model.Data method)</a>
+  <dt><a href="peachbox.html#peachbox.spark.Spark">Spark (class in peachbox.spark)</a>
+  </dt>
+
+      
+  <dt><a href="peachbox.model.html#peachbox.model.master.MasterDataSet.spark_row">spark_row() (peachbox.model.master.MasterDataSet class method)</a>
   </dt>
 
   </dl></td>
   <td style="width: 33%" valign="top"><dl>
       
-  <dt><a href="peachbox.html#peachbox.spark.Spark">Spark (class in peachbox.spark)</a>
+  <dt><a href="peachbox.model.html#peachbox.model.master.MasterDataSet.spark_schema">spark_schema() (peachbox.model.master.MasterDataSet class method)</a>
+  </dt>
+
+      
+  <dt><a href="peachbox.model.html#peachbox.model.types.Types.spark_type">spark_type() (peachbox.model.types.Types static method)</a>
+  </dt>
+
+      
+  <dt><a href="peachbox.model.html#peachbox.model.types.Types.spark_types">spark_types (peachbox.model.types.Types attribute)</a>
   </dt>
 
       
@@ -639,17 +742,39 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%" valign="top"><dl>
       
-  <dt><a href="peachbox.pipeline.html#peachbox.pipeline.pipeline.Pipeline.tear_down">tear_down() (peachbox.pipeline.pipeline.Pipeline method)</a>
+  <dt><a href="peachbox.connector.html#peachbox.connector.pail.Pail.target">target() (peachbox.connector.pail.Pail method)</a>
+  </dt>
+
+      <dd><dl>
+        
+  <dt><a href="peachbox.model.html#peachbox.model.master.MasterDataSet.target">(peachbox.model.master.MasterDataSet class method)</a>
+  </dt>
+
+      </dl></dd>
+      
+  <dt><a href="peachbox.task.html#peachbox.task.task.Task">Task (class in peachbox.task.task)</a>
   </dt>
 
       
-  <dt><a href="peachbox.utils.html#peachbox.utils.test_helper.TestHelper">TestHelper (class in peachbox.utils.test_helper)</a>
+  <dt><a href="peachbox.task.html#peachbox.task.task.Task.tear_down">tear_down() (peachbox.task.task.Task method)</a>
+  </dt>
+
+      
+  <dt><a href="peachbox.fs.html#peachbox.fs.fs.Fs.test_path_exists">test_path_exists() (peachbox.fs.fs.Fs method)</a>
   </dt>
 
   </dl></td>
   <td style="width: 33%" valign="top"><dl>
       
+  <dt><a href="peachbox.utils.html#peachbox.utils.test_helper.TestHelper">TestHelper (class in peachbox.utils.test_helper)</a>
+  </dt>
+
+      
   <dt><a href="peachbox.utils.html#peachbox.utils.test_helper.TestHelper.touch">touch() (peachbox.utils.test_helper.TestHelper static method)</a>
+  </dt>
+
+      
+  <dt><a href="peachbox.model.html#peachbox.model.types.Types">Types (class in peachbox.model.types)</a>
   </dt>
 
       
@@ -685,19 +810,15 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%" valign="top"><dl>
       
-  <dt><a href="peachbox.gen.html#peachbox.gen.model.Model.write">write() (peachbox.gen.model.Model method)</a>
-  </dt>
-
-      
   <dt><a href="peachbox.gen.html#peachbox.gen.generator.Generator.write_class">write_class() (peachbox.gen.generator.Generator method)</a>
   </dt>
 
-  </dl></td>
-  <td style="width: 33%" valign="top"><dl>
       
   <dt><a href="peachbox.utils.html#peachbox.utils.test_helper.TestHelper.write_json">write_json() (peachbox.utils.test_helper.TestHelper static method)</a>
   </dt>
 
+  </dl></td>
+  <td style="width: 33%" valign="top"><dl>
       
   <dt><a href="peachbox.utils.html#peachbox.utils.test_helper.TestHelper.write_string">write_string() (peachbox.utils.test_helper.TestHelper static method)</a>
   </dt>

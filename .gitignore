@@ -3,3 +3,5 @@
 .pydevproject
 *.swp
 
+conf/aws_s3.py
+

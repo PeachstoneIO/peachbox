@@ -26,7 +26,6 @@ class TestMasterData(unittest.TestCase):
         peachbox.connector.sink.MasterData().absorb({'data':'rdd', 'model':MyModel})
         mock_create_pails.assert_called_with(mock_data_frame(), MyModel)
 
-
     # TODO
     def test_absorb_calls_dwh_append(self):
         assert True

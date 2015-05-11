@@ -67,10 +67,13 @@
     <span class="sd">&quot;&quot;&quot;Base class of the file system.&quot;&quot;&quot;</span>
 
 <div class="viewcode-block" id="Fs.ls"><a class="viewcode-back" href="../../../peachbox.fs.html#peachbox.fs.fs.Fs.ls">[docs]</a>    <span class="k">def</span> <span class="nf">ls</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mart</span><span class="p">,</span>  <span class="n">path</span><span class="o">=</span><span class="s">&#39;&#39;</span><span class="p">):</span>
-        <span class="ne">NotImplementedError</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
 </div>
 <div class="viewcode-block" id="Fs.ls_d"><a class="viewcode-back" href="../../../peachbox.fs.html#peachbox.fs.fs.Fs.ls_d">[docs]</a>    <span class="k">def</span> <span class="nf">ls_d</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mart</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="s">&#39;&#39;</span><span class="p">):</span>
-        <span class="ne">NotImplementedError</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+</div>
+<div class="viewcode-block" id="Fs.test_path_exists"><a class="viewcode-back" href="../../../peachbox.fs.html#peachbox.fs.fs.Fs.test_path_exists">[docs]</a>    <span class="k">def</span> <span class="nf">test_path_exists</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
 </div>
 <div class="viewcode-block" id="Fs.dirs_of_period"><a class="viewcode-back" href="../../../peachbox.fs.html#peachbox.fs.fs.Fs.dirs_of_period">[docs]</a>    <span class="k">def</span> <span class="nf">dirs_of_period</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mart</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">from_utime</span><span class="p">,</span> <span class="n">before_utime</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Lists directories of a given time period.&quot;&quot;&quot;</span>

@@ -76,8 +76,9 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&#39;Missing key in param: path&#39;</span><span class="p">)</span>
 </div>
-<div class="viewcode-block" id="JSON.data_frame"><a class="viewcode-back" href="../../../../peachbox.connector.source.html#peachbox.connector.source.json.JSON.data_frame">[docs]</a>    <span class="k">def</span> <span class="nf">data_frame</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">peachbox</span><span class="o">.</span><span class="n">Spark</span><span class="o">.</span><span class="n">Instance</span><span class="p">()</span><span class="o">.</span><span class="n">sql_context</span><span class="p">()</span><span class="o">.</span><span class="n">jsonFile</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">)</span></div></div>
+<div class="viewcode-block" id="JSON.emit"><a class="viewcode-back" href="../../../../peachbox.connector.source.html#peachbox.connector.source.json.JSON.emit">[docs]</a>    <span class="k">def</span> <span class="nf">emit</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">peachbox</span><span class="o">.</span><span class="n">Spark</span><span class="o">.</span><span class="n">Instance</span><span class="p">()</span><span class="o">.</span><span class="n">sql_context</span><span class="p">()</span><span class="o">.</span><span class="n">jsonFile</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s">&#39;data&#39;</span><span class="p">:</span><span class="n">df</span><span class="p">}</span></div></div>
 </pre></div>
 
           </div>

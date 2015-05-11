@@ -7,17 +7,22 @@ import boto.s3.connection
 import peachbox.fs
 import peachbox.utils
 
+import conf.aws_s3
+
+key_id =     conf.aws_s3.AWS_ACCESS_KEY_ID 
+access_key = conf.aws_s3.AWS_SECRET_ACCESS_KEY
+
 class TestIntegrationS3(unittest.TestCase):
     mart = 'integrationtestppahl'
 
     @classmethod
     def setUpClass(cls):
-        connection  = boto.connect_s3()
+        connection = boto.connect_s3(aws_access_key_id=key_id, aws_secret_access_key=access_key)
         connection.create_bucket(TestIntegrationS3.mart)
 
     @classmethod
     def tearDownClass(cls):
-        connection = boto.connect_s3()
+        connection = boto.connect_s3(aws_access_key_id=key_id, aws_secret_access_key=access_key)
         bucket = connection.get_bucket(TestIntegrationS3.mart)
         for key in bucket.list():
             key.delete()
@@ -25,7 +30,7 @@ class TestIntegrationS3(unittest.TestCase):
 
     def setUp(self):
         self.fs         = peachbox.fs.S3()
-        self.connection = boto.connect_s3()
+        self.connection = boto.connect_s3(aws_access_key_id=key_id, aws_secret_access_key=access_key)
         self.bucket     = self.connection.get_bucket(TestIntegrationS3.mart)
         self.key        = Key(self.bucket)
         self.mart       = TestIntegrationS3.mart
@@ -95,6 +100,5 @@ class TestIntegrationS3(unittest.TestCase):
         assert not self.fs.path_exists(self.mart, 'path_does_not_exist')
         assert self.fs.path_exists(self.mart, 'path_exists/file')
         assert self.fs.path_exists(self.mart, '/path_exists/file')
-
 
 

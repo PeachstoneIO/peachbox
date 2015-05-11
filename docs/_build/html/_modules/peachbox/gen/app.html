@@ -76,17 +76,19 @@
         <span class="n">replaced</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">substitutor</span><span class="o">.</span><span class="n">substitute</span><span class="p">(</span><span class="s">&#39;app&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s">&#39;ClassName&#39;</span><span class="p">:</span><span class="n">name</span><span class="p">})</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">write_class</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">,</span> <span class="n">replaced</span><span class="p">)</span>
 </div>
-<div class="viewcode-block" id="App.create_model_setup"><a class="viewcode-back" href="../../../peachbox.gen.html#peachbox.gen.app.App.create_model_setup">[docs]</a>    <span class="k">def</span> <span class="nf">create_model_setup</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Create template for model setup.&quot;&quot;&quot;</span>
-        <span class="n">replaced</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">substitutor</span><span class="o">.</span><span class="n">substitute</span><span class="p">(</span><span class="s">&#39;model&#39;</span><span class="p">,</span> <span class="p">{})</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">write_class</span><span class="p">(</span><span class="s">&#39;Model&#39;</span><span class="p">,</span> <span class="s">&#39;setup&#39;</span><span class="p">,</span> <span class="n">replaced</span><span class="p">)</span>
-</div>
 <div class="viewcode-block" id="App.create_dirs"><a class="viewcode-back" href="../../../peachbox.gen.html#peachbox.gen.app.App.create_dirs">[docs]</a>    <span class="k">def</span> <span class="nf">create_dirs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Create the project folders.&quot;&quot;&quot;</span>
-        <span class="n">dirs</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;conf&#39;</span><span class="p">,</span> <span class="s">&#39;setup&#39;</span><span class="p">,</span> <span class="s">&#39;model&#39;</span><span class="p">,</span> <span class="s">&#39;pipelines&#39;</span><span class="p">]</span>
+        <span class="n">dirs</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;conf&#39;</span><span class="p">,</span> <span class="s">&#39;model&#39;</span><span class="p">,</span> <span class="s">&#39;tasks&#39;</span><span class="p">,</span> <span class="s">&#39;pipelines&#39;</span><span class="p">]</span>
         <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">dirs</span><span class="p">:</span>
             <span class="nb">dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">project_home</span><span class="p">(),</span> <span class="n">d</span><span class="p">)</span>
             <span class="n">subprocess</span><span class="o">.</span><span class="n">call</span><span class="p">([</span><span class="s">&#39;mkdir&#39;</span><span class="p">,</span> <span class="s">&#39;-p&#39;</span><span class="p">,</span> <span class="nb">dir</span><span class="p">])</span>
+</div>
+<div class="viewcode-block" id="App.create_init_files"><a class="viewcode-back" href="../../../peachbox.gen.html#peachbox.gen.app.App.create_init_files">[docs]</a>    <span class="k">def</span> <span class="nf">create_init_files</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Create the init files in created dirs.&quot;&quot;&quot;</span>
+        <span class="n">dirs</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;model&#39;</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">dirs</span><span class="p">:</span>
+            <span class="n">init_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">project_home</span><span class="p">(),</span> <span class="n">d</span><span class="p">,</span> <span class="s">&#39;__init__.py&#39;</span><span class="p">)</span>
+            <span class="n">subprocess</span><span class="o">.</span><span class="n">call</span><span class="p">([</span><span class="s">&#39;touch&#39;</span><span class="p">,</span> <span class="n">init_file</span><span class="p">])</span>
 
 </div></div>
 <div class="viewcode-block" id="create_app"><a class="viewcode-back" href="../../../peachbox.gen.html#peachbox.gen.app.create_app">[docs]</a><span class="k">def</span> <span class="nf">create_app</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">project_home</span><span class="o">=</span><span class="s">&#39;.&#39;</span><span class="p">):</span>
@@ -95,8 +97,8 @@
     <span class="n">App</span><span class="o">.</span><span class="n">PROJECT_HOME</span> <span class="o">=</span> <span class="n">project_home</span>
     <span class="n">app</span> <span class="o">=</span> <span class="n">App</span><span class="p">()</span>
     <span class="n">app</span><span class="o">.</span><span class="n">create_dirs</span><span class="p">()</span>
-    <span class="n">app</span><span class="o">.</span><span class="n">create_app</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
-    <span class="n">app</span><span class="o">.</span><span class="n">create_model_setup</span><span class="p">()</span></div>
+    <span class="n">app</span><span class="o">.</span><span class="n">create_init_files</span><span class="p">()</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">create_app</span><span class="p">(</span><span class="n">name</span><span class="p">)</span></div>
 </pre></div>
 
           </div>

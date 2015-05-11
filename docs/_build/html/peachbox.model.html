@@ -59,15 +59,6 @@
 <div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="module-peachbox.model.data">
-<span id="peachbox-model-data-module"></span><h2>peachbox.model.data module<a class="headerlink" href="#module-peachbox.model.data" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
-<dt id="peachbox.model.data.Data">
-<em class="property">class </em><tt class="descclassname">peachbox.model.data.</tt><tt class="descname">Data</tt><a class="reference internal" href="_modules/peachbox/model/data.html#Data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.model.data.Data" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
-</dd></dl>
-
-</div>
 <div class="section" id="module-peachbox.model.file_format">
 <span id="peachbox-model-file-format-module"></span><h2>peachbox.model.file_format module<a class="headerlink" href="#module-peachbox.model.file_format" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
@@ -90,17 +81,66 @@
 <div class="section" id="module-peachbox.model.master">
 <span id="peachbox-model-master-module"></span><h2>peachbox.model.master module<a class="headerlink" href="#module-peachbox.model.master" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
-<dt id="peachbox.model.master.MasterDataSetModel">
-<em class="property">class </em><tt class="descclassname">peachbox.model.master.</tt><tt class="descname">MasterDataSetModel</tt><a class="reference internal" href="_modules/peachbox/model/master.html#MasterDataSetModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.model.master.MasterDataSetModel" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
-<dl class="method">
-<dt id="peachbox.model.master.MasterDataSetModel.path">
-<tt class="descname">path</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/peachbox/model/master.html#MasterDataSetModel.path"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.model.master.MasterDataSetModel.path" title="Permalink to this definition">¶</a></dt>
+<dt id="peachbox.model.master.MasterDataSet">
+<em class="property">class </em><tt class="descclassname">peachbox.model.master.</tt><tt class="descname">MasterDataSet</tt><a class="reference internal" href="_modules/peachbox/model/master.html#MasterDataSet"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.model.master.MasterDataSet" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="peachbox.model.master.MasterDataSet.data_unit_index">
+<tt class="descname">data_unit_index</tt><em class="property"> = None</em><a class="headerlink" href="#peachbox.model.master.MasterDataSet.data_unit_index" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="method">
-<dt id="peachbox.model.master.MasterDataSetModel.schema">
-<tt class="descname">schema</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/peachbox/model/master.html#MasterDataSetModel.schema"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.model.master.MasterDataSetModel.schema" title="Permalink to this definition">¶</a></dt>
+<dl class="classmethod">
+<dt id="peachbox.model.master.MasterDataSet.generate_spark_row_definition">
+<em class="property">classmethod </em><tt class="descname">generate_spark_row_definition</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/peachbox/model/master.html#MasterDataSet.generate_spark_row_definition"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.model.master.MasterDataSet.generate_spark_row_definition" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="peachbox.model.master.MasterDataSet.generate_spark_schema">
+<em class="property">classmethod </em><tt class="descname">generate_spark_schema</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/peachbox/model/master.html#MasterDataSet.generate_spark_schema"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.model.master.MasterDataSet.generate_spark_schema" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="peachbox.model.master.MasterDataSet.initialize">
+<em class="property">classmethod </em><tt class="descname">initialize</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/peachbox/model/master.html#MasterDataSet.initialize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.model.master.MasterDataSet.initialize" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="peachbox.model.master.MasterDataSet.mart">
+<tt class="descname">mart</tt><em class="property"> = 'master'</em><a class="headerlink" href="#peachbox.model.master.MasterDataSet.mart" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="peachbox.model.master.MasterDataSet.output_format">
+<tt class="descname">output_format</tt><em class="property"> = 1</em><a class="headerlink" href="#peachbox.model.master.MasterDataSet.output_format" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="peachbox.model.master.MasterDataSet.partition_granularity">
+<tt class="descname">partition_granularity</tt><em class="property"> = None</em><a class="headerlink" href="#peachbox.model.master.MasterDataSet.partition_granularity" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="peachbox.model.master.MasterDataSet.partition_key">
+<tt class="descname">partition_key</tt><em class="property"> = None</em><a class="headerlink" href="#peachbox.model.master.MasterDataSet.partition_key" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="peachbox.model.master.MasterDataSet.schema">
+<tt class="descname">schema</tt><em class="property"> = None</em><a class="headerlink" href="#peachbox.model.master.MasterDataSet.schema" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="peachbox.model.master.MasterDataSet.spark_row">
+<em class="property">classmethod </em><tt class="descname">spark_row</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/peachbox/model/master.html#MasterDataSet.spark_row"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.model.master.MasterDataSet.spark_row" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="peachbox.model.master.MasterDataSet.spark_schema">
+<em class="property">classmethod </em><tt class="descname">spark_schema</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/peachbox/model/master.html#MasterDataSet.spark_schema"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.model.master.MasterDataSet.spark_schema" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="peachbox.model.master.MasterDataSet.target">
+<em class="property">classmethod </em><tt class="descname">target</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/peachbox/model/master.html#MasterDataSet.target"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.model.master.MasterDataSet.target" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -115,6 +155,35 @@
 <dl class="method">
 <dt id="peachbox.model.model.Data.set_true_as_of_seconds">
 <tt class="descname">set_true_as_of_seconds</tt><big>(</big><em>seconds</em><big>)</big><a class="reference internal" href="_modules/peachbox/model/model.html#Data.set_true_as_of_seconds"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.model.model.Data.set_true_as_of_seconds" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-peachbox.model.types">
+<span id="peachbox-model-types-module"></span><h2>peachbox.model.types module<a class="headerlink" href="#module-peachbox.model.types" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="peachbox.model.types.Types">
+<em class="property">class </em><tt class="descclassname">peachbox.model.types.</tt><tt class="descname">Types</tt><a class="reference internal" href="_modules/peachbox/model/types.html#Types"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.model.types.Types" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<dl class="staticmethod">
+<dt id="peachbox.model.types.Types.python_type">
+<em class="property">static </em><tt class="descname">python_type</tt><big>(</big><em>peachbox_type</em><big>)</big><a class="reference internal" href="_modules/peachbox/model/types.html#Types.python_type"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.model.types.Types.python_type" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="peachbox.model.types.Types.python_types">
+<tt class="descname">python_types</tt><em class="property"> = {'StringType': &lt;type 'unicode'&gt;, 'IntegerType': &lt;type 'int'&gt;}</em><a class="headerlink" href="#peachbox.model.types.Types.python_types" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="peachbox.model.types.Types.spark_type">
+<em class="property">static </em><tt class="descname">spark_type</tt><big>(</big><em>peachbox_type</em><big>)</big><a class="reference internal" href="_modules/peachbox/model/types.html#Types.spark_type"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.model.types.Types.spark_type" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="peachbox.model.types.Types.spark_types">
+<tt class="descname">spark_types</tt><em class="property"> = {'StringType': &lt;class 'pyspark.sql.types.StringType'&gt;, 'IntegerType': &lt;class 'pyspark.sql.types.IntegerType'&gt;}</em><a class="headerlink" href="#peachbox.model.types.Types.spark_types" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -135,10 +204,10 @@
   <ul>
 <li><a class="reference internal" href="#">peachbox.model package</a><ul>
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
-<li><a class="reference internal" href="#module-peachbox.model.data">peachbox.model.data module</a></li>
 <li><a class="reference internal" href="#module-peachbox.model.file_format">peachbox.model.file_format module</a></li>
 <li><a class="reference internal" href="#module-peachbox.model.master">peachbox.model.master module</a></li>
 <li><a class="reference internal" href="#module-peachbox.model.model">peachbox.model.model module</a></li>
+<li><a class="reference internal" href="#module-peachbox.model.types">peachbox.model.types module</a></li>
 <li><a class="reference internal" href="#module-peachbox.model">Module contents</a></li>
 </ul>
 </li>

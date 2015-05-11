@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>peachbox.pipeline.pipeline &mdash; peachbox 0.1 documentation</title>
+    <title>peachbox.model.types &mdash; peachbox 0.1 documentation</title>
     
     <link rel="stylesheet" href="../../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
@@ -46,10 +46,26 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <h1>Source code for peachbox.pipeline.pipeline</h1><div class="highlight"><pre>
-<div class="viewcode-block" id="Pipeline"><a class="viewcode-back" href="../../../peachbox.pipeline.html#peachbox.pipeline.pipeline.Pipeline">[docs]</a><span class="k">class</span> <span class="nc">Pipeline</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="k">pass</span></div>
-</pre></div>
+  <h1>Source code for peachbox.model.types</h1><div class="highlight"><pre>
+<span class="kn">from</span> <span class="nn">pyspark.sql.types</span> <span class="kn">import</span> <span class="o">*</span>
+
+
+<div class="viewcode-block" id="Types"><a class="viewcode-back" href="../../../peachbox.model.html#peachbox.model.types.Types">[docs]</a><span class="k">class</span> <span class="nc">Types</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+
+    <span class="n">spark_types</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;StringType&#39;</span><span class="p">:</span><span class="n">StringType</span><span class="p">,</span>
+                   <span class="s">&#39;IntegerType&#39;</span><span class="p">:</span><span class="n">IntegerType</span><span class="p">}</span>
+
+    <span class="n">python_types</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;StringType&#39;</span><span class="p">:</span><span class="nb">unicode</span><span class="p">,</span>
+                    <span class="s">&#39;IntegerType&#39;</span><span class="p">:</span><span class="nb">int</span><span class="p">}</span>
+
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="Types.spark_type"><a class="viewcode-back" href="../../../peachbox.model.html#peachbox.model.types.Types.spark_type">[docs]</a>    <span class="k">def</span> <span class="nf">spark_type</span><span class="p">(</span><span class="n">peachbox_type</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">Types</span><span class="o">.</span><span class="n">spark_types</span><span class="p">[</span><span class="n">peachbox_type</span><span class="p">]()</span>
+</div>
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="Types.python_type"><a class="viewcode-back" href="../../../peachbox.model.html#peachbox.model.types.Types.python_type">[docs]</a>    <span class="k">def</span> <span class="nf">python_type</span><span class="p">(</span><span class="n">peachbox_type</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">Types</span><span class="o">.</span><span class="n">python_types</span><span class="p">[</span><span class="n">peachbox_type</span><span class="p">]</span>
+</pre></div></div></div>
 
           </div>
         </div>

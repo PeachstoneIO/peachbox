@@ -4,14 +4,6 @@ peachbox.model package
 Submodules
 ----------
 
-peachbox.model.data module
---------------------------
-
-.. automodule:: peachbox.model.data
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
 peachbox.model.file_format module
 ---------------------------------
 
@@ -32,6 +24,14 @@ peachbox.model.model module
 ---------------------------
 
 .. automodule:: peachbox.model.model
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+peachbox.model.types module
+---------------------------
+
+.. automodule:: peachbox.model.types
     :members:
     :undoc-members:
     :show-inheritance:

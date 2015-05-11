@@ -13,7 +13,6 @@ class TestIntegrationDwh(unittest.TestCase):
         peachbox.DWH.Instance().fs = peachbox.fs.Local()
         peachbox.DWH.Instance().fs.dwh_path = self.dwh_path
 
-
         input = [{'user':'u1', 'product':'p1', 'true_as_of_seconds':3},
                  {'user':'u2', 'product':'p2', 'true_as_of_seconds':7}]
 
@@ -41,7 +40,6 @@ class TestIntegrationDwh(unittest.TestCase):
             df = spark.sql_context().createDataFrame(rdd)
             df.saveAsParquetFile(dir)
             df = spark.sql_context().parquetFile(dir)
-            print df.collect()
             assert type(df.collect()[0][0]) is unicode
 
 

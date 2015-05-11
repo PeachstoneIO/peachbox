@@ -18,16 +18,13 @@ import peachbox
 class MasterData(peachbox.connector.Connector):
     """Absorbs data into the master data set"""
 
-    def __init__(self):
-        print 'in masterdata'
-
     def absorb(self, data_descriptor):
         """Absorbs data corresponding to target and partition key of model."""
 
         data   = data_descriptor['data']
         model  = data_descriptor['model']
         schema = model.spark_schema()
-        df = self.data_frame(data, schema)
+        df     = self.data_frame(data, schema)
 
         pails = self.create_pails(df, model)
         for pail in pails:
@@ -35,7 +32,6 @@ class MasterData(peachbox.connector.Connector):
 
     def data_frame(self, data, schema):
         return peachbox.Spark.Instance().sql_context().createDataFrame(data, schema=schema)
-        
 
     def create_pails(self, df, model):
         return peachbox.connector.Pail.create_pails(df, model)

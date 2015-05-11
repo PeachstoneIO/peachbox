@@ -4,10 +4,10 @@ peachbox.connector.sink package
 Submodules
 ----------
 
-peachbox.connector.sink.master_data_set module
-----------------------------------------------
+peachbox.connector.sink.master_data module
+------------------------------------------
 
-.. automodule:: peachbox.connector.sink.master_data_set
+.. automodule:: peachbox.connector.sink.master_data
     :members:
     :undoc-members:
     :show-inheritance:

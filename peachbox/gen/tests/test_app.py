@@ -18,17 +18,13 @@ class TestApp(unittest.TestCase):
         self.assertEqual('/tmp/base', app_gen.project_home())
 
     def test_create_dirs(self):
-        dirs = ['conf', 'setup', 'model', 'pipelines']
+        dirs = ['conf', 'model', 'tasks', 'pipelines']
         for d in dirs:
             assert os.path.exists(os.path.join(self.app_gen.project_home(), d))
 
     def test_create_app(self):
         self.app_gen.create_app("MovieReviews")
         assert os.path.exists(os.path.join(self.app_gen.project_home(), "movie_reviews.py"))
-
-    def test_create_model_setup(self):
-        self.app_gen.create_model_setup()
-        assert os.path.exists(os.path.join(self.app_gen.project_home(), "setup/model.py"))
 
 
 

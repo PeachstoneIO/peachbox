@@ -60,19 +60,33 @@
 <div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="module-peachbox.connector.sink.master_data_set">
-<span id="peachbox-connector-sink-master-data-set-module"></span><h2>peachbox.connector.sink.master_data_set module<a class="headerlink" href="#module-peachbox.connector.sink.master_data_set" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-peachbox.connector.sink.master_data">
+<span id="peachbox-connector-sink-master-data-module"></span><h2>peachbox.connector.sink.master_data module<a class="headerlink" href="#module-peachbox.connector.sink.master_data" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
-<dt id="peachbox.connector.sink.master_data_set.MasterDataSet">
-<em class="property">class </em><tt class="descclassname">peachbox.connector.sink.master_data_set.</tt><tt class="descname">MasterDataSet</tt><big>(</big><em>model=None</em><big>)</big><a class="reference internal" href="_modules/peachbox/connector/sink/master_data_set.html#MasterDataSet"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.connector.sink.master_data_set.MasterDataSet" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<dt id="peachbox.connector.sink.master_data.MasterData">
+<em class="property">class </em><tt class="descclassname">peachbox.connector.sink.master_data.</tt><tt class="descname">MasterData</tt><a class="reference internal" href="_modules/peachbox/connector/sink/master_data.html#MasterData"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.connector.sink.master_data.MasterData" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="peachbox.connector.html#peachbox.connector.connector.Connector" title="peachbox.connector.connector.Connector"><tt class="xref py py-class docutils literal"><span class="pre">peachbox.connector.connector.Connector</span></tt></a></p>
 <p>Absorbs data into the master data set</p>
 <dl class="method">
-<dt id="peachbox.connector.sink.master_data_set.MasterDataSet.absorb">
-<tt class="descname">absorb</tt><big>(</big><em>data</em><big>)</big><a class="reference internal" href="_modules/peachbox/connector/sink/master_data_set.html#MasterDataSet.absorb"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.connector.sink.master_data_set.MasterDataSet.absorb" title="Permalink to this definition">¶</a></dt>
-<dd><p>Absorbs data corresponding to target of model. Takes into account vertical partitioning 
-wrt. true_as_of_seconds</p>
+<dt id="peachbox.connector.sink.master_data.MasterData.absorb">
+<tt class="descname">absorb</tt><big>(</big><em>data_descriptor</em><big>)</big><a class="reference internal" href="_modules/peachbox/connector/sink/master_data.html#MasterData.absorb"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.connector.sink.master_data.MasterData.absorb" title="Permalink to this definition">¶</a></dt>
+<dd><p>Absorbs data corresponding to target and partition key of model.</p>
 </dd></dl>
+
+<dl class="method">
+<dt id="peachbox.connector.sink.master_data.MasterData.create_pails">
+<tt class="descname">create_pails</tt><big>(</big><em>df</em>, <em>model</em><big>)</big><a class="reference internal" href="_modules/peachbox/connector/sink/master_data.html#MasterData.create_pails"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.connector.sink.master_data.MasterData.create_pails" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="peachbox.connector.sink.master_data.MasterData.data_frame">
+<tt class="descname">data_frame</tt><big>(</big><em>data</em>, <em>schema</em><big>)</big><a class="reference internal" href="_modules/peachbox/connector/sink/master_data.html#MasterData.data_frame"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.connector.sink.master_data.MasterData.data_frame" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="peachbox.connector.sink.master_data.MasterData.set_param">
+<tt class="descname">set_param</tt><big>(</big><em>param</em><big>)</big><a class="reference internal" href="_modules/peachbox/connector/sink/master_data.html#MasterData.set_param"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.connector.sink.master_data.MasterData.set_param" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </dd></dl>
 
@@ -92,7 +106,7 @@ wrt. true_as_of_seconds</p>
   <ul>
 <li><a class="reference internal" href="#">peachbox.connector.sink package</a><ul>
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
-<li><a class="reference internal" href="#module-peachbox.connector.sink.master_data_set">peachbox.connector.sink.master_data_set module</a></li>
+<li><a class="reference internal" href="#module-peachbox.connector.sink.master_data">peachbox.connector.sink.master_data module</a></li>
 <li><a class="reference internal" href="#module-peachbox.connector.sink">Module contents</a></li>
 </ul>
 </li>
