@@ -1,3 +1,6 @@
+from peachbox.scheduler.scheduler import Scheduler
+from peachbox.scheduler.event import Event
+
 # Copyright 2015 Philipp Pahl, Sven Schubert
 # 
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -61,6 +64,10 @@ class Task(object):
     def tear_down(self):
         pass
 
+
     def notify_scheduler(self):
-        message = self.__class__.__name__ + "Finished"
+        Scheduler.Instance().publish(self.finished())
+
+    def finished(self):
+        return Event(self.__class__.__name__ + "Finished")
 
