@@ -48,7 +48,7 @@ class Task(object):
         self.source = None
         self.sink   = None
 
-    def execute(self, param):
+    def execute(self, param={}):
         if self.source and self.sink:
             self.source.set_param(param)
             self.sink.set_param(param)

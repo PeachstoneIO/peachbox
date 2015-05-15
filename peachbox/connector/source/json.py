@@ -13,8 +13,9 @@
 # limitations under the License.
 
 import peachbox
+import peachbox.connector
 
-class JSON(object):
+class JSON(peachbox.connector.Connector):
     """Source for JSON files."""
 
     def __init__(self):

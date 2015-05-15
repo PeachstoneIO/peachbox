@@ -27,10 +27,7 @@
 
 #from peachbox.model import MasterData
 
-
-
 #class ImportReviews(peachbox.task.Import):
-
 
     ### optional: is called by execute
     #def tear_down(self):
