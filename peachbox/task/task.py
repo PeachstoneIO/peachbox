@@ -1,5 +1,8 @@
 from peachbox.scheduler.scheduler import Scheduler
 from peachbox.scheduler.event import Event
+from multiprocessing import Process
+from threading import Thread
+
 
 # Copyright 2015 Philipp Pahl, Sven Schubert
 # 
@@ -47,6 +50,7 @@ class Task(object):
     def __init__(self):
         self.source = None
         self.sink   = None
+        self.process = None
 
     def execute(self, param={}):
         if self.source and self.sink:
@@ -54,8 +58,17 @@ class Task(object):
             self.sink.set_param(param)
         else:
             raise ValueError("Source/Sink not defined.")
-        self._execute()
-        self.notify_scheduler()
+
+        t = Thread(target=self._execute_notify_teardown(), args=())
+        t.daemon = False
+        t.start()
+
+    def _execute_notify_teardown(self):
+        self.notify_scheduler(self.started())
+        self.process = Process(target=self._execute, args=())
+        self.process.start()
+        self.process.join()
+        self.notify_scheduler(self.finished())
         self.tear_down()
 
     def _execute(self):
@@ -63,10 +76,13 @@ class Task(object):
 
     def tear_down(self):
         pass
+        
 
+    def notify_scheduler(self, event):
+        Scheduler.Instance().publish(event)
 
-    def notify_scheduler(self):
-        Scheduler.Instance().publish(self.finished())
+    def started(self):
+        return Event(self.__class__.__name__ + "Started")
 
     def finished(self):
         return Event(self.__class__.__name__ + "Finished")
