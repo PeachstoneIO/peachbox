@@ -49,15 +49,18 @@ class DWH(object):
         if self.fs.path_exists(mart, path):
             current_df = self.read_data_frame(mart, path)
             df = current_df.unionAll(pail.data)
-            self.fs.rm_f(mart, path)
-        print 'saving to: ' + self.fs.uri(mart, path)
+            self.fs.rm_r(mart, path)
         df.saveAsParquetFile(self.fs.uri(mart, path))
 
     def read_data_frame(self, mart, path):
         uri = self.fs.uri(mart, path)
         return peachbox.Spark.Instance().sql_context().parquetFile(uri)
 
-
+    def query_by_key_range(self, model, smallest_key, biggest_key):
+        self.fs.mart = model.mart
+        uris = self.fs.dirs_of_period(model.mart, model.target(), smallest_key, biggest_key)
+        df = peachbox.Spark.Instance().sql_context().parquetFile(*uris) if uris else None
+        return df
 
     #TODO: Clean up legacy code
     #

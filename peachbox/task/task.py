@@ -15,6 +15,8 @@ from peachbox.scheduler.event import Event
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from multiprocessing import Process
+
 class Task(object):
     """Base class for data pipelines:
 
@@ -49,14 +51,18 @@ class Task(object):
         self.sink   = None
 
     def execute(self, param={}):
+        self.process = Process(target=self.run_in_process, args=(param,))
+        self.process.start()
+
+    def run_in_process(self, param):
         if self.source and self.sink:
             self.source.set_param(param)
             self.sink.set_param(param)
         else:
             raise ValueError("Source/Sink not defined.")
         self._execute()
-        self.notify_scheduler()
         self.tear_down()
+        self.notify_scheduler()
 
     def _execute(self):
         raise NotImplementedError

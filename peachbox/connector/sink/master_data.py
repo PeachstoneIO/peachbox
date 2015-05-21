@@ -20,9 +20,14 @@ class MasterData(peachbox.connector.Connector):
 
     def absorb(self, data_descriptor):
         """Absorbs data corresponding to target and partition key of model."""
+        pass
 
-        data   = data_descriptor['data']
-        model  = data_descriptor['model']
+        for data_unit in data_descriptor:
+            data   = data_unit['data']
+            model  = data_unit['model']
+            self.absorb_data_unit(data, model)
+
+    def absorb_data_unit(self, data, model):
         schema = model.spark_schema()
         df     = self.data_frame(data, schema)
 

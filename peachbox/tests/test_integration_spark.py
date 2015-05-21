@@ -3,6 +3,8 @@ import unittest
 import peachbox
 import pyspark
 import time
+import multiprocessing
+import os
 
 import peachbox.utils
 from pyspark.sql.types import *
@@ -47,4 +49,37 @@ class TestIntegrationSpark(unittest.TestCase):
             assert spark.sql_context()
             spark.stop()
             assert not spark._sql_context
+
+    def test_streaming_context_initialization(self):
+        with peachbox.Spark() as spark:
+            assert spark.streaming_context(dstream_time_interval=2)
+            spark.stop()
+            assert not spark._streaming_context
+
+
+    # TODO: Test streaming data properly
+    def move_file(self, dir1, dir2):
+        #time.sleep(10)
+        os.rename(dir1+"/file.json", dir2+"/file.json")
+
+    def test_streaming_context(self):
+        dir1 = peachbox.utils.TestHelper().mkdir_tmp()
+        dir2 = peachbox.utils.TestHelper().mkdir_tmp() 
+        dir3 = peachbox.utils.TestHelper().mkdir_tmp() 
+        
+        print 'dir1: '+dir1
+        print 'dir2: '+dir2
+        print 'dir3: '+dir3
+
+        j = peachbox.utils.TestHelper.write_json('file.json', [{'hello':'world'}], dir2)
+        multiprocessing.Process(target=self.move_file, args=(dir2,dir1)).start()
+
+        with peachbox.Spark() as spark:
+            ssc = spark.streaming_context(1)
+            rdd = ssc.textFileStream(dir1)
+            rdd.map(lambda line: line)
+            rdd.pprint()
+            ssc.start()
+            ssc.awaitTermination(1)
+
 

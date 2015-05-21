@@ -33,7 +33,7 @@ class Fs(object):
         valid_dirs = []
         for dir in dirs:
             utime = self.dir_utime(dir)
-            if utime >= from_utime and utime < before_utime:
+            if utime >= from_utime and utime <= before_utime:
                 valid_dirs.append(dir)
         return valid_dirs
 
