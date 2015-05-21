@@ -1,7 +1,6 @@
 import unittest
 from peachbox.scheduler.scheduler import Scheduler
-from peachbox.scheduler.event import Event
-from peachbox.scheduler.event import TimeIntervalEvent
+import peachbox.scheduler.event as scheduler_event
 import peachbox.task
 import peachbox.connector.source
 import peachbox.connector.sink
@@ -32,16 +31,46 @@ class TestTask2(peachbox.task.Task):
         print "executing task 2"
 
 
+class TestTask3(peachbox.task.Task):
+    def __init__(self):
+        super(TestTask3, self).__init__()
+        self.source = peachbox.connector.source.JSON()
+        self.sink = peachbox.connector.sink.MasterData()
+
+    def _execute(self):
+        print "executing task 3"
+
+
 class TestScheduler(unittest.TestCase):
 
     def test_get_instance(self):
         scheduler = Scheduler.Instance()
+
         task1 = TestTask1()
         task2 = TestTask2()
-        timedEvent = TimeIntervalEvent(delay=1)
+        task3 = TestTask3()
+
+        # create a periodic timed event:
+        timedEvent = scheduler_event.DelayedTimedEvent(delay=1, periodic=True)
+
+        # create a conditional event:
+        condEvent = scheduler_event.ConditionalEvent("cond1")
+        # publish this event every second and after task1 has been finished:
+        condEvent.subscribe(timedEvent)
+        condEvent.subscribe(task1.finished())
+
+        # execute task1 every second:
         scheduler.subscribe(task1, timedEvent)
+
+        # execute task2 when task1 is finished:
         scheduler.subscribe(task2, task1.finished())
-        scheduler.publish(timedEvent)
+        
+        # execute task3 every second and after task1 has been finshed
+        scheduler.subscribe(task3, condEvent)
+
+        # start the timed event:
+        scheduler.register_timed_event(timedEvent)
+        
         scheduler.run()
 
         assert True

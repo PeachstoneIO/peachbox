@@ -12,10 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import sched, time
+import time
+import threading
 from pubsub import pub
-from peachbox.scheduler.event import Event
-from peachbox.scheduler.event import TimedEvent
+import event as scheduler_event
 
 
 class Scheduler(object):
@@ -42,28 +42,32 @@ class Scheduler(object):
                 "Cannot run multiple Scheduler instances at once."
                 "Use peachbox.Scheduler.Instance() to access existing instance.")
         Scheduler._active_instance = self
+        self._registered_events = {}
 
-        self._scheduler = sched.scheduler(time.time, time.sleep)
-        self._timedEvents = {}
+    def register_timed_event(self, event):
+        if not isinstance(event, scheduler_event.TimedEvent):
+            raise TypeError("event has to be an instance of TimedEvent")
 
-    def run(self):
-        self._scheduler.run()
-
-    def _registerTimedEvent(self, event):
-        self._scheduler.enterabs(event.getNextTimestamp(time.time()), 1, self.publish, (event,))
+        if event.is_periodic():
+            self.publish(event)
+            threading.Timer(event.get_delay_to_next(), self.register_timed_event, (event,)).start()
+        else:
+            threading.Timer(event.get_delay_to_next(), self.publish, (event,)).start()     
 
     def publish(self, event):
-        if isinstance(event, TimedEvent):
-            if event.getId() in self._timedEvents:
-                pub.sendMessage(event.getId(), param=event.getParam())
-            else:
-                self._timedEvents[event.getId()] = event
-
-            self._registerTimedEvent(event)
-        else:
-            pub.sendMessage(event.getId(), param=event.getParam())
-            
+        pub.sendMessage(event.get_id(), param=event.get_param())
 
     def subscribe(self, task, event):
-        pub.subscribe(task.execute, event.getId())
+        if isinstance(event, scheduler_event.ConditionalEvent):
+            if event._id not in self._registered_events:
+                # register conditional event:
+
+                self._registered_events[event._id] = event
+                event.subscribe_to_child_events()
+
+        pub.subscribe(task.execute, event.get_id())
+
+    def run(self):
+        while True:
+            time.sleep(1)
         
