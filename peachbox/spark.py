@@ -83,6 +83,8 @@ class Spark(object):
             spark_conf.set('spark.executor.memory', conf.get('spark.executor.memory'))
         if conf.get('spark.cassandra.connection.host'): 
             spark_conf.set('spark.cassandra.connection.host', conf.get('spark.cassandra.connection.host'))
+        if conf.get('spark.driver.memory'): 
+            spark_conf.set('spark.driver.memory', conf.get('spark.driver.memory'))
         return spark_conf
 
     def stop_context(self):

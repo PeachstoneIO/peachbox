@@ -22,9 +22,9 @@ class JSON(peachbox.connector.Connector):
         self.path = None
 
     def set_param(self, param):
-        """Expects param['path']"""
-        if param.get('path'):
-            self.path = param['path']
+        """Expects param['payload']['path']"""
+        if 'payload' in param and 'path' in param['payload']:
+            self.path = param['payload']['path']
         else:
             raise ValueError('Missing key in param: path')
 

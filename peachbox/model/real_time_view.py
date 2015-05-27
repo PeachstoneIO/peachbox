@@ -1,32 +1,25 @@
+from peachbox.model.view import View
 import peachbox.model
 
-class RealTimeView():
+class RealTimeView(View):
 
-    mart   = None
-    schema = None
-
-    key = 'true_as_of_seconds'
+    keys = [] 
 
     _cassandra_initialized = False
     _cassandra_indices = None
 
     @classmethod
+    def row(cls, **kwargs):
+        if not cls._cassandra_initialized: cls.cassandra_initialize()
+        partition_key = hash(''.join([str(kwargs[v]) for v in cls.keys])) % 10
+        row = dict(kwargs)
+        row.update({'partition_key':partition_key})
+        return row
+
+    @classmethod
     def cassandra_schema(cls):
         if not cls._cassandra_schema: cls.generate_cassandra_schema()
         return cls._cassandra_schema
-
-    @classmethod
-    def cassandra_row(cls, **kwargs):
-        if not cls._cassandra_initialized: cls.cassandra_initialize()
-
-        values = [None]*len(kwargs)
-        for (k,v) in kwargs.iteritems():
-            #if k is not cls.key:
-            values[cls._cassandra_indices[k]] = v
-
-        #key = {cls.key: kwargs[cls.key]}
-        #return (key, values)
-        return tuple(values)
 
     @classmethod
     def cassandra_initialize(cls):
@@ -40,14 +33,18 @@ class RealTimeView():
 
     @classmethod
     def cassandra_table_cql(cls):
-        cql = "CREATE TABLE " + cls.name() + ' ('
+        cql = "CREATE TABLE " + cls.name() + ' (partition_key int, '
 
-        for i,entry in enumerate(cls.schema):
-            cql += (entry['field'] + ' ' + peachbox.model.Types.cassandra_type(entry['type']))
-            if entry['field'] is cls.key:
-                cql += ' PRIMARY KEY,'
-            elif i is not len(cls.schema)-1:
-                cql += ','
+        fields = [e['field'] + ' ' + peachbox.model.Types.cassandra_type(e['type']) for e in cls.schema]
+        cql += ', '.join(fields)
+
+#        for i,entry in enumerate(cls.schema):
+#            cql += (entry['field'] + ' ' + peachbox.model.Types.cassandra_type(entry['type']))
+#            if entry['field'] is cls.key:
+#                cql += ' PRIMARY KEY,'
+#            elif i is not len(cls.schema)-1:
+#                cql += ','
+        cql += ', PRIMARY KEY (' + ', '.join(['partition_key']+cls.keys) + ')'
         cql += ')'
         return cql
     

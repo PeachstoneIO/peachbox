@@ -18,13 +18,13 @@ class KafkaJSON(peachbox.connector.Connector):
                 "group.id": "Group1",
                 "zookeeper.connection.timeout.ms": "10000"}
         self.topic = topic
+        self.from_offset = 0
+        self.latest_offset = 0
 
     def set_param(self, param):
-        pass
+        if 'from_offset' in param: self.from_offset = param['from_offset']
 
     def emit(self):
-        # spark = peachbox.Spark({'spark.master':'spark://eb94aa674c2d:7077'})
-        # result = spark.context().parallelize([1,2,3])
         sc = peachbox.Spark.Instance().context()
 
         kafka_client = kafka.KafkaClient('localhost:9092')
@@ -32,10 +32,12 @@ class KafkaJSON(peachbox.connector.Connector):
         reqs = [OffsetRequest(self.topic, 0, -1, 10)]
         until_offset = kafka_client.send_offset_request(reqs)[0].offsets[0]
 
-        offset_ranges = [OffsetRange(topic=self.topic, partition=0, fromOffset=0, untilOffset=until_offset)]
-
+        offset_ranges = [OffsetRange(topic=self.topic, partition=0, fromOffset=self.from_offset, 
+                                     untilOffset=until_offset)]
 
         result = pyspark.streaming.kafka.KafkaUtils.createRDD(sc, self.kafka_params, offset_ranges)
+
+        self.latest_offset = until_offset
 
         result = result.map(lambda x: self.read_json(x[1]))
         return {'data':result}

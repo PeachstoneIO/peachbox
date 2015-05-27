@@ -54,6 +54,7 @@ class DWH(object):
 
     def read_data_frame(self, mart, path):
         uri = self.fs.uri(mart, path)
+        print 'trying to read ' + uri
         return peachbox.Spark.Instance().sql_context().parquetFile(uri)
 
     def query_by_key_range(self, model, smallest_key, biggest_key):

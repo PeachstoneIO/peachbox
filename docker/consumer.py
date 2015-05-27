@@ -17,7 +17,7 @@ kafka_params = {"zookeeper.connect": "localhost:2182",
 		"group.id": "TutorialGroup1",
 		"zookeeper.connection.timeout.ms": "10000"}
 
-tutorial1 = OffsetRange(topic='t1', partition=0, fromOffset=0, untilOffset=2)
+tutorial1 = OffsetRange(topic='movie_reviews', partition=0, fromOffset=0, untilOffset=2)
 
 offset_ranges = [tutorial1]
 

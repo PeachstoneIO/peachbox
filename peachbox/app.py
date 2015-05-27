@@ -12,11 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import peachbox.scheduler
+
 class App(object):
-    def __init__(self):
-        importers = []
+    def __init__(self, name):
+        self.name = name
+        self.scheduler = peachbox.scheduler.Scheduler.Instance()
 
     def run(self):
-        pass
-        # run each importer in own thread!
+        self.scheduler.run()
 

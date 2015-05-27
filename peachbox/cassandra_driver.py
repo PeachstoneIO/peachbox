@@ -10,14 +10,16 @@ class CassandraDriver(object):
         return self._session
 
     def keyspace_exists(self, ks):
+        return (ks in self.list_keyspaces())
+
+    def list_keyspaces(self):
         s = self.session()
         current_keyspace = s.keyspace
         s.set_keyspace('system')
         keyspaces = map(lambda k: k.keyspace_name, s.execute('SELECT * FROM schema_keyspaces'))
-        existent =  ks in keyspaces 
         if current_keyspace and (current_keyspace in keyspaces): 
             s.set_keyspace(current_keyspace)
-        return existent
+        return keyspaces
 
     def table_exists(self, table):
         tables = self.session().execute('select columnfamily_name from system.schema_columnfamilies \
@@ -32,7 +34,8 @@ class CassandraDriver(object):
         self.session().set_keyspace(ks)
 
     def drop_keyspace(self, ks):
-        self.execute("DROP KEYSPACE %s" % (ks,))
+        if self.keyspace_exists(ks):
+            self.execute("DROP KEYSPACE %s" % (ks,))
     
     def execute(self, cql):
         return self.session().execute(cql)

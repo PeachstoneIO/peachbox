@@ -5,31 +5,43 @@ import peachbox.pipeline
 
 import pipelines.importer
 import model.master
+import time
 
 from peachbox.pipeline import Chain
 
 class ImportMovieReviews(peachbox.task.Task):
     def __init__(self):
-        self.source = peachbox.connector.source.KafkaJSON('t1')
+        self.source = peachbox.connector.source.KafkaJSON(topic='movie_reviews')
         self.sink   = peachbox.connector.sink.MasterData()
 
     def _execute(self):
-        df = self.source.emit()['data']
+        input = self.source.emit()['data']
 
-        # Available fields of the input data are: 'user_id', 'product_id', 'review', 'summary',
-        # 'profile_name', 'helpfulness', 'time', 'score'
+        # Available fields of the input data: 'user_id', 'product_id', 'review', 'summary',
+        #                                     'profile_name', 'helpfulness', 'time', 'score'
 
-        review_by_user_validator = peachbox.pipeline.Validator(['user_id', 'product_id', 'time'])
-        reviews_by_user = Chain([review_by_user_validator, pipelines.importer.ReviewByUser()]).execute(df)
+        # Import 'review by user edges'
+        user_review_validator = peachbox.pipeline.Validator(['time', 'user_id', 'product_id'])
+        user_review_chain = Chain([user_review_validator, pipelines.importer.UserReviewEdge()])
+        user_review_edges = user_review_chain.execute(input)
+
+        # Import 'product review edges'
+        product_review_validator = peachbox.pipeline.Validator(['time', 'user_id', 'product_id'])
+        product_review_chain = Chain([product_review_validator, pipelines.importer.ProductReviewEdge()])
+        product_review_edges = product_review_chain.execute(input)
 
 
-        # Import the user properties 
-        user_properties_validator = peachbox.pipeline.Validator(['user_id', 'time', 'profile_name', 'score'])
-        properties_chain = Chain([user_properties_validator, pipelines.importer.UserProperties()])
-        user_properties = properties_chain.execute(df) 
-        
-        self.sink.absorb([{'data':reviews_by_user, 'model':model.master.ReviewByUserEdge},
-                          {'data':user_properties, 'model':model.master.UserProperties}])
+        # Import 'review properties'
+        required_fields = ['time', 'user_id', 'product_id', 'helpfulness', 'score', 'summary', 'review']
+        review_property_validator = peachbox.pipeline.Validator(required_fields)
+        review_properties = Chain([review_property_validator, pipelines.importer.ReviewProperties()]).execute(input)
+
+        self.sink.absorb([{'data':user_review_edges,    'model':model.master.UserReviewEdge},
+                          {'data':product_review_edges, 'model':model.master.ProductReviewEdge},
+                          {'data':review_properties,    'model':model.master.ReviewProperties}])
+
+        # Payload is sent with 'Finished Event'
+        self.payload = {'import_finished':int(time.time()), 'latest_kafka_offset':self.source.latest_offset}
 
 
 

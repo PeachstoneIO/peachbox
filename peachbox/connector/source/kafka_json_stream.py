@@ -11,7 +11,7 @@ class KafkaJSONStream(peachbox.connector.Connector):
         stream = pyspark.streaming.kafka.KafkaUtils.createStream(ssc, 
                 'localhost:2181', 
                 'KafkaGroup', 
-                {'t1':1})
+                {self.topic:1})
         values = stream.map(lambda entry: entry[1])
         return values
 

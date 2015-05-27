@@ -20,17 +20,17 @@ class RealTimeView(object):
 #
 #        self.c.execute(create_table_cql)
 #
-        conf = {"cassandra.output.thrift.address": 'localhost',
-                "cassandra.output.thrift.port": "9160",
-                "cassandra.output.keyspace": model.mart,
-                "cassandra.output.partitioner.class": "Murmur3Partitioner",
-                "cassandra.output.cql":model.cassandra_output_cql(), 
-                "mapreduce.output.basename": model.name(),
-                "mapreduce.outputformat.class": "org.apache.cassandra.hadoop.cql3.CqlOutputFormat",
-                "mapreduce.job.output.key.class": "java.util.Map",
-                "mapreduce.job.output.value.class": "java.util.List"}
+#        conf = {"cassandra.output.thrift.address": 'localhost',
+#                "cassandra.output.thrift.port": "9160",
+#                "cassandra.output.keyspace": model.mart,
+#                "cassandra.output.partitioner.class": "Murmur3Partitioner",
+#                "cassandra.output.cql":model.cassandra_output_cql(), 
+#                "mapreduce.output.basename": model.name(),
+#                "mapreduce.outputformat.class": "org.apache.cassandra.hadoop.cql3.CqlOutputFormat",
+#                "mapreduce.job.output.key.class": "java.util.Map",
+#                "mapreduce.job.output.value.class": "java.util.List"}
 
-        data.saveToCassandra(model.mart.lower(), model.name())
+        data.saveToCassandra(model.keyspace_name(), model.name())
 #        data.saveAsNewAPIHadoopDataset(
 #            conf=conf,
 #            keyConverter="org.apache.spark.examples.pythonconverters.ToCassandraCQLKeyConverter",
@@ -43,8 +43,8 @@ class RealTimeView(object):
 #                    valueConverter="org.apache.spark.examples.pythonconverters.ToCassandraCQLValueConverter")
 #
     def setup_keyspace(self, mart):
+        print('setting up keyspace: '+mart)
         if not self.cassandra_driver.keyspace_exists(mart):
-            print('setting up keyspace: '+mart)
             self.cassandra_driver.create_keyspace(mart)
         else:
             self.cassandra_driver.set_keyspace(mart)

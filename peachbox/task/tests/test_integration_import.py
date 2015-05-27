@@ -16,15 +16,13 @@ class ReviewByUserEdge(peachbox.model.MasterDataSet):
               {'field':'product_id', 'type': 'StringType'}]
 
 class ReviewByUserPipeline(object):
-    def invoke(self, df):
+    def execute(self, df):
         return df.map(lambda entry: (ReviewByUserEdge.spark_row(user_id=entry.user_id, 
                                                                 product_id=entry.product_id, 
                                                                 true_as_of_seconds=entry.time)))
 
 class ImportReviews(peachbox.task.Task):
     def __init__(self):
-        #super(ImportReviews, self).__init__()
-
         self.source = peachbox.connector.source.JSON()
         self.sink   = peachbox.connector.sink.MasterData()
 
@@ -33,7 +31,7 @@ class ImportReviews(peachbox.task.Task):
     def _execute(self):
         df = self.source.emit()['data']
                                                        
-        reviews_by_user = ReviewByUserPipeline().invoke(df) 
+        reviews_by_user = ReviewByUserPipeline().execute(df) 
 
         #product_chain = peachbox.pipeline.Chain([ pipeline.Normalize, pipeline.ReviewForProduct ])
         #review_for_product = product_chain.invoke(df)
@@ -43,7 +41,7 @@ class ImportReviews(peachbox.task.Task):
                           #{'data':review_for_product, 'model':ReviewForProductEdge}, 
                            #'data':user_properties,    'model':UserProperties}]
         
-        self.sink.absorb({'data':reviews_by_user, 'model':ReviewByUserEdge})
+        self.sink.absorb([{'data':reviews_by_user, 'model':ReviewByUserEdge}])
 
 class TestIntegrationImport(unittest.TestCase):
 
@@ -60,6 +58,7 @@ class TestIntegrationImport(unittest.TestCase):
         self.json_file = peachbox.utils.TestHelper().write_json('movie_reviews.json', input)
         self.importer  = ImportReviews()
         self.importer.execute(param={'path':self.json_file})
+        self.importer.process.join()
 
     def test_execution(self):
         result = peachbox.DWH.Instance().read_data_frame(ReviewByUserEdge.mart, '0/3600').collect()
@@ -69,5 +68,4 @@ class TestIntegrationImport(unittest.TestCase):
 
         result2 = peachbox.DWH.Instance().read_data_frame(ReviewByUserEdge.mart, '0/7200').collect()
         self.assertEqual(u'u2', result2[0].user_id)
-
 

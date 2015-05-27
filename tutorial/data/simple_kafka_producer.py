@@ -12,7 +12,7 @@ timestamp = time.time()
 
 for line in file:
     try:
-        producer.send_messages('t1', line)
+        producer.send_messages('movie_reviews', line)
         if (counter % 1000)==0: 
             now = time.time()
             print str(counter)+' events sent in '+str(now-timestamp)+' seconds: '+str(1000.0/(now-timestamp))+' evts/sec'

@@ -1,7 +1,9 @@
 from peachbox.scheduler.scheduler import Scheduler
 from peachbox.scheduler.event import Event
 from multiprocessing import Process
-from threading import Thread
+#from threading import Thread
+
+import peachbox
 
 
 # Copyright 2015 Philipp Pahl, Sven Schubert
@@ -19,6 +21,7 @@ from threading import Thread
 # limitations under the License.
 
 from multiprocessing import Process
+import pubsub
 
 class Task(object):
     """Base class for data pipelines:
@@ -53,43 +56,64 @@ class Task(object):
         self.source = None
         self.sink   = None
         self.process = None
+        self.payload = None
 
     def execute(self, param={}):
-        self.process = Process(target=self.run_in_process, args=(param,))
-        self.process.start()
+       if self.source and self.sink:
+           self.source.set_param(param)
+           self.sink.set_param(param)
+       else:
+           raise ValueError("Source/Sink not defined.")
 
-    def run_in_process(self, param):
-        if self.source and self.sink:
-            self.source.set_param(param)
-            self.sink.set_param(param)
-        else:
-            raise ValueError("Source/Sink not defined.")
+       self.process = Process(target=self.run_in_process, args=(Scheduler.Instance(),))
+       self.process.start()
+       #self.run_in_process()
 
-        t = Thread(target=self._execute_notify_teardown(), args=())
-        t.daemon = False
-        t.start()
+    def run_in_process(self, scheduler):
+       #self.notify_scheduler(self.started())
+       self._execute()
+       #self.notify_scheduler(self.finished())
+       self.tear_down()
+       e = self.get_event_finished() 
+       scheduler.publish(e)
+       #Scheduler.Instance().publish(self.get_event_finished())
 
-    def _execute_notify_teardown(self):
-        self.notify_scheduler(self.started())
-        self.process = Process(target=self._execute, args=())
-        self.process.start()
-        self.process.join()
-        self.notify_scheduler(self.finished())
-        self.tear_down()
+
+#    def execute(self, param={}):
+#        self.process = Process(target=self.run_in_process, args=(param,))
+#        self.process.start()
+#
+#    def run_in_process(self, param):
+#        if self.source and self.sink:
+#            self.source.set_param(param)
+#            self.sink.set_param(param)
+#        else:
+#            raise ValueError("Source/Sink not defined.")
+#
+#        t = Thread(target=self._execute_notify_teardown(), args=())
+#        t.daemon = False
+#        t.start()
+#
+#    def _execute_notify_teardown(self):
+#        self.notify_scheduler(self.started())
+#        self.process = Process(target=self._execute, args=())
+#        self.process.start()
+#        self.process.join()
+#        self.notify_scheduler(self.finished())
+#        self.tear_down()
 
     def _execute(self):
         raise NotImplementedError
 
     def tear_down(self):
         pass
+
+    def get_event_finished(self):
+        e = Event(self.__class__.__name__ + "Finished")
+        status = e.status()
+        try:
+            status['payload'] = self.payload 
+        except AttributeError:
+            pass
+        return e
         
-
-    def notify_scheduler(self, event):
-        Scheduler.Instance().publish(event)
-
-    def started(self):
-        return Event(self.__class__.__name__ + "Started")
-
-    def finished(self):
-        return Event(self.__class__.__name__ + "Finished")
-

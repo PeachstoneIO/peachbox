@@ -58,28 +58,28 @@ class TestIntegrationSpark(unittest.TestCase):
 
 
     # TODO: Test streaming data properly
-    def move_file(self, dir1, dir2):
-        #time.sleep(10)
-        os.rename(dir1+"/file.json", dir2+"/file.json")
+    #def move_file(self, dir1, dir2):
+    #    #time.sleep(10)
+    #    os.rename(dir1+"/file.json", dir2+"/file.json")
 
-    def test_streaming_context(self):
-        dir1 = peachbox.utils.TestHelper().mkdir_tmp()
-        dir2 = peachbox.utils.TestHelper().mkdir_tmp() 
-        dir3 = peachbox.utils.TestHelper().mkdir_tmp() 
-        
-        print 'dir1: '+dir1
-        print 'dir2: '+dir2
-        print 'dir3: '+dir3
+    #def test_streaming_context(self):
+    #    dir1 = peachbox.utils.TestHelper().mkdir_tmp()
+    #    dir2 = peachbox.utils.TestHelper().mkdir_tmp() 
+    #    dir3 = peachbox.utils.TestHelper().mkdir_tmp() 
+    #    
+    #    print 'dir1: '+dir1
+    #    print 'dir2: '+dir2
+    #    print 'dir3: '+dir3
 
-        j = peachbox.utils.TestHelper.write_json('file.json', [{'hello':'world'}], dir2)
-        multiprocessing.Process(target=self.move_file, args=(dir2,dir1)).start()
+    #    j = peachbox.utils.TestHelper.write_json('file.json', [{'hello':'world'}], dir2)
+    #    multiprocessing.Process(target=self.move_file, args=(dir2,dir1)).start()
 
-        with peachbox.Spark() as spark:
-            ssc = spark.streaming_context(1)
-            rdd = ssc.textFileStream(dir1)
-            rdd.map(lambda line: line)
-            rdd.pprint()
-            ssc.start()
-            ssc.awaitTermination(1)
+    #    with peachbox.Spark() as spark:
+    #        ssc = spark.streaming_context(1)
+    #        rdd = ssc.textFileStream(dir1)
+    #        rdd.map(lambda line: line)
+    #        rdd.pprint()
+    #        ssc.start()
+    #        ssc.awaitTermination(1)
 
 

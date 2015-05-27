@@ -28,12 +28,11 @@ class TestDate(unittest.TestCase):
         d = Date(timezone=pytz.utc, date=datetime(2014,04,01))
         self.assertEqual(pytz.utc, d.datetime().tzinfo)
 
-    # TODO
     # case3: datetime object has no tzinfo, tzinfo not given in ctor
-    #def test_localize_case3(self):
-    #    d = Date()
-    #    self.assertRaises(Exception, d.localize(datetime(2014,04,01)))
-
+    def test_localize_case3(self):
+        d = Date()
+        with self.assertRaises(Exception):
+            d.localize(datetime(2014,04,01))
 
     def test_parse(self):
         d = Date(timezone=pytz.timezone('Europe/Berlin'))
@@ -62,11 +61,6 @@ class TestDate(unittest.TestCase):
 
     def test_from_utime(self):
         utime = Date.tz_berlin(2014,3,1).seconds()
-        d = Date.from_utime(pytz.timezone('Europe/Berlin'), utime)
+        d = Date.from_utc_utime(pytz.timezone('Europe/Berlin'), utime)
         self.assertEqual(utime, d.seconds())
         
-
-
-
-
-
