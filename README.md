@@ -1,4 +1,3 @@
-![Logo](http://peachston.ioe/peachbox.png)
+![Logo](http://www.peachstone.io/peachbox.png)
 
-Peachbox is a framework for easy and accessible big ETL system.
-It's based on Python and Pyspark.
+Peachbox is a framework for easy and accessible big ETL system, based on Python and Pyspark.
