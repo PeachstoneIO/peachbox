@@ -9,16 +9,28 @@ import model.batch_views
 
 from peachbox.pipeline import Chain
 
-class ReviewsByGender(peachbox.task.Task):
+class Reviews(peachbox.task.Task):
     def __init__(self):
-        self.source = peachbox.connector.source.DWH(model.master.UserProperties)
+        super(Reviews, self).__init__()
+
+        self.sources = [peachbox.connector.source.DWH(model.master.ReviewProperties), 
+                        peachbox.connector.source.DWH(model.master.ProductReviewEdge)]
+
         self.sink   = peachbox.connector.sink.BatchView()
 
     def _execute(self):
-        df = self.source.emit()['data']
-        reviews_by_gender = pipelines.batch_views.ReviewsByGender().execute(df.distinct())
+        properties = self.sources[0].emit()['data']
+        edges      = self.sources[1].emit()['data']
 
-        self.sink.absorb([{'data':reviews_by_gender, 'model':model.batch_views.ReviewsByGender}])
+        if not properties: return
+
+        input = properties.join(edges, properties.review_id==edges.review_id)\
+                .select(properties.true_as_of_seconds, properties.review_id, edges.product_id, 
+                        properties.score)
+
+        reviews = pipelines.batch_views.Reviews().execute(input)
+
+        self.sink.absorb([{'data':reviews, 'model':model.batch_views.Reviews}])
 
         #reviews_by_user = Chain([review_by_user_validator, pipelines.importer.ReviewByUser()]).execute(df)
         # Import the user properties 

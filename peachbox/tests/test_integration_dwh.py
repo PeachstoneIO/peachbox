@@ -42,4 +42,13 @@ class TestIntegrationDwh(unittest.TestCase):
             df = spark.sql_context().parquetFile(dir)
             assert type(df.collect()[0][0]) is unicode
 
+    def test_append_to_existing_data(self):
+        peachbox.DWH.Instance().append(self.pail)
+        peachbox.DWH.Instance().append(self.pail)
 
+        result = peachbox.DWH.Instance().read_data_frame(self.pail.model.mart, self.pail.target()).collect()
+        assert len(result) is 4
+
+        self.assertEqual('u1', result[0].user)
+        self.assertEqual('p1', result[0].product)
+        self.assertEqual('u2', result[1].user)

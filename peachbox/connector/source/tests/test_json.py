@@ -8,7 +8,7 @@ class TestJSON(unittest.TestCase):
         self.json = peachbox.connector.source.JSON()
 
     def test_set_param(self):
-        param = {'path':'/data'}
+        param = {'payload':{'path':'/data'}}
         self.json.set_param(param)
         self.assertEqual('/data', self.json.path)
 
@@ -18,6 +18,6 @@ class TestJSON(unittest.TestCase):
 
     def test_emit(self):
         json_file = peachbox.utils.TestHelper.write_json('data', [{'key':'value'}])
-        self.json.set_param({'path':json_file})
+        self.json.set_param({'payload':{'path':json_file}})
         df = self.json.emit()['data'].collect()
         self.assertEqual('value', df[0].key)

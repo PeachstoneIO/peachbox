@@ -1,5 +1,6 @@
 from peachbox.model.view import View
 import peachbox.model
+import uuid
 
 class RealTimeView(View):
 
@@ -11,7 +12,8 @@ class RealTimeView(View):
     @classmethod
     def row(cls, **kwargs):
         if not cls._cassandra_initialized: cls.cassandra_initialize()
-        partition_key = hash(''.join([str(kwargs[v]) for v in cls.keys])) % 10
+        #partition_key = hash(''.join([str(kwargs[v]) for v in cls.keys]))
+        partition_key = uuid.uuid1() 
         row = dict(kwargs)
         row.update({'partition_key':partition_key})
         return row
@@ -33,7 +35,7 @@ class RealTimeView(View):
 
     @classmethod
     def cassandra_table_cql(cls):
-        cql = "CREATE TABLE " + cls.name() + ' (partition_key int, '
+        cql = "CREATE TABLE " + cls.name() + ' (partition_key text PRIMARY KEY, '
 
         fields = [e['field'] + ' ' + peachbox.model.Types.cassandra_type(e['type']) for e in cls.schema]
         cql += ', '.join(fields)
@@ -44,7 +46,7 @@ class RealTimeView(View):
 #                cql += ' PRIMARY KEY,'
 #            elif i is not len(cls.schema)-1:
 #                cql += ','
-        cql += ', PRIMARY KEY (' + ', '.join(['partition_key']+cls.keys) + ')'
+#        cql += ', PRIMARY KEY (' + ', '.join(['partition_key']+cls.keys) + ')'
         cql += ')'
         return cql
     
@@ -63,6 +65,8 @@ class RealTimeView(View):
     @classmethod
     def keyspace_name(cls):
         return cls.mart.lower()
+
+    
 
 
 

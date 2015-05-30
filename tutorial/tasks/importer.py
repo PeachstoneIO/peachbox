@@ -11,14 +11,12 @@ from peachbox.pipeline import Chain
 
 class ImportMovieReviews(peachbox.task.Task):
     def __init__(self):
+        super(ImportMovieReviews, self).__init__()
         self.source = peachbox.connector.source.KafkaJSON(topic='movie_reviews')
         self.sink   = peachbox.connector.sink.MasterData()
 
     def _execute(self):
         input = self.source.emit()['data']
-
-        # Available fields of the input data: 'user_id', 'product_id', 'review', 'summary',
-        #                                     'profile_name', 'helpfulness', 'time', 'score'
 
         # Import 'review by user edges'
         user_review_validator = peachbox.pipeline.Validator(['time', 'user_id', 'product_id'])

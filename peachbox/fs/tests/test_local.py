@@ -49,3 +49,11 @@ class TestLocal(unittest.TestCase):
         assert self.fs.path_exists('mart', '123')
         assert not self.fs.path_exists('mart', '12')
         assert not self.fs.path_exists('mart2', '123')
+
+    def test_mv_to_tmp(self):
+        tmp_dir = TestHelper.mkdir_tmp()
+        TestHelper.mkdir_p(tmp_dir+'/master/0/123')
+        TestHelper.touch(tmp_dir+'/master/0/123/file.parquet')
+        self.fs.dwh_path = tmp_dir
+        dst =  self.fs.mv_to_tmp('master', '0/123')
+        self.assertEqual(self.fs.ls_a(dst)[1][0], dst + '/file.parquet')

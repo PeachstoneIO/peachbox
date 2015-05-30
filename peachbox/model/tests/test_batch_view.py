@@ -16,7 +16,7 @@ class TestBatchView(unittest.TestCase):
         assert issubclass(self.view, peachbox.model.RealTimeView)
 
     def test_keyspace_name(self):
-        self.assertEqual('batchview_test_mart', self.view.keyspace_name())
+        self.assertEqual('test_mart', self.view.keyspace_name())
 
     def test_keys(self):
         self.assertEqual(['f1'], self.view.keys)

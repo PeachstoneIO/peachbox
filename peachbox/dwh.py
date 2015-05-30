@@ -15,6 +15,7 @@
 
 import peachbox
 import peachbox.fs
+import peachbox.utils
 
 #import simplejson as json
 
@@ -47,14 +48,16 @@ class DWH(object):
         path = pail.target()
         df = pail.data
         if self.fs.path_exists(mart, path):
-            current_df = self.read_data_frame(mart, path)
+            current_data_dir = self.fs.mv_to_tmp(mart, path)
+            current_df = peachbox.Spark.Instance().sql_context().parquetFile(current_data_dir)
             df = current_df.unionAll(pail.data)
-            self.fs.rm_r(mart, path)
-        df.saveAsParquetFile(self.fs.uri(mart, path))
+            df.saveAsParquetFile(self.fs.uri(mart, path))
+            self.fs.rmtree(path=current_data_dir)
+        else:
+            df.saveAsParquetFile(self.fs.uri(mart, path))
 
     def read_data_frame(self, mart, path):
         uri = self.fs.uri(mart, path)
-        print 'trying to read ' + uri
         return peachbox.Spark.Instance().sql_context().parquetFile(uri)
 
     def query_by_key_range(self, model, smallest_key, biggest_key):

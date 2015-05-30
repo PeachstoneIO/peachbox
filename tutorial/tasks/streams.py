@@ -10,21 +10,23 @@ import peachbox.pipeline.json_parser
 import pipelines.streams
 import model.streams
 
-class MovieReviews(peachbox.task.Task):
+class Reviews(peachbox.task.Task):
     def __init__(self):
+        super(Reviews, self).__init__()
         self.source = peachbox.connector.source.KafkaJSONStream(topic='movie_reviews', 
-                dstream_time_interval=10)
+                dstream_time_interval=1)
         self.sink   = peachbox.connector.sink.RealTimeView()
 
     def _execute(self):
         reviews = self.source.stream_rdd()
 
         json_parser = peachbox.pipeline.JSONParser()
-        validator   = peachbox.pipeline.Validator(['user_id', 'time', 'profile_name'])
+        validator   = peachbox.pipeline.Validator(['user_id', 'product_id', 'time', 'score'])
 
-        chain = peachbox.pipeline.Chain([json_parser, validator, pipelines.streams.ReviewByGender()])
+        chain = peachbox.pipeline.Chain([json_parser, validator, pipelines.streams.Reviews()])
         r = chain.execute(reviews)
-        self.sink.absorb([{'data':r, 'model':model.streams.ReviewByGender}])
+
+        self.sink.absorb([{'data':r, 'model':model.streams.Reviews}])
 
         self.source.start_stream()
 

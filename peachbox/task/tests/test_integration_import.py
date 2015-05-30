@@ -57,7 +57,7 @@ class TestIntegrationImport(unittest.TestCase):
 
         self.json_file = peachbox.utils.TestHelper().write_json('movie_reviews.json', input)
         self.importer  = ImportReviews()
-        self.importer.execute(param={'path':self.json_file})
+        self.importer.execute(param={'payload':{'path':self.json_file}})
         self.importer.process.join()
 
     def test_execution(self):

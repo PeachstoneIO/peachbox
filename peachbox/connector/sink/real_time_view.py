@@ -50,11 +50,32 @@ class RealTimeView(object):
             self.cassandra_driver.set_keyspace(mart)
 
     def setup_table(self, model):
+        print 'entering setting up table'
+        print self.cassandra_driver.list_tables()
+        self.cassandra_driver.set_keyspace(model.keyspace_name())
         if not self.cassandra_driver.table_exists(model.name()):
             print 'setting up table: ' + model.name()
             print model.cassandra_table_cql()
             self.cassandra_driver.execute(model.cassandra_table_cql())
+            self.create_cassandra_indices(model)
+
+    def create_cassandra_indices(self, model):
+        print 'creating indices'
+        for key in model.keys:
+            self.create_cassandra_index(key, model)
+
+    def create_cassandra_index(self, key, model):
+        index_name = model.keyspace_name()+'_'+model.name()+'_'+key + '_index'
+        table = model.name()
+        cql = "CREATE INDEX " + index_name + ' ON ' + table + '(' + key + ')'
+        print 'creating index:'
+        print cql
+        self.cassandra_driver.execute(cql)
 
     def set_param(self, param):
         pass
+
+
+
+
 

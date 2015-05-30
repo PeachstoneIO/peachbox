@@ -24,59 +24,32 @@ from multiprocessing import Process
 import pubsub
 
 class Task(object):
-    """Base class for data pipelines:
-
-    >>> from model.review_edge import ReviewEdge
-    >>>
-    >>> class ExampleTaskImplementation(peachbox.pipeline.Task):
-    >>>      def __init__(object):
-    >>>          # connector can be pre-defined or manually defined
-    >>>          self.source = peachbox.connector.source.JSON()
-    >>>          # MasterDataSet: model has an output target, which is determined by partition_time_range
-    >>>          self.sink   = peachbox.connector.sink.MasterDataSet(model=ReviewEdge)
-    >>>
-    >>>      # param are passed to source and sink beforehand
-    >>>      # super class has execute(): Sets params in connectors and sends out "ImportReviewsFinished"
-    >>>      def _execute(self):
-    >>>          df = self.source.data_frame()
-    >>>          reviews = df.validate(['user_id', 'product_id', 'time']) \ 
-    >>>              .map(lambda entry: ReviewEdge(user_id=entry['user_id'], 
-    >>>                  product_id=entry['product_id'], 
-    >>>                  true_as_of_seconds=entry['time'])
-    >>>          self.sink.absorb(reviews)
-    >>>
-    >>>      # optional: is called by execute()
-    >>>      def tear_down(self):
-    >>>          pass
-
+    """Base class for data tasks:
     """
-        
 
     def __init__(self):
-        self.source = None
-        self.sink   = None
+        self.source  = None
+        self.sources = None
+        self.sink    = None
         self.process = None
         self.payload = None
 
     def execute(self, param={}):
-       if self.source and self.sink:
-           self.source.set_param(param)
-           self.sink.set_param(param)
-       else:
-           raise ValueError("Source/Sink not defined.")
+        if self.source:
+            self.source.set_param(param)
+        if self.sources:
+            for s in self.sources: s.set_param(param)
+        if self.sink:
+            self.sink.set_param(param)
 
-       self.process = Process(target=self.run_in_process, args=(Scheduler.Instance(),))
-       self.process.start()
-       #self.run_in_process()
+        self.process = Process(target=self.run_in_process, args=(Scheduler.Instance(),))
+        self.process.start()
 
     def run_in_process(self, scheduler):
-       #self.notify_scheduler(self.started())
        self._execute()
-       #self.notify_scheduler(self.finished())
        self.tear_down()
        e = self.get_event_finished() 
        scheduler.publish(e)
-       #Scheduler.Instance().publish(self.get_event_finished())
 
 
 #    def execute(self, param={}):
@@ -106,7 +79,7 @@ class Task(object):
         raise NotImplementedError
 
     def tear_down(self):
-        pass
+        peachbox.Spark.Instance().stop()
 
     def get_event_finished(self):
         e = Event(self.__class__.__name__ + "Finished")

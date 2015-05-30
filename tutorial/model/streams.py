@@ -1,10 +1,12 @@
 import peachbox.model
 
-class ReviewByGender(peachbox.model.RealTimeView):
-    mart = 'MovieReviews'
-    keys  = ['true_as_of_seconds']
+class Reviews(peachbox.model.RealTimeView):
+    mart = 'real_time_views'
+    keys  = ['true_as_of_seconds', 'review_id', 'product_id', 'score']
 
     schema = [{'field':'true_as_of_seconds', 'type':'IntegerType'},
-              {'field':'gender', 'type':'StringType'}]
+              {'field':'review_id', 'type':'StringType'}, 
+              {'field':'product_id', 'type':'StringType'},
+              {'field':'score', 'type':'IntegerType'}]
 
 

@@ -44,6 +44,10 @@ class Local(Fs):
         if self.path_exists(mart, path):
             shutil.rmtree(self.uri(mart,path))
 
+    def rmtree(self, path):
+        if os.path.exists(path):
+            shutil.rmtree(path)
+
     def path_exists(self, mart, path):
         return os.path.exists(self.uri(mart,path))
 
@@ -51,5 +55,11 @@ class Local(Fs):
         uri_parts = [self.dwh_path, mart, filename]
         uri       = os.path.join(*uri_parts)
         return uri
+
+    def mv_to_tmp(self, mart, filename):
+        src = self.uri(mart, filename)
+        dst = peachbox.utils.TestHelper.mkdir_tmp()
+        shutil.move(src, dst)
+        return self.ls_a(dst)[0][0]
     
 

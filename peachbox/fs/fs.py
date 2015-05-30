@@ -45,5 +45,5 @@ class Fs(object):
             utime = int(basename)
             return utime
         except ValueError:
-            raise 'FileSystem.dir_utime(): Name of directory does not contain a number'
+            raise ValueError('FileSystem.dir_utime(): Name of directory '+path+' does not contain a number')
 

@@ -84,6 +84,7 @@ class PeriodicEvent(Event):
         self.process.start()
 
     def publish(self, scheduler):
+        time.sleep(self._period)
         while self._max_publications is not 0:
             scheduler.publish(self)
             time.sleep(self._period)

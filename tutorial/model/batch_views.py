@@ -10,9 +10,11 @@
 
 import peachbox.model
 
-class ReviewsByGender(peachbox.model.BatchView):
+class Reviews(peachbox.model.BatchView):
     mart = 'batch_views'
-    keys = ['true_as_of_seconds']
+    keys = ['true_as_of_seconds', 'review_id', 'product_id', 'score' ]
     schema = [{'field':'true_as_of_seconds', 'type':'IntegerType'},
-              {'field':'gender', 'type':'StringType'},
-              {'field':'review_count', 'type':'IntegerType'}]
+              {'field':'review_count', 'type':'IntegerType'},
+              {'field':'review_id', 'type':'StringType'},
+              {'field':'product_id', 'type':'StringType'},
+              {'field':'score', 'type':'IntegerType'}]

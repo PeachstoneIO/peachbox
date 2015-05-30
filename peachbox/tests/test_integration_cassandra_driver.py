@@ -40,3 +40,17 @@ class TestIntegrationCassandraDriver(unittest.TestCase):
         self.c.drop_keyspace('ks_test3')
         self.c.drop_keyspace('ks_test4')
 
+    def test_list_tables(self):
+        self.c.create_keyspace('ks_test5')
+        self.c.session().execute("CREATE TABLE users (f1 int PRIMARY KEY, f2 int)")
+        tables = self.c.list_tables()
+        self.assertEqual(['users'], tables)
+        self.c.drop_keyspace('ks_test5')
+
+    def test_table_exists(self):
+        self.c.create_keyspace('ks_test6')
+        self.c.session().execute("CREATE TABLE users (f1 int PRIMARY KEY, f2 int)")
+        assert self.c.table_exists('users')
+        self.c.drop_keyspace('ks_test6')
+
+

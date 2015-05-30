@@ -22,10 +22,7 @@ class CassandraDriver(object):
         return keyspaces
 
     def table_exists(self, table):
-        tables = self.session().execute('select columnfamily_name from system.schema_columnfamilies \
-                where keyspace_name = \'' + self.session().keyspace + '\'')
-        tables = map(lambda t: t.columnfamily_name, tables)
-        return table in tables
+        return table in self.list_tables()
 
     def create_keyspace(self, ks):
         if not self.keyspace_exists(ks):
@@ -50,4 +47,9 @@ class CassandraDriver(object):
         if self._session:
             self._session.shutdown()
             self._session = None
+
+    def list_tables(self):
+        tables = self.session().execute('select columnfamily_name from system.schema_columnfamilies \
+                where keyspace_name = \'' + self.session().keyspace + '\'')
+        return map(lambda t: t.columnfamily_name, tables)
 

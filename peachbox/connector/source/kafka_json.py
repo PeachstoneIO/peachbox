@@ -22,7 +22,8 @@ class KafkaJSON(peachbox.connector.Connector):
         self.latest_offset = 0
 
     def set_param(self, param):
-        if 'from_offset' in param: self.from_offset = param['from_offset']
+        if 'payload' in param and 'latest_kafka_offset' in param['payload']: 
+            self.from_offset = param['payload']['latest_kafka_offset'] + 1
 
     def emit(self):
         sc = peachbox.Spark.Instance().context()
@@ -34,6 +35,11 @@ class KafkaJSON(peachbox.connector.Connector):
 
         offset_ranges = [OffsetRange(topic=self.topic, partition=0, fromOffset=self.from_offset, 
                                      untilOffset=until_offset)]
+        print 'offset range: ' + str(self.from_offset) + ':' + str(until_offset)
+
+        # TODO: This is kinda hacky, resolve it
+        if self.from_offset > until_offset:
+            self.from_offset = until_offset
 
         result = pyspark.streaming.kafka.KafkaUtils.createRDD(sc, self.kafka_params, offset_ranges)
 

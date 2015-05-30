@@ -25,5 +25,4 @@ class ReviewProperties(peachbox.model.MasterDataSet):
               {'field':'summary', 'type':'StringType'},
               {'field':'text', 'type':'StringType'}]
 
-# Implement User properties
 

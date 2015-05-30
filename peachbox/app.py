@@ -13,6 +13,7 @@
 # limitations under the License.
 
 import peachbox.scheduler
+import time
 
 class App(object):
     def __init__(self, name):
@@ -21,4 +22,6 @@ class App(object):
 
     def run(self):
         self.scheduler.run()
+        while True:
+            time.sleep(10)
 

@@ -33,8 +33,8 @@ class TestRealTimeView(unittest.TestCase):
 
     def test_create_table_cql(self):
         s1    = self.m.cassandra_table_cql()
-        s2 = """CREATE TABLE myrealtimeview (partition_key int, true_as_of_seconds int, user_id text, 
-                review_id text, PRIMARY KEY (partition_key, true_as_of_seconds))"""
+        s2 = """CREATE TABLE myrealtimeview (partition_key int PRIMARY KEY, true_as_of_seconds int, 
+                user_id text, review_id text)"""
 
         # Remove whitespaces
         s2 = re.sub(' +',' ', ' '.join(s2.splitlines()))
