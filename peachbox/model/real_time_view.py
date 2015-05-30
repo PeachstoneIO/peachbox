@@ -12,7 +12,6 @@ class RealTimeView(View):
     @classmethod
     def row(cls, **kwargs):
         if not cls._cassandra_initialized: cls.cassandra_initialize()
-        #partition_key = hash(''.join([str(kwargs[v]) for v in cls.keys]))
         partition_key = uuid.uuid1() 
         row = dict(kwargs)
         row.update({'partition_key':partition_key})
@@ -25,7 +24,6 @@ class RealTimeView(View):
 
     @classmethod
     def cassandra_initialize(cls):
-        #fields = filter(lambda entry: entry['field'] is not cls.key, cls.schema)
         fields = map(lambda entry: entry['field'], cls.schema)
         cls._cassandra_indices = {field:i for i,field in enumerate(fields)}
 
@@ -39,14 +37,6 @@ class RealTimeView(View):
 
         fields = [e['field'] + ' ' + peachbox.model.Types.cassandra_type(e['type']) for e in cls.schema]
         cql += ', '.join(fields)
-
-#        for i,entry in enumerate(cls.schema):
-#            cql += (entry['field'] + ' ' + peachbox.model.Types.cassandra_type(entry['type']))
-#            if entry['field'] is cls.key:
-#                cql += ' PRIMARY KEY,'
-#            elif i is not len(cls.schema)-1:
-#                cql += ','
-#        cql += ', PRIMARY KEY (' + ', '.join(['partition_key']+cls.keys) + ')'
         cql += ')'
         return cql
     

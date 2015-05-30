@@ -5,7 +5,6 @@ import tasks.batch_views
 
 
 movies_app = peachbox.App("MovieReviews")
-#movies_app.importers = [processors.ImportReviews]
 
 
 # Set up the data warehouse with local file system and path
@@ -15,23 +14,15 @@ dwh = peachbox.DWH.Instance()
 dwh.fs = peachbox.fs.Local()
 dwh.fs.dwh_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'dwh')
 
-# Example for scheduler
-# every_ten_minutes = TimedEvent("EveryTenMinutes")
-# start_import = ConditionalEvent("StartImport")
-# start_import.subscribes("EveryTenMinutes")
-# start_import.subscribes("ImportMovieReviewsFinished")
-# Event("ImportMovieReviewsStart").subscribes("StartImport")
 
-
-
-# Import data into master data set 
+## Import data into master data set 
 import_movie_reviews = tasks.importer.ImportMovieReviews()
-
-# Batch view 
+#
+## Batch view 
 reviews_batch_view = tasks.batch_views.Reviews()
-
-# Example of streaming task
-# Is just executed, runs permanently
+#
+## Example of streaming task
+## Is just executed, runs permanently
 reviews_real_time_view = tasks.streams.Reviews()
 reviews_real_time_view.execute()
 

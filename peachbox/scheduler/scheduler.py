@@ -48,7 +48,6 @@ class Scheduler(object):
         elif isinstance(event, peachbox.scheduler.ConditionalEvent):
             self._conditional_events.append(event)
         else:
-            print 'appending to _events: ' + event.name()
             self._events.append(event)
 
         pub.subscribe(task.execute, event.name())
@@ -63,25 +62,18 @@ class Scheduler(object):
         self._event_status[event_name] = status
     
     def run(self):
-        print 'now in run'
         for e in self._events:
-            print '_events:'
             self.publish(e)
 
         for e in self._periodic_events:
-            print 'starting periodic events: '
             e.start()
         self.run_conditional_events()
 
     def run_conditional_events(self):
-        print 'run conditional events'
         for e in self._conditional_events:
-            print 'in conditional event loop'
             self.publish(e)
             for c in e._conditions:
-                print 'in conditions'
                 if isinstance(c, peachbox.scheduler.PeriodicEvent) and c not in self._periodic_events:
-                    print 'starting additional periodic events'
                     c.start()
 
 

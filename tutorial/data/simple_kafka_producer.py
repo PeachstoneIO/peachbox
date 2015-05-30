@@ -20,4 +20,4 @@ for line in file:
         counter +=1
     except:
         print 'Something went wrong'
-    time.sleep(0.1)
+    time.sleep(0.5)
