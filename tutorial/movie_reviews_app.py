@@ -17,10 +17,10 @@ dwh.fs.dwh_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'dwh
 
 ## Import data into master data set 
 import_movie_reviews = tasks.importer.ImportMovieReviews()
-#
+
 ## Batch view 
 reviews_batch_view = tasks.batch_views.Reviews()
-#
+
 ## Example of streaming task
 ## Is just executed, runs permanently
 reviews_real_time_view = tasks.streams.Reviews()
