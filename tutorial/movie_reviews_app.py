@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 import peachbox
 import tasks.importer
 import tasks.streams
@@ -20,6 +21,9 @@ import_movie_reviews = tasks.importer.ImportMovieReviews()
 
 ## Batch view 
 reviews_batch_view = tasks.batch_views.Reviews()
+
+reviews_shottime_view = tasks.batch_views.Reviews()
+
 
 ## Example of streaming task
 ## Is just executed, runs permanently
