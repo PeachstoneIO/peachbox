@@ -1,0 +1,146 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>peachbox.cassandra_driver &mdash; peachbox 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="peachbox 0.1 documentation" href="../../index.html" />
+    <link rel="up" title="Module code" href="../index.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">peachbox 0.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for peachbox.cassandra_driver</h1><div class="highlight"><pre>
+<span class="kn">import</span> <span class="nn">cassandra.cluster</span>
+
+<div class="viewcode-block" id="CassandraDriver"><a class="viewcode-back" href="../../peachbox.html#peachbox.cassandra_driver.CassandraDriver">[docs]</a><span class="k">class</span> <span class="nc">CassandraDriver</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_session</span> <span class="o">=</span> <span class="bp">None</span>
+        
+<div class="viewcode-block" id="CassandraDriver.session"><a class="viewcode-back" href="../../peachbox.html#peachbox.cassandra_driver.CassandraDriver.session">[docs]</a>    <span class="k">def</span> <span class="nf">session</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_session</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_session</span> <span class="o">=</span> <span class="n">cassandra</span><span class="o">.</span><span class="n">cluster</span><span class="o">.</span><span class="n">Cluster</span><span class="p">()</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_session</span>
+</div>
+<div class="viewcode-block" id="CassandraDriver.keyspace_exists"><a class="viewcode-back" href="../../peachbox.html#peachbox.cassandra_driver.CassandraDriver.keyspace_exists">[docs]</a>    <span class="k">def</span> <span class="nf">keyspace_exists</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ks</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">ks</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">list_keyspaces</span><span class="p">())</span>
+</div>
+<div class="viewcode-block" id="CassandraDriver.list_keyspaces"><a class="viewcode-back" href="../../peachbox.html#peachbox.cassandra_driver.CassandraDriver.list_keyspaces">[docs]</a>    <span class="k">def</span> <span class="nf">list_keyspaces</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="p">()</span>
+        <span class="n">current_keyspace</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">keyspace</span>
+        <span class="n">s</span><span class="o">.</span><span class="n">set_keyspace</span><span class="p">(</span><span class="s">&#39;system&#39;</span><span class="p">)</span>
+        <span class="n">keyspaces</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">k</span><span class="p">:</span> <span class="n">k</span><span class="o">.</span><span class="n">keyspace_name</span><span class="p">,</span> <span class="n">s</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s">&#39;SELECT * FROM schema_keyspaces&#39;</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">current_keyspace</span> <span class="ow">and</span> <span class="p">(</span><span class="n">current_keyspace</span> <span class="ow">in</span> <span class="n">keyspaces</span><span class="p">):</span> 
+            <span class="n">s</span><span class="o">.</span><span class="n">set_keyspace</span><span class="p">(</span><span class="n">current_keyspace</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">keyspaces</span>
+</div>
+<div class="viewcode-block" id="CassandraDriver.table_exists"><a class="viewcode-back" href="../../peachbox.html#peachbox.cassandra_driver.CassandraDriver.table_exists">[docs]</a>    <span class="k">def</span> <span class="nf">table_exists</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">table</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">table</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">list_tables</span><span class="p">()</span>
+</div>
+<div class="viewcode-block" id="CassandraDriver.create_keyspace"><a class="viewcode-back" href="../../peachbox.html#peachbox.cassandra_driver.CassandraDriver.create_keyspace">[docs]</a>    <span class="k">def</span> <span class="nf">create_keyspace</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ks</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">keyspace_exists</span><span class="p">(</span><span class="n">ks</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="p">()</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s">&quot;CREATE KEYSPACE </span><span class="si">%s</span><span class="s"> WITH replication = {&#39;class&#39;:&#39;SimpleStrategy&#39;,</span><span class="se">\</span>
+<span class="s">                    &#39;replication_factor&#39;:1}&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">ks</span><span class="p">,))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="p">()</span><span class="o">.</span><span class="n">set_keyspace</span><span class="p">(</span><span class="n">ks</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="CassandraDriver.drop_keyspace"><a class="viewcode-back" href="../../peachbox.html#peachbox.cassandra_driver.CassandraDriver.drop_keyspace">[docs]</a>    <span class="k">def</span> <span class="nf">drop_keyspace</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ks</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">keyspace_exists</span><span class="p">(</span><span class="n">ks</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s">&quot;DROP KEYSPACE </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">ks</span><span class="p">,))</span>
+    </div>
+<div class="viewcode-block" id="CassandraDriver.execute"><a class="viewcode-back" href="../../peachbox.html#peachbox.cassandra_driver.CassandraDriver.execute">[docs]</a>    <span class="k">def</span> <span class="nf">execute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cql</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="p">()</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">cql</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="CassandraDriver.set_keyspace"><a class="viewcode-back" href="../../peachbox.html#peachbox.cassandra_driver.CassandraDriver.set_keyspace">[docs]</a>    <span class="k">def</span> <span class="nf">set_keyspace</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ks</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">keyspace_exists</span><span class="p">(</span><span class="n">ks</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="p">()</span><span class="o">.</span><span class="n">set_keyspace</span><span class="p">(</span><span class="n">ks</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&quot;</span><span class="si">%s</span><span class="s"> keyspace does not exist&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">ks</span><span class="p">,))</span>
+</div>
+<div class="viewcode-block" id="CassandraDriver.shutdown"><a class="viewcode-back" href="../../peachbox.html#peachbox.cassandra_driver.CassandraDriver.shutdown">[docs]</a>    <span class="k">def</span> <span class="nf">shutdown</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_session</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_session</span><span class="o">.</span><span class="n">shutdown</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_session</span> <span class="o">=</span> <span class="bp">None</span>
+</div>
+<div class="viewcode-block" id="CassandraDriver.list_tables"><a class="viewcode-back" href="../../peachbox.html#peachbox.cassandra_driver.CassandraDriver.list_tables">[docs]</a>    <span class="k">def</span> <span class="nf">list_tables</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">tables</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="p">()</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s">&#39;select columnfamily_name from system.schema_columnfamilies </span><span class="se">\</span>
+<span class="s">                where keyspace_name = </span><span class="se">\&#39;</span><span class="s">&#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="p">()</span><span class="o">.</span><span class="n">keyspace</span> <span class="o">+</span> <span class="s">&#39;</span><span class="se">\&#39;</span><span class="s">&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">t</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">columnfamily_name</span><span class="p">,</span> <span class="n">tables</span><span class="p">)</span>
+</pre></div></div></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">peachbox 0.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2015, Philipp Pahl, Sven Schubert.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,183 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>peachbox.scheduler.event &mdash; peachbox 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="peachbox 0.1 documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">peachbox 0.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for peachbox.scheduler.event</h1><div class="highlight"><pre>
+<span class="kn">import</span> <span class="nn">peachbox</span>
+<span class="kn">import</span> <span class="nn">multiprocessing</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">pubsub</span>
+
+<div class="viewcode-block" id="Event"><a class="viewcode-back" href="../../../peachbox.scheduler.html#peachbox.scheduler.event.Event">[docs]</a><span class="k">class</span> <span class="nc">Event</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_status</span> <span class="o">=</span> <span class="p">{}</span>
+
+<div class="viewcode-block" id="Event.name"><a class="viewcode-back" href="../../../peachbox.scheduler.html#peachbox.scheduler.event.Event.name">[docs]</a>    <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span>
+</div>
+<div class="viewcode-block" id="Event.status"><a class="viewcode-back" href="../../../peachbox.scheduler.html#peachbox.scheduler.event.Event.status">[docs]</a>    <span class="k">def</span> <span class="nf">status</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_status</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s">&#39;name&#39;</span><span class="p">:</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">()})</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_status</span>
+</div>
+<div class="viewcode-block" id="Event.set_status"><a class="viewcode-back" href="../../../peachbox.scheduler.html#peachbox.scheduler.event.Event.set_status">[docs]</a>    <span class="k">def</span> <span class="nf">set_status</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">status</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_status</span> <span class="o">=</span> <span class="n">status</span>
+</div></div>
+<div class="viewcode-block" id="ConditionalEvent"><a class="viewcode-back" href="../../../peachbox.scheduler.html#peachbox.scheduler.event.ConditionalEvent">[docs]</a><span class="k">class</span> <span class="nc">ConditionalEvent</span><span class="p">(</span><span class="n">Event</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ConditionalEvent</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scheduler</span> <span class="o">=</span> <span class="n">peachbox</span><span class="o">.</span><span class="n">scheduler</span><span class="o">.</span><span class="n">Scheduler</span><span class="o">.</span><span class="n">Instance</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_conditions</span> <span class="o">=</span> <span class="p">[]</span>
+
+<div class="viewcode-block" id="ConditionalEvent.subscribe"><a class="viewcode-back" href="../../../peachbox.scheduler.html#peachbox.scheduler.event.ConditionalEvent.subscribe">[docs]</a>    <span class="k">def</span> <span class="nf">subscribe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_conditions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">event</span><span class="p">)</span>
+        <span class="n">status</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_current_status</span><span class="p">()</span> 
+        <span class="k">if</span> <span class="ow">not</span> <span class="s">&#39;subscriptions&#39;</span> <span class="ow">in</span> <span class="n">status</span><span class="p">:</span> <span class="n">status</span><span class="p">[</span><span class="s">&#39;subscriptions&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">status</span><span class="p">[</span><span class="s">&#39;subscriptions&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="n">event</span><span class="o">.</span><span class="n">name</span><span class="p">():</span><span class="mi">1</span><span class="p">})</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_status</span><span class="p">(</span><span class="n">status</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">persist_status</span><span class="p">()</span>
+
+        <span class="n">pubsub</span><span class="o">.</span><span class="n">pub</span><span class="o">.</span><span class="n">subscribe</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">track_event</span><span class="p">,</span> <span class="n">event</span><span class="o">.</span><span class="n">name</span><span class="p">())</span>
+</div>
+<div class="viewcode-block" id="ConditionalEvent.track_event"><a class="viewcode-back" href="../../../peachbox.scheduler.html#peachbox.scheduler.event.ConditionalEvent.track_event">[docs]</a>    <span class="k">def</span> <span class="nf">track_event</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">param</span><span class="p">):</span>
+        <span class="n">status</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_current_status</span><span class="p">()</span>
+        <span class="k">if</span> <span class="s">&#39;payload&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">status</span><span class="p">:</span> <span class="n">status</span><span class="p">[</span><span class="s">&#39;payload&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">if</span> <span class="s">&#39;payload&#39;</span> <span class="ow">in</span> <span class="n">param</span><span class="p">:</span> <span class="n">status</span><span class="p">[</span><span class="s">&#39;payload&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">param</span><span class="p">[</span><span class="s">&#39;payload&#39;</span><span class="p">])</span>
+
+        <span class="n">subscriptions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_subscriptions</span><span class="p">()</span>
+        <span class="n">event_name</span> <span class="o">=</span> <span class="n">param</span><span class="p">[</span><span class="s">&#39;name&#39;</span><span class="p">]</span>
+        <span class="n">subscriptions</span><span class="p">[</span><span class="n">event_name</span><span class="p">]</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">subscriptions</span><span class="p">[</span><span class="n">event_name</span><span class="p">]</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">sum_event_counts</span><span class="p">(</span><span class="n">subscriptions</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">status</span><span class="p">[</span><span class="s">&#39;subscriptions&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">reset_subscriptions</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_status</span><span class="p">(</span><span class="n">status</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">scheduler</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">status</span><span class="p">[</span><span class="s">&#39;subscriptions&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">subscriptions</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_status</span><span class="p">(</span><span class="n">status</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">persist_status</span><span class="p">()</span>
+</div>
+<div class="viewcode-block" id="ConditionalEvent.get_subscriptions"><a class="viewcode-back" href="../../../peachbox.scheduler.html#peachbox.scheduler.event.ConditionalEvent.get_subscriptions">[docs]</a>    <span class="k">def</span> <span class="nf">get_subscriptions</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">scheduler</span><span class="o">.</span><span class="n">get_event_status</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">())[</span><span class="s">&#39;subscriptions&#39;</span><span class="p">]</span>
+</div>
+<div class="viewcode-block" id="ConditionalEvent.sum_event_counts"><a class="viewcode-back" href="../../../peachbox.scheduler.html#peachbox.scheduler.event.ConditionalEvent.sum_event_counts">[docs]</a>    <span class="k">def</span> <span class="nf">sum_event_counts</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">subscriptions</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">sum</span><span class="p">([</span><span class="n">v</span> <span class="k">for</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)</span> <span class="ow">in</span> <span class="n">subscriptions</span><span class="o">.</span><span class="n">iteritems</span><span class="p">()])</span>
+</div>
+<div class="viewcode-block" id="ConditionalEvent.get_current_status"><a class="viewcode-back" href="../../../peachbox.scheduler.html#peachbox.scheduler.event.ConditionalEvent.get_current_status">[docs]</a>    <span class="k">def</span> <span class="nf">get_current_status</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">scheduler</span><span class="o">.</span><span class="n">get_event_status</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">())</span>
+    </div>
+<div class="viewcode-block" id="ConditionalEvent.persist_status"><a class="viewcode-back" href="../../../peachbox.scheduler.html#peachbox.scheduler.event.ConditionalEvent.persist_status">[docs]</a>    <span class="k">def</span> <span class="nf">persist_status</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scheduler</span><span class="o">.</span><span class="n">set_event_status</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">status</span><span class="p">())</span>
+</div>
+<div class="viewcode-block" id="ConditionalEvent.reset_subscriptions"><a class="viewcode-back" href="../../../peachbox.scheduler.html#peachbox.scheduler.event.ConditionalEvent.reset_subscriptions">[docs]</a>    <span class="k">def</span> <span class="nf">reset_subscriptions</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_subscriptions</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">s</span><span class="p">:</span>
+            <span class="n">s</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="n">s</span>
+</div></div>
+<div class="viewcode-block" id="PeriodicEvent"><a class="viewcode-back" href="../../../peachbox.scheduler.html#peachbox.scheduler.event.PeriodicEvent">[docs]</a><span class="k">class</span> <span class="nc">PeriodicEvent</span><span class="p">(</span><span class="n">Event</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">period</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">PeriodicEvent</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_period</span> <span class="o">=</span> <span class="n">period</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_scheduler</span> <span class="o">=</span> <span class="n">peachbox</span><span class="o">.</span><span class="n">scheduler</span><span class="o">.</span><span class="n">Scheduler</span><span class="o">.</span><span class="n">Instance</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">process</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_max_publications</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+
+<div class="viewcode-block" id="PeriodicEvent.start"><a class="viewcode-back" href="../../../peachbox.scheduler.html#peachbox.scheduler.event.PeriodicEvent.start">[docs]</a>    <span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">process</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Process</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">publish</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_scheduler</span><span class="p">,))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">process</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+</div>
+<div class="viewcode-block" id="PeriodicEvent.publish"><a class="viewcode-back" href="../../../peachbox.scheduler.html#peachbox.scheduler.event.PeriodicEvent.publish">[docs]</a>    <span class="k">def</span> <span class="nf">publish</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scheduler</span><span class="p">):</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_period</span><span class="p">)</span>
+        <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">_max_publications</span> <span class="ow">is</span> <span class="ow">not</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">scheduler</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_period</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_max_publications</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_max_publications</span> <span class="o">-=</span> <span class="mi">1</span>
+</pre></div></div></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">peachbox 0.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2015, Philipp Pahl, Sven Schubert.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+    </div>
+  </body>
+</html>

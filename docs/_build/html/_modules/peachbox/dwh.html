@@ -8,7 +8,7 @@
     
     <title>peachbox.dwh &mdash; peachbox 0.1 documentation</title>
     
-    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
@@ -26,8 +26,8 @@
     <link rel="top" title="peachbox 0.1 documentation" href="../../index.html" />
     <link rel="up" title="Module code" href="../index.html" /> 
   </head>
-  <body>
-    <div class="related">
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -36,15 +36,15 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li><a href="../../index.html">peachbox 0.1 documentation</a> &raquo;</li>
-          <li><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../../index.html">peachbox 0.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <h1>Source code for peachbox.dwh</h1><div class="highlight"><pre>
 <span class="c"># Copyright 2015 Philipp Pahl, Sven Schubert</span>
@@ -64,6 +64,7 @@
 
 <span class="kn">import</span> <span class="nn">peachbox</span>
 <span class="kn">import</span> <span class="nn">peachbox.fs</span>
+<span class="kn">import</span> <span class="nn">peachbox.utils</span>
 
 <span class="c">#import simplejson as json</span>
 
@@ -96,17 +97,23 @@
         <span class="n">path</span> <span class="o">=</span> <span class="n">pail</span><span class="o">.</span><span class="n">target</span><span class="p">()</span>
         <span class="n">df</span> <span class="o">=</span> <span class="n">pail</span><span class="o">.</span><span class="n">data</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">path_exists</span><span class="p">(</span><span class="n">mart</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
-            <span class="n">current_df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">read_data_frame</span><span class="p">(</span><span class="n">mart</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
+            <span class="n">current_data_dir</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">mv_to_tmp</span><span class="p">(</span><span class="n">mart</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
+            <span class="n">current_df</span> <span class="o">=</span> <span class="n">peachbox</span><span class="o">.</span><span class="n">Spark</span><span class="o">.</span><span class="n">Instance</span><span class="p">()</span><span class="o">.</span><span class="n">sql_context</span><span class="p">()</span><span class="o">.</span><span class="n">parquetFile</span><span class="p">(</span><span class="n">current_data_dir</span><span class="p">)</span>
             <span class="n">df</span> <span class="o">=</span> <span class="n">current_df</span><span class="o">.</span><span class="n">unionAll</span><span class="p">(</span><span class="n">pail</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">rm_f</span><span class="p">(</span><span class="n">mart</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
-        <span class="k">print</span> <span class="s">&#39;saving to: &#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">uri</span><span class="p">(</span><span class="n">mart</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
-        <span class="n">df</span><span class="o">.</span><span class="n">saveAsParquetFile</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">uri</span><span class="p">(</span><span class="n">mart</span><span class="p">,</span> <span class="n">path</span><span class="p">))</span>
+            <span class="n">df</span><span class="o">.</span><span class="n">saveAsParquetFile</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">uri</span><span class="p">(</span><span class="n">mart</span><span class="p">,</span> <span class="n">path</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">rmtree</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="n">current_data_dir</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">df</span><span class="o">.</span><span class="n">saveAsParquetFile</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">uri</span><span class="p">(</span><span class="n">mart</span><span class="p">,</span> <span class="n">path</span><span class="p">))</span>
 </div>
 <div class="viewcode-block" id="DWH.read_data_frame"><a class="viewcode-back" href="../../peachbox.html#peachbox.dwh.DWH.read_data_frame">[docs]</a>    <span class="k">def</span> <span class="nf">read_data_frame</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mart</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
         <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">uri</span><span class="p">(</span><span class="n">mart</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">peachbox</span><span class="o">.</span><span class="n">Spark</span><span class="o">.</span><span class="n">Instance</span><span class="p">()</span><span class="o">.</span><span class="n">sql_context</span><span class="p">()</span><span class="o">.</span><span class="n">parquetFile</span><span class="p">(</span><span class="n">uri</span><span class="p">)</span>
-
-
+</div>
+<div class="viewcode-block" id="DWH.query_by_key_range"><a class="viewcode-back" href="../../peachbox.html#peachbox.dwh.DWH.query_by_key_range">[docs]</a>    <span class="k">def</span> <span class="nf">query_by_key_range</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">smallest_key</span><span class="p">,</span> <span class="n">biggest_key</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">mart</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">mart</span>
+        <span class="n">uris</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">dirs_of_period</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">mart</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">target</span><span class="p">(),</span> <span class="n">smallest_key</span><span class="p">,</span> <span class="n">biggest_key</span><span class="p">)</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">peachbox</span><span class="o">.</span><span class="n">Spark</span><span class="o">.</span><span class="n">Instance</span><span class="p">()</span><span class="o">.</span><span class="n">sql_context</span><span class="p">()</span><span class="o">.</span><span class="n">parquetFile</span><span class="p">(</span><span class="o">*</span><span class="n">uris</span><span class="p">)</span> <span class="k">if</span> <span class="n">uris</span> <span class="k">else</span> <span class="bp">None</span>
+        <span class="k">return</span> <span class="n">df</span>
 
     <span class="c">#TODO: Clean up legacy code</span>
     <span class="c">#</span>
@@ -193,9 +200,9 @@
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-<div id="searchbox" style="display: none">
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../../search.html" method="get">
       <input type="text" name="q" />
@@ -212,7 +219,7 @@
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -221,13 +228,13 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li><a href="../../index.html">peachbox 0.1 documentation</a> &raquo;</li>
-          <li><a href="../index.html" >Module code</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../../index.html">peachbox 0.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &raquo;</li> 
       </ul>
     </div>
-    <div class="footer">
+    <div class="footer" role="contentinfo">
         &copy; Copyright 2015, Philipp Pahl, Sven Schubert.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
     </div>
   </body>
 </html>

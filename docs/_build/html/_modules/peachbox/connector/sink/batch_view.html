@@ -1,0 +1,128 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>peachbox.connector.sink.batch_view &mdash; peachbox 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../../../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <link rel="top" title="peachbox 0.1 documentation" href="../../../../index.html" />
+    <link rel="up" title="Module code" href="../../../index.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../../index.html">peachbox 0.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for peachbox.connector.sink.batch_view</h1><div class="highlight"><pre>
+<span class="kn">from</span> <span class="nn">peachbox.connector.sink</span> <span class="kn">import</span> <span class="n">RealTimeView</span>
+
+<div class="viewcode-block" id="BatchView"><a class="viewcode-back" href="../../../../peachbox.connector.sink.html#peachbox.connector.sink.batch_view.BatchView">[docs]</a><span class="k">class</span> <span class="nc">BatchView</span><span class="p">(</span><span class="n">RealTimeView</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+<span class="c">#    def absorb(self, data_descriptor):</span>
+<span class="c">#        # hbase_outputformat &lt;host&gt; test row1 f1 q1 value1</span>
+<span class="c">#        # sc.parallelize([sys.argv[3:]]).map(lambda x: (x[0], x))</span>
+<span class="c">#        # [&#39;row1&#39;, &#39;f1&#39;, &#39;q1&#39;, &#39;value1&#39;] -&gt; (&#39;row1&#39;, [&#39;row1&#39;, &#39;f1&#39;, &#39;q1&#39;, &#39;value1&#39;]])</span>
+<span class="c">#        #</span>
+<span class="c">#</span>
+<span class="c">#        host  = &#39;localhost&#39; </span>
+<span class="c">#        model = data_descriptor[&#39;model&#39;]</span>
+<span class="c">#        data  = data_descriptor[&#39;data&#39;]</span>
+<span class="c">#        table = model.name()</span>
+<span class="c">#</span>
+<span class="c">#        sc = peachbox.Spark.Instance().context()</span>
+<span class="c">#</span>
+<span class="c">#        conf = {&quot;hbase.zookeeper.quorum&quot;: host,</span>
+<span class="c">#                &quot;hbase.mapred.outputtable&quot;: table,</span>
+<span class="c">#                &quot;mapreduce.outputformat.class&quot;: &quot;org.apache.hadoop.hbase.mapreduce.TableOutputFormat&quot;,</span>
+<span class="c">#                &quot;mapreduce.job.output.key.class&quot;: &quot;org.apache.hadoop.hbase.io.ImmutableBytesWritable&quot;,</span>
+<span class="c">#                &quot;mapreduce.job.output.value.class&quot;: &quot;org.apache.hadoop.io.Writable&quot;}</span>
+<span class="c">#</span>
+<span class="c">#        keyConv   = &quot;org.apache.spark.examples.pythonconverters.StringToImmutableBytesWritableConverter&quot;</span>
+<span class="c">#        valueConv = &quot;org.apache.spark.examples.pythonconverters.StringListToPutConverter&quot;</span>
+<span class="c">#</span>
+<span class="c">#        #sc.parallelize([(&#39;12345&#39;,[&#39;1234&#39;, &#39;f1&#39;,&#39;r1&#39;,&#39;r3&#39;])]).saveAsNewAPIHadoopDataset(</span>
+<span class="c">#        data.saveAsNewAPIHadoopDataset(</span>
+<span class="c">#                conf=conf,</span>
+<span class="c">#                keyConverter=keyConv,</span>
+<span class="c">#                valueConverter=valueConv)</span>
+<span class="c">#</span>
+<span class="c">#    def set_param(self, param):</span>
+<span class="c">#        pass</span>
+<span class="c">#</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../../index.html">peachbox 0.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../../../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2015, Philipp Pahl, Sven Schubert.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+    </div>
+  </body>
+</html>

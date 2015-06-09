@@ -8,7 +8,7 @@
     
     <title>peachbox package &mdash; peachbox 0.1 documentation</title>
     
-    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
@@ -27,8 +27,8 @@
     <link rel="next" title="peachbox.connector package" href="peachbox.connector.html" />
     <link rel="prev" title="Welcome to peachbox’s documentation!" href="index.html" /> 
   </head>
-  <body>
-    <div class="related">
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -43,14 +43,14 @@
         <li class="right" >
           <a href="index.html" title="Welcome to peachbox’s documentation!"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">peachbox 0.1 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">peachbox 0.1 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="peachbox-package">
 <h1>peachbox package<a class="headerlink" href="#peachbox-package" title="Permalink to this headline">¶</a></h1>
@@ -62,13 +62,18 @@
 <li class="toctree-l2"><a class="reference internal" href="peachbox.connector.html#subpackages">Subpackages</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="peachbox.connector.sink.html">peachbox.connector.sink package</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="peachbox.connector.sink.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="peachbox.connector.sink.html#module-peachbox.connector.sink.batch_view">peachbox.connector.sink.batch_view module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="peachbox.connector.sink.html#module-peachbox.connector.sink.master_data">peachbox.connector.sink.master_data module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="peachbox.connector.sink.html#module-peachbox.connector.sink.real_time_view">peachbox.connector.sink.real_time_view module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="peachbox.connector.sink.html#module-peachbox.connector.sink">Module contents</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="peachbox.connector.source.html">peachbox.connector.source package</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="peachbox.connector.source.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="peachbox.connector.source.html#module-peachbox.connector.source.dwh">peachbox.connector.source.dwh module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="peachbox.connector.source.html#module-peachbox.connector.source.json">peachbox.connector.source.json module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="peachbox.connector.source.html#module-peachbox.connector.source.kafka_json">peachbox.connector.source.kafka_json module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="peachbox.connector.source.html#module-peachbox.connector.source.kafka_json_stream">peachbox.connector.source.kafka_json_stream module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="peachbox.connector.source.html#module-peachbox.connector.source">Module contents</a></li>
 </ul>
 </li>
@@ -98,21 +103,30 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="peachbox.model.html">peachbox.model package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="peachbox.model.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="peachbox.model.html#module-peachbox.model.batch_view">peachbox.model.batch_view module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="peachbox.model.html#module-peachbox.model.file_format">peachbox.model.file_format module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="peachbox.model.html#module-peachbox.model.master">peachbox.model.master module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="peachbox.model.html#module-peachbox.model.model">peachbox.model.model module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="peachbox.model.html#module-peachbox.model.real_time_view">peachbox.model.real_time_view module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="peachbox.model.html#module-peachbox.model.types">peachbox.model.types module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="peachbox.model.html#module-peachbox.model.view">peachbox.model.view module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="peachbox.model.html#module-peachbox.model">Module contents</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="peachbox.pipeline.html">peachbox.pipeline package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="peachbox.pipeline.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="peachbox.pipeline.html#module-peachbox.pipeline.chain">peachbox.pipeline.chain module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="peachbox.pipeline.html#module-peachbox.pipeline.json_parser">peachbox.pipeline.json_parser module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="peachbox.pipeline.html#module-peachbox.pipeline.pipeline">peachbox.pipeline.pipeline module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="peachbox.pipeline.html#module-peachbox.pipeline.validator">peachbox.pipeline.validator module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="peachbox.pipeline.html#module-peachbox.pipeline">Module contents</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="peachbox.scheduler.html">peachbox.scheduler package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="peachbox.scheduler.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="peachbox.scheduler.html#module-peachbox.scheduler.event">peachbox.scheduler.event module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="peachbox.scheduler.html#module-peachbox.scheduler.old_event">peachbox.scheduler.old_event module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="peachbox.scheduler.html#module-peachbox.scheduler.old_scheduler">peachbox.scheduler.old_scheduler module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="peachbox.scheduler.html#module-peachbox.scheduler.scheduler">peachbox.scheduler.scheduler module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="peachbox.scheduler.html#module-peachbox.scheduler">Module contents</a></li>
 </ul>
@@ -141,11 +155,70 @@
 <span id="peachbox-app-module"></span><h2>peachbox.app module<a class="headerlink" href="#module-peachbox.app" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="peachbox.app.App">
-<em class="property">class </em><tt class="descclassname">peachbox.app.</tt><tt class="descname">App</tt><a class="reference internal" href="_modules/peachbox/app.html#App"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.app.App" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<em class="property">class </em><code class="descclassname">peachbox.app.</code><code class="descname">App</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/peachbox/app.html#App"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.app.App" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
 <dl class="method">
 <dt id="peachbox.app.App.run">
-<tt class="descname">run</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/peachbox/app.html#App.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.app.App.run" title="Permalink to this definition">¶</a></dt>
+<code class="descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/peachbox/app.html#App.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.app.App.run" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-peachbox.cassandra_driver">
+<span id="peachbox-cassandra-driver-module"></span><h2>peachbox.cassandra_driver module<a class="headerlink" href="#module-peachbox.cassandra_driver" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="peachbox.cassandra_driver.CassandraDriver">
+<em class="property">class </em><code class="descclassname">peachbox.cassandra_driver.</code><code class="descname">CassandraDriver</code><a class="reference internal" href="_modules/peachbox/cassandra_driver.html#CassandraDriver"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.cassandra_driver.CassandraDriver" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="peachbox.cassandra_driver.CassandraDriver.create_keyspace">
+<code class="descname">create_keyspace</code><span class="sig-paren">(</span><em>ks</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/peachbox/cassandra_driver.html#CassandraDriver.create_keyspace"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.cassandra_driver.CassandraDriver.create_keyspace" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="peachbox.cassandra_driver.CassandraDriver.drop_keyspace">
+<code class="descname">drop_keyspace</code><span class="sig-paren">(</span><em>ks</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/peachbox/cassandra_driver.html#CassandraDriver.drop_keyspace"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.cassandra_driver.CassandraDriver.drop_keyspace" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="peachbox.cassandra_driver.CassandraDriver.execute">
+<code class="descname">execute</code><span class="sig-paren">(</span><em>cql</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/peachbox/cassandra_driver.html#CassandraDriver.execute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.cassandra_driver.CassandraDriver.execute" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="peachbox.cassandra_driver.CassandraDriver.keyspace_exists">
+<code class="descname">keyspace_exists</code><span class="sig-paren">(</span><em>ks</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/peachbox/cassandra_driver.html#CassandraDriver.keyspace_exists"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.cassandra_driver.CassandraDriver.keyspace_exists" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="peachbox.cassandra_driver.CassandraDriver.list_keyspaces">
+<code class="descname">list_keyspaces</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/peachbox/cassandra_driver.html#CassandraDriver.list_keyspaces"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.cassandra_driver.CassandraDriver.list_keyspaces" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="peachbox.cassandra_driver.CassandraDriver.list_tables">
+<code class="descname">list_tables</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/peachbox/cassandra_driver.html#CassandraDriver.list_tables"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.cassandra_driver.CassandraDriver.list_tables" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="peachbox.cassandra_driver.CassandraDriver.session">
+<code class="descname">session</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/peachbox/cassandra_driver.html#CassandraDriver.session"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.cassandra_driver.CassandraDriver.session" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="peachbox.cassandra_driver.CassandraDriver.set_keyspace">
+<code class="descname">set_keyspace</code><span class="sig-paren">(</span><em>ks</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/peachbox/cassandra_driver.html#CassandraDriver.set_keyspace"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.cassandra_driver.CassandraDriver.set_keyspace" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="peachbox.cassandra_driver.CassandraDriver.shutdown">
+<code class="descname">shutdown</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/peachbox/cassandra_driver.html#CassandraDriver.shutdown"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.cassandra_driver.CassandraDriver.shutdown" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="peachbox.cassandra_driver.CassandraDriver.table_exists">
+<code class="descname">table_exists</code><span class="sig-paren">(</span><em>table</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/peachbox/cassandra_driver.html#CassandraDriver.table_exists"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.cassandra_driver.CassandraDriver.table_exists" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -155,28 +228,62 @@
 <span id="peachbox-dwh-module"></span><h2>peachbox.dwh module<a class="headerlink" href="#module-peachbox.dwh" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="peachbox.dwh.DWH">
-<em class="property">class </em><tt class="descclassname">peachbox.dwh.</tt><tt class="descname">DWH</tt><a class="reference internal" href="_modules/peachbox/dwh.html#DWH"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.dwh.DWH" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<em class="property">class </em><code class="descclassname">peachbox.dwh.</code><code class="descname">DWH</code><a class="reference internal" href="_modules/peachbox/dwh.html#DWH"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.dwh.DWH" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
 <p>Interface to the data warehouse.</p>
 <dl class="staticmethod">
 <dt id="peachbox.dwh.DWH.Instance">
-<em class="property">static </em><tt class="descname">Instance</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/peachbox/dwh.html#DWH.Instance"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.dwh.DWH.Instance" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="descname">Instance</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/peachbox/dwh.html#DWH.Instance"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.dwh.DWH.Instance" title="Permalink to this definition">¶</a></dt>
 <dd><p>DWH is singleton. Access via Instance()</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="peachbox.dwh.DWH.append">
-<tt class="descname">append</tt><big>(</big><em>pail</em><big>)</big><a class="reference internal" href="_modules/peachbox/dwh.html#DWH.append"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.dwh.DWH.append" title="Permalink to this definition">¶</a></dt>
+<code class="descname">append</code><span class="sig-paren">(</span><em>pail</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/peachbox/dwh.html#DWH.append"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.dwh.DWH.append" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="peachbox.dwh.DWH.query_by_key_range">
+<code class="descname">query_by_key_range</code><span class="sig-paren">(</span><em>model</em>, <em>smallest_key</em>, <em>biggest_key</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/peachbox/dwh.html#DWH.query_by_key_range"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.dwh.DWH.query_by_key_range" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="peachbox.dwh.DWH.read_data_frame">
-<tt class="descname">read_data_frame</tt><big>(</big><em>mart</em>, <em>path</em><big>)</big><a class="reference internal" href="_modules/peachbox/dwh.html#DWH.read_data_frame"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.dwh.DWH.read_data_frame" title="Permalink to this definition">¶</a></dt>
+<code class="descname">read_data_frame</code><span class="sig-paren">(</span><em>mart</em>, <em>path</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/peachbox/dwh.html#DWH.read_data_frame"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.dwh.DWH.read_data_frame" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="peachbox.dwh.DWH.stop">
-<tt class="descname">stop</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/peachbox/dwh.html#DWH.stop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.dwh.DWH.stop" title="Permalink to this definition">¶</a></dt>
+<code class="descname">stop</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/peachbox/dwh.html#DWH.stop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.dwh.DWH.stop" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-peachbox.hbase_driver">
+<span id="peachbox-hbase-driver-module"></span><h2>peachbox.hbase_driver module<a class="headerlink" href="#module-peachbox.hbase_driver" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="peachbox.hbase_driver.HbaseDriver">
+<em class="property">class </em><code class="descclassname">peachbox.hbase_driver.</code><code class="descname">HbaseDriver</code><a class="reference internal" href="_modules/peachbox/hbase_driver.html#HbaseDriver"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.hbase_driver.HbaseDriver" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="peachbox.hbase_driver.HbaseDriver.connection">
+<code class="descname">connection</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/peachbox/hbase_driver.html#HbaseDriver.connection"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.hbase_driver.HbaseDriver.connection" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="peachbox.hbase_driver.HbaseDriver.create_table">
+<code class="descname">create_table</code><span class="sig-paren">(</span><em>table</em>, <em>schema</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/peachbox/hbase_driver.html#HbaseDriver.create_table"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.hbase_driver.HbaseDriver.create_table" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="peachbox.hbase_driver.HbaseDriver.drop_table">
+<code class="descname">drop_table</code><span class="sig-paren">(</span><em>table</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/peachbox/hbase_driver.html#HbaseDriver.drop_table"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.hbase_driver.HbaseDriver.drop_table" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="peachbox.hbase_driver.HbaseDriver.table_exists">
+<code class="descname">table_exists</code><span class="sig-paren">(</span><em>table</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/peachbox/hbase_driver.html#HbaseDriver.table_exists"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.hbase_driver.HbaseDriver.table_exists" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -186,8 +293,8 @@
 <span id="peachbox-spark-module"></span><h2>peachbox.spark module<a class="headerlink" href="#module-peachbox.spark" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="peachbox.spark.Spark">
-<em class="property">class </em><tt class="descclassname">peachbox.spark.</tt><tt class="descname">Spark</tt><big>(</big><em>spark_conf={}</em><big>)</big><a class="reference internal" href="_modules/peachbox/spark.html#Spark"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.spark.Spark" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<em class="property">class </em><code class="descclassname">peachbox.spark.</code><code class="descname">Spark</code><span class="sig-paren">(</span><em>spark_conf={}</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/peachbox/spark.html#Spark"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.spark.Spark" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
 <p>Interface to Apache Spark. Singleton. After initialization use peachbox.spark.Instance()
 to access the existing instance.:</p>
 <div class="highlight-python"><div class="highlight"><pre>class HelloWorld()
@@ -196,40 +303,45 @@ to access the existing instance.:</p>
 </div>
 <dl class="staticmethod">
 <dt id="peachbox.spark.Spark.Instance">
-<em class="property">static </em><tt class="descname">Instance</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/peachbox/spark.html#Spark.Instance"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.spark.Spark.Instance" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="descname">Instance</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/peachbox/spark.html#Spark.Instance"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.spark.Spark.Instance" title="Permalink to this definition">¶</a></dt>
 <dd><p>Spark is a singleton. Access via Instance()</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="peachbox.spark.Spark.context">
-<tt class="descname">context</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/peachbox/spark.html#Spark.context"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.spark.Spark.context" title="Permalink to this definition">¶</a></dt>
+<code class="descname">context</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/peachbox/spark.html#Spark.context"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.spark.Spark.context" title="Permalink to this definition">¶</a></dt>
 <dd><p>Spark context</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="peachbox.spark.Spark.get_spark_conf">
-<tt class="descname">get_spark_conf</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/peachbox/spark.html#Spark.get_spark_conf"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.spark.Spark.get_spark_conf" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_spark_conf</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/peachbox/spark.html#Spark.get_spark_conf"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.spark.Spark.get_spark_conf" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="peachbox.spark.Spark.initialize">
-<tt class="descname">initialize</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/peachbox/spark.html#Spark.initialize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.spark.Spark.initialize" title="Permalink to this definition">¶</a></dt>
+<code class="descname">initialize</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/peachbox/spark.html#Spark.initialize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.spark.Spark.initialize" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="peachbox.spark.Spark.sql_context">
-<tt class="descname">sql_context</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/peachbox/spark.html#Spark.sql_context"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.spark.Spark.sql_context" title="Permalink to this definition">¶</a></dt>
+<code class="descname">sql_context</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/peachbox/spark.html#Spark.sql_context"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.spark.Spark.sql_context" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a SQLContext, which is the entry point to PySparks&#8217; data frames.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="peachbox.spark.Spark.stop">
-<tt class="descname">stop</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/peachbox/spark.html#Spark.stop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.spark.Spark.stop" title="Permalink to this definition">¶</a></dt>
+<code class="descname">stop</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/peachbox/spark.html#Spark.stop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.spark.Spark.stop" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="peachbox.spark.Spark.stop_context">
-<tt class="descname">stop_context</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/peachbox/spark.html#Spark.stop_context"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.spark.Spark.stop_context" title="Permalink to this definition">¶</a></dt>
+<code class="descname">stop_context</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/peachbox/spark.html#Spark.stop_context"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.spark.Spark.stop_context" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="peachbox.spark.Spark.streaming_context">
+<code class="descname">streaming_context</code><span class="sig-paren">(</span><em>dstream_time_interval</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/peachbox/spark.html#Spark.streaming_context"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.spark.Spark.streaming_context" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -244,7 +356,7 @@ to access the existing instance.:</p>
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
@@ -252,7 +364,9 @@ to access the existing instance.:</p>
 <li><a class="reference internal" href="#subpackages">Subpackages</a></li>
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
 <li><a class="reference internal" href="#module-peachbox.app">peachbox.app module</a></li>
+<li><a class="reference internal" href="#module-peachbox.cassandra_driver">peachbox.cassandra_driver module</a></li>
 <li><a class="reference internal" href="#module-peachbox.dwh">peachbox.dwh module</a></li>
+<li><a class="reference internal" href="#module-peachbox.hbase_driver">peachbox.hbase_driver module</a></li>
 <li><a class="reference internal" href="#module-peachbox.spark">peachbox.spark module</a></li>
 <li><a class="reference internal" href="#module-peachbox">Module contents</a></li>
 </ul>
@@ -265,12 +379,14 @@ to access the existing instance.:</p>
   <h4>Next topic</h4>
   <p class="topless"><a href="peachbox.connector.html"
                         title="next chapter">peachbox.connector package</a></p>
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="_sources/peachbox.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
-<div id="searchbox" style="display: none">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/peachbox.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
       <input type="text" name="q" />
@@ -287,7 +403,7 @@ to access the existing instance.:</p>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -302,12 +418,12 @@ to access the existing instance.:</p>
         <li class="right" >
           <a href="index.html" title="Welcome to peachbox’s documentation!"
              >previous</a> |</li>
-        <li><a href="index.html">peachbox 0.1 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">peachbox 0.1 documentation</a> &raquo;</li> 
       </ul>
     </div>
-    <div class="footer">
+    <div class="footer" role="contentinfo">
         &copy; Copyright 2015, Philipp Pahl, Sven Schubert.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
     </div>
   </body>
 </html>

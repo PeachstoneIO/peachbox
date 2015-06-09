@@ -23,5 +23,5 @@ class TestBatchView(unittest.TestCase):
 
     def test_table_cql(self):
         s1 = self.view.cassandra_table_cql()
-        s2 = 'CREATE TABLE myview (partition_key int, f1 text, PRIMARY KEY (partition_key, f1))'
+        s2 = 'CREATE TABLE myview (partition_key text PRIMARY KEY, f1 text)'
         self.assertEqual(s1, s2) 

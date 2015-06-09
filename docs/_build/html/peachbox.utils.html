@@ -8,7 +8,7 @@
     
     <title>peachbox.utils package &mdash; peachbox 0.1 documentation</title>
     
-    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
@@ -27,8 +27,8 @@
     <link rel="up" title="peachbox package" href="peachbox.html" />
     <link rel="prev" title="peachbox.task package" href="peachbox.task.html" /> 
   </head>
-  <body>
-    <div class="related">
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -40,15 +40,15 @@
         <li class="right" >
           <a href="peachbox.task.html" title="peachbox.task package"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">peachbox 0.1 documentation</a> &raquo;</li>
-          <li><a href="peachbox.html" accesskey="U">peachbox package</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">peachbox 0.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="peachbox.html" accesskey="U">peachbox package</a> &raquo;</li> 
       </ul>
     </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="peachbox-utils-package">
 <h1>peachbox.utils package<a class="headerlink" href="#peachbox-utils-package" title="Permalink to this headline">¶</a></h1>
@@ -59,36 +59,36 @@
 <span id="peachbox-utils-date-module"></span><h2>peachbox.utils.date module<a class="headerlink" href="#module-peachbox.utils.date" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="peachbox.utils.date.Date">
-<em class="property">class </em><tt class="descclassname">peachbox.utils.date.</tt><tt class="descname">Date</tt><big>(</big><em>timezone=None</em>, <em>date=None</em><big>)</big><a class="reference internal" href="_modules/peachbox/utils/date.html#Date"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.utils.date.Date" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<em class="property">class </em><code class="descclassname">peachbox.utils.date.</code><code class="descname">Date</code><span class="sig-paren">(</span><em>timezone=None</em>, <em>date=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/peachbox/utils/date.html#Date"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.utils.date.Date" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
 <dl class="method">
 <dt id="peachbox.utils.date.Date.datetime">
-<tt class="descname">datetime</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/peachbox/utils/date.html#Date.datetime"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.utils.date.Date.datetime" title="Permalink to this definition">¶</a></dt>
+<code class="descname">datetime</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/peachbox/utils/date.html#Date.datetime"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.utils.date.Date.datetime" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="staticmethod">
-<dt id="peachbox.utils.date.Date.from_utime">
-<em class="property">static </em><tt class="descname">from_utime</tt><big>(</big><em>timezone</em>, <em>seconds</em><big>)</big><a class="reference internal" href="_modules/peachbox/utils/date.html#Date.from_utime"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.utils.date.Date.from_utime" title="Permalink to this definition">¶</a></dt>
+<dt id="peachbox.utils.date.Date.from_utc_utime">
+<em class="property">static </em><code class="descname">from_utc_utime</code><span class="sig-paren">(</span><em>timezone</em>, <em>seconds</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/peachbox/utils/date.html#Date.from_utc_utime"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.utils.date.Date.from_utc_utime" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="peachbox.utils.date.Date.localize">
-<tt class="descname">localize</tt><big>(</big><em>_datetime</em><big>)</big><a class="reference internal" href="_modules/peachbox/utils/date.html#Date.localize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.utils.date.Date.localize" title="Permalink to this definition">¶</a></dt>
+<code class="descname">localize</code><span class="sig-paren">(</span><em>_datetime</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/peachbox/utils/date.html#Date.localize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.utils.date.Date.localize" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="peachbox.utils.date.Date.parse">
-<tt class="descname">parse</tt><big>(</big><em>string</em><big>)</big><a class="reference internal" href="_modules/peachbox/utils/date.html#Date.parse"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.utils.date.Date.parse" title="Permalink to this definition">¶</a></dt>
+<code class="descname">parse</code><span class="sig-paren">(</span><em>string</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/peachbox/utils/date.html#Date.parse"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.utils.date.Date.parse" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="peachbox.utils.date.Date.seconds">
-<tt class="descname">seconds</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/peachbox/utils/date.html#Date.seconds"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.utils.date.Date.seconds" title="Permalink to this definition">¶</a></dt>
+<code class="descname">seconds</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/peachbox/utils/date.html#Date.seconds"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.utils.date.Date.seconds" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="staticmethod">
 <dt id="peachbox.utils.date.Date.tz_berlin">
-<em class="property">static </em><tt class="descname">tz_berlin</tt><big>(</big><em>year</em>, <em>month</em>, <em>day</em><big>)</big><a class="reference internal" href="_modules/peachbox/utils/date.html#Date.tz_berlin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.utils.date.Date.tz_berlin" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="descname">tz_berlin</code><span class="sig-paren">(</span><em>year</em>, <em>month</em>, <em>day</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/peachbox/utils/date.html#Date.tz_berlin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.utils.date.Date.tz_berlin" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -98,58 +98,58 @@
 <span id="peachbox-utils-test-helper-module"></span><h2>peachbox.utils.test_helper module<a class="headerlink" href="#module-peachbox.utils.test_helper" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="peachbox.utils.test_helper.TestHelper">
-<em class="property">class </em><tt class="descclassname">peachbox.utils.test_helper.</tt><tt class="descname">TestHelper</tt><a class="reference internal" href="_modules/peachbox/utils/test_helper.html#TestHelper"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.utils.test_helper.TestHelper" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<em class="property">class </em><code class="descclassname">peachbox.utils.test_helper.</code><code class="descname">TestHelper</code><a class="reference internal" href="_modules/peachbox/utils/test_helper.html#TestHelper"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.utils.test_helper.TestHelper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
 <dl class="staticmethod">
 <dt id="peachbox.utils.test_helper.TestHelper.mkdir">
-<em class="property">static </em><tt class="descname">mkdir</tt><big>(</big><em>path</em><big>)</big><a class="reference internal" href="_modules/peachbox/utils/test_helper.html#TestHelper.mkdir"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.utils.test_helper.TestHelper.mkdir" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="descname">mkdir</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/peachbox/utils/test_helper.html#TestHelper.mkdir"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.utils.test_helper.TestHelper.mkdir" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="staticmethod">
 <dt id="peachbox.utils.test_helper.TestHelper.mkdir_p">
-<em class="property">static </em><tt class="descname">mkdir_p</tt><big>(</big><em>path</em><big>)</big><a class="reference internal" href="_modules/peachbox/utils/test_helper.html#TestHelper.mkdir_p"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.utils.test_helper.TestHelper.mkdir_p" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="descname">mkdir_p</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/peachbox/utils/test_helper.html#TestHelper.mkdir_p"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.utils.test_helper.TestHelper.mkdir_p" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="staticmethod">
 <dt id="peachbox.utils.test_helper.TestHelper.mkdir_tmp">
-<em class="property">static </em><tt class="descname">mkdir_tmp</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/peachbox/utils/test_helper.html#TestHelper.mkdir_tmp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.utils.test_helper.TestHelper.mkdir_tmp" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="descname">mkdir_tmp</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/peachbox/utils/test_helper.html#TestHelper.mkdir_tmp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.utils.test_helper.TestHelper.mkdir_tmp" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="staticmethod">
 <dt id="peachbox.utils.test_helper.TestHelper.random_name">
-<em class="property">static </em><tt class="descname">random_name</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/peachbox/utils/test_helper.html#TestHelper.random_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.utils.test_helper.TestHelper.random_name" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="descname">random_name</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/peachbox/utils/test_helper.html#TestHelper.random_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.utils.test_helper.TestHelper.random_name" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="staticmethod">
 <dt id="peachbox.utils.test_helper.TestHelper.read_spark_result">
-<em class="property">static </em><tt class="descname">read_spark_result</tt><big>(</big><em>dir_name</em><big>)</big><a class="reference internal" href="_modules/peachbox/utils/test_helper.html#TestHelper.read_spark_result"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.utils.test_helper.TestHelper.read_spark_result" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="descname">read_spark_result</code><span class="sig-paren">(</span><em>dir_name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/peachbox/utils/test_helper.html#TestHelper.read_spark_result"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.utils.test_helper.TestHelper.read_spark_result" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="staticmethod">
 <dt id="peachbox.utils.test_helper.TestHelper.rm_r">
-<em class="property">static </em><tt class="descname">rm_r</tt><big>(</big><em>dir_name</em><big>)</big><a class="reference internal" href="_modules/peachbox/utils/test_helper.html#TestHelper.rm_r"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.utils.test_helper.TestHelper.rm_r" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="descname">rm_r</code><span class="sig-paren">(</span><em>dir_name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/peachbox/utils/test_helper.html#TestHelper.rm_r"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.utils.test_helper.TestHelper.rm_r" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="staticmethod">
 <dt id="peachbox.utils.test_helper.TestHelper.touch">
-<em class="property">static </em><tt class="descname">touch</tt><big>(</big><em>path</em><big>)</big><a class="reference internal" href="_modules/peachbox/utils/test_helper.html#TestHelper.touch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.utils.test_helper.TestHelper.touch" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="descname">touch</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/peachbox/utils/test_helper.html#TestHelper.touch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.utils.test_helper.TestHelper.touch" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="staticmethod">
 <dt id="peachbox.utils.test_helper.TestHelper.write_json">
-<em class="property">static </em><tt class="descname">write_json</tt><big>(</big><em>filename</em>, <em>json_input</em>, <em>dir_name=''</em><big>)</big><a class="reference internal" href="_modules/peachbox/utils/test_helper.html#TestHelper.write_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.utils.test_helper.TestHelper.write_json" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="descname">write_json</code><span class="sig-paren">(</span><em>filename</em>, <em>json_input</em>, <em>dir_name=''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/peachbox/utils/test_helper.html#TestHelper.write_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.utils.test_helper.TestHelper.write_json" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="staticmethod">
 <dt id="peachbox.utils.test_helper.TestHelper.write_string">
-<em class="property">static </em><tt class="descname">write_string</tt><big>(</big><em>filename</em>, <em>input</em><big>)</big><a class="reference internal" href="_modules/peachbox/utils/test_helper.html#TestHelper.write_string"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.utils.test_helper.TestHelper.write_string" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="descname">write_string</code><span class="sig-paren">(</span><em>filename</em>, <em>input</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/peachbox/utils/test_helper.html#TestHelper.write_string"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.utils.test_helper.TestHelper.write_string" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="function">
 <dt id="peachbox.utils.test_helper.random">
-<tt class="descclassname">peachbox.utils.test_helper.</tt><tt class="descname">random</tt><big>(</big><big>)</big> &rarr; x in the interval [0, 1).<a class="headerlink" href="#peachbox.utils.test_helper.random" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">peachbox.utils.test_helper.</code><code class="descname">random</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &rarr; x in the interval [0, 1).<a class="headerlink" href="#peachbox.utils.test_helper.random" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </div>
@@ -162,7 +162,7 @@
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
@@ -178,12 +178,14 @@
   <h4>Previous topic</h4>
   <p class="topless"><a href="peachbox.task.html"
                         title="previous chapter">peachbox.task package</a></p>
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="_sources/peachbox.utils.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
-<div id="searchbox" style="display: none">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/peachbox.utils.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
       <input type="text" name="q" />
@@ -200,7 +202,7 @@
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -212,13 +214,13 @@
         <li class="right" >
           <a href="peachbox.task.html" title="peachbox.task package"
              >previous</a> |</li>
-        <li><a href="index.html">peachbox 0.1 documentation</a> &raquo;</li>
-          <li><a href="peachbox.html" >peachbox package</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">peachbox 0.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="peachbox.html" >peachbox package</a> &raquo;</li> 
       </ul>
     </div>
-    <div class="footer">
+    <div class="footer" role="contentinfo">
         &copy; Copyright 2015, Philipp Pahl, Sven Schubert.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
     </div>
   </body>
 </html>

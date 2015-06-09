@@ -8,7 +8,7 @@
     
     <title>peachbox.task.task &mdash; peachbox 0.1 documentation</title>
     
-    <link rel="stylesheet" href="../../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
@@ -26,8 +26,8 @@
     <link rel="top" title="peachbox 0.1 documentation" href="../../../index.html" />
     <link rel="up" title="Module code" href="../../index.html" /> 
   </head>
-  <body>
-    <div class="related">
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -36,17 +36,25 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li><a href="../../../index.html">peachbox 0.1 documentation</a> &raquo;</li>
-          <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../../../index.html">peachbox 0.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <h1>Source code for peachbox.task.task</h1><div class="highlight"><pre>
+<span class="kn">from</span> <span class="nn">peachbox.scheduler.scheduler</span> <span class="kn">import</span> <span class="n">Scheduler</span>
+<span class="kn">from</span> <span class="nn">peachbox.scheduler.event</span> <span class="kn">import</span> <span class="n">Event</span>
+<span class="kn">from</span> <span class="nn">multiprocessing</span> <span class="kn">import</span> <span class="n">Process</span>
+<span class="c">#from threading import Thread</span>
+
+<span class="kn">import</span> <span class="nn">peachbox</span>
+
+
 <span class="c"># Copyright 2015 Philipp Pahl, Sven Schubert</span>
 <span class="c"># </span>
 <span class="c"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
@@ -61,65 +69,84 @@
 <span class="c"># See the License for the specific language governing permissions and</span>
 <span class="c"># limitations under the License.</span>
 
+<span class="kn">from</span> <span class="nn">multiprocessing</span> <span class="kn">import</span> <span class="n">Process</span>
+<span class="kn">import</span> <span class="nn">pubsub</span>
+
 <div class="viewcode-block" id="Task"><a class="viewcode-back" href="../../../peachbox.task.html#peachbox.task.task.Task">[docs]</a><span class="k">class</span> <span class="nc">Task</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Base class for data pipelines:</span>
-
-<span class="sd">    &gt;&gt;&gt; from model.review_edge import ReviewEdge</span>
-<span class="sd">    &gt;&gt;&gt;</span>
-<span class="sd">    &gt;&gt;&gt; class ExampleTaskImplementation(peachbox.pipeline.Task):</span>
-<span class="sd">    &gt;&gt;&gt;      def __init__(object):</span>
-<span class="sd">    &gt;&gt;&gt;          # connector can be pre-defined or manually defined</span>
-<span class="sd">    &gt;&gt;&gt;          self.source = peachbox.connector.source.JSON()</span>
-<span class="sd">    &gt;&gt;&gt;          # MasterDataSet: model has an output target, which is determined by partition_time_range</span>
-<span class="sd">    &gt;&gt;&gt;          self.sink   = peachbox.connector.sink.MasterDataSet(model=ReviewEdge)</span>
-<span class="sd">    &gt;&gt;&gt;</span>
-<span class="sd">    &gt;&gt;&gt;      # param are passed to source and sink beforehand</span>
-<span class="sd">    &gt;&gt;&gt;      # super class has execute(): Sets params in connectors and sends out &quot;ImportReviewsFinished&quot;</span>
-<span class="sd">    &gt;&gt;&gt;      def _execute(self):</span>
-<span class="sd">    &gt;&gt;&gt;          df = self.source.data_frame()</span>
-<span class="sd">    &gt;&gt;&gt;          reviews = df.validate([&#39;user_id&#39;, &#39;product_id&#39;, &#39;time&#39;]) \ </span>
-<span class="sd">    &gt;&gt;&gt;              .map(lambda entry: ReviewEdge(user_id=entry[&#39;user_id&#39;], </span>
-<span class="sd">    &gt;&gt;&gt;                  product_id=entry[&#39;product_id&#39;], </span>
-<span class="sd">    &gt;&gt;&gt;                  true_as_of_seconds=entry[&#39;time&#39;])</span>
-<span class="sd">    &gt;&gt;&gt;          self.sink.absorb(reviews)</span>
-<span class="sd">    &gt;&gt;&gt;</span>
-<span class="sd">    &gt;&gt;&gt;      # optional: is called by execute()</span>
-<span class="sd">    &gt;&gt;&gt;      def tear_down(self):</span>
-<span class="sd">    &gt;&gt;&gt;          pass</span>
-
+    <span class="sd">&quot;&quot;&quot;Base class for data tasks:</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-        
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">source</span> <span class="o">=</span> <span class="bp">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">sink</span>   <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">source</span>  <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sources</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sink</span>    <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">process</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">payload</span> <span class="o">=</span> <span class="bp">None</span>
 
-<div class="viewcode-block" id="Task.execute"><a class="viewcode-back" href="../../../peachbox.task.html#peachbox.task.task.Task.execute">[docs]</a>    <span class="k">def</span> <span class="nf">execute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">param</span><span class="p">):</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">source</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">sink</span><span class="p">:</span>
+<div class="viewcode-block" id="Task.execute"><a class="viewcode-back" href="../../../peachbox.task.html#peachbox.task.task.Task.execute">[docs]</a>    <span class="k">def</span> <span class="nf">execute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">param</span><span class="o">=</span><span class="p">{}):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">source</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">source</span><span class="o">.</span><span class="n">set_param</span><span class="p">(</span><span class="n">param</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">sources</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">sources</span><span class="p">:</span> <span class="n">s</span><span class="o">.</span><span class="n">set_param</span><span class="p">(</span><span class="n">param</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">sink</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">sink</span><span class="o">.</span><span class="n">set_param</span><span class="p">(</span><span class="n">param</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&quot;Source/Sink not defined.&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_execute</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">notify_scheduler</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">tear_down</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">process</span> <span class="o">=</span> <span class="n">Process</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">run_in_process</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">Scheduler</span><span class="o">.</span><span class="n">Instance</span><span class="p">(),))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">process</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+</div>
+<div class="viewcode-block" id="Task.run_in_process"><a class="viewcode-back" href="../../../peachbox.task.html#peachbox.task.task.Task.run_in_process">[docs]</a>    <span class="k">def</span> <span class="nf">run_in_process</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scheduler</span><span class="p">):</span>
+       <span class="bp">self</span><span class="o">.</span><span class="n">_execute</span><span class="p">()</span>
+       <span class="bp">self</span><span class="o">.</span><span class="n">tear_down</span><span class="p">()</span>
+       <span class="n">e</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_event_finished</span><span class="p">()</span> 
+       <span class="n">scheduler</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+
+
+<span class="c">#    def execute(self, param={}):</span>
+<span class="c">#        self.process = Process(target=self.run_in_process, args=(param,))</span>
+<span class="c">#        self.process.start()</span>
+<span class="c">#</span>
+<span class="c">#    def run_in_process(self, param):</span>
+<span class="c">#        if self.source and self.sink:</span>
+<span class="c">#            self.source.set_param(param)</span>
+<span class="c">#            self.sink.set_param(param)</span>
+<span class="c">#        else:</span>
+<span class="c">#            raise ValueError(&quot;Source/Sink not defined.&quot;)</span>
+<span class="c">#</span>
+<span class="c">#        t = Thread(target=self._execute_notify_teardown(), args=())</span>
+<span class="c">#        t.daemon = False</span>
+<span class="c">#        t.start()</span>
+<span class="c">#</span>
+<span class="c">#    def _execute_notify_teardown(self):</span>
+<span class="c">#        self.notify_scheduler(self.started())</span>
+<span class="c">#        self.process = Process(target=self._execute, args=())</span>
+<span class="c">#        self.process.start()</span>
+<span class="c">#        self.process.join()</span>
+<span class="c">#        self.notify_scheduler(self.finished())</span>
+<span class="c">#        self.tear_down()</span>
 </div>
     <span class="k">def</span> <span class="nf">_execute</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span>
 
 <div class="viewcode-block" id="Task.tear_down"><a class="viewcode-back" href="../../../peachbox.task.html#peachbox.task.task.Task.tear_down">[docs]</a>    <span class="k">def</span> <span class="nf">tear_down</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">pass</span>
+        <span class="n">peachbox</span><span class="o">.</span><span class="n">Spark</span><span class="o">.</span><span class="n">Instance</span><span class="p">()</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
 </div>
-<div class="viewcode-block" id="Task.notify_scheduler"><a class="viewcode-back" href="../../../peachbox.task.html#peachbox.task.task.Task.notify_scheduler">[docs]</a>    <span class="k">def</span> <span class="nf">notify_scheduler</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">message</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span> <span class="o">+</span> <span class="s">&quot;Finished&quot;</span>
-</pre></div></div></div>
+<div class="viewcode-block" id="Task.get_event_finished"><a class="viewcode-back" href="../../../peachbox.task.html#peachbox.task.task.Task.get_event_finished">[docs]</a>    <span class="k">def</span> <span class="nf">get_event_finished</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">e</span> <span class="o">=</span> <span class="n">Event</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span> <span class="o">+</span> <span class="s">&quot;Finished&quot;</span><span class="p">)</span>
+        <span class="n">status</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="n">status</span><span class="p">()</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">status</span><span class="p">[</span><span class="s">&#39;payload&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">payload</span> 
+        <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+            <span class="k">pass</span>
+        <span class="k">return</span> <span class="n">e</span>
+        </div></div>
+</pre></div>
 
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-<div id="searchbox" style="display: none">
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../../../search.html" method="get">
       <input type="text" name="q" />
@@ -136,7 +163,7 @@
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -145,13 +172,13 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li><a href="../../../index.html">peachbox 0.1 documentation</a> &raquo;</li>
-          <li><a href="../../index.html" >Module code</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../../../index.html">peachbox 0.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &raquo;</li> 
       </ul>
     </div>
-    <div class="footer">
+    <div class="footer" role="contentinfo">
         &copy; Copyright 2015, Philipp Pahl, Sven Schubert.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
     </div>
   </body>
 </html>
