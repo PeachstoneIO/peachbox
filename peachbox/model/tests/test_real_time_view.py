@@ -17,23 +17,19 @@ class TestRealTimeView(unittest.TestCase):
 
     def test_row(self):
         row = self.m.row(user_id='user_id_1', review_id='review_id_1', true_as_of_seconds=123)
-        partition_key = hash(str(123)) % 10
-        self.assertEqual({'partition_key':partition_key, 
-                          'true_as_of_seconds':123, 
-                          'user_id':'user_id_1', 
-                          'review_id':'review_id_1'}, row)
+        self.assertEqual(123, row['true_as_of_seconds'])
+        self.assertEqual('user_id_1', row['user_id'])
+        self.assertEqual('review_id_1', row['review_id'])
 
     def test_row_wrong_order(self):
         row = self.m.row(review_id='review_id_1', user_id='user_id_1', true_as_of_seconds=123)
-        partition_key = hash(str(123)) % 10
-        self.assertEqual({'partition_key':partition_key, 
-                          'true_as_of_seconds':123, 
-                          'user_id':'user_id_1', 
-                          'review_id':'review_id_1'}, row)
+        self.assertEqual(123, row['true_as_of_seconds'])
+        self.assertEqual('user_id_1', row['user_id'])
+        self.assertEqual('review_id_1', row['review_id'])
 
     def test_create_table_cql(self):
         s1    = self.m.cassandra_table_cql()
-        s2 = """CREATE TABLE myrealtimeview (partition_key int PRIMARY KEY, true_as_of_seconds int, 
+        s2 = """CREATE TABLE myrealtimeview (partition_key text PRIMARY KEY, true_as_of_seconds int, 
                 user_id text, review_id text)"""
 
         # Remove whitespaces

@@ -32,8 +32,12 @@ for line in datafile:
             timestamp = now
     except:
         print 'Something went wrong'
+<<<<<<< HEAD
 
     # sleep 1/2 second
     time.sleep(0.5)
 
 ##############################################################
+=======
+    #time.sleep(0.5)
+>>>>>>> 1d0a4a3e4fabaa6c59ce9c9d5c0ebc87babd3f30
