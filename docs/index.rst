@@ -61,6 +61,19 @@ git and github
 ----------
 git (https://git-scm.com/) is used to as code repository and version control system. The git repository itsself is located at github (https://github.com/). The usage of github requires an account at github.com.
 
+Update repository::
+
+  $ git pull
+
+Commit changes locally::
+
+  $ git commit -am "message for all files"
+
+Push changes into github repository::
+  
+  $ git push
+
+
 Apache Spark
 ------------
 Apache Spark (https://spark.apache.org/) is a fast and general engine for big data processing, with built-in modules for streaming, SQL, machine learning and graph processing. It is up to 100 times faster than Hadoop MapReduce (https://hadoop.apache.org/)  when running in memory and still 10 times faster when running on disk.
@@ -147,8 +160,9 @@ Welcome to peachbox' official user documentation. The official homepage of peach
 
 Tutorial 1
 ==========
-Start docker environment from the peachbox main directory::
+Go to the peachbox directory (if `$PEACHBOX` is set) and start docker environment from the peachbox main directory::
 
+  $ cd $PEACHBOX
   $ ./docker/run_docker.sh
 
 This runs a docker session with ``$ docker run -i -p 8888:8888 -v $PWD:/peachbox -t peachstone/dev /bin/bash`` and opens a bash terminal.
@@ -170,15 +184,20 @@ The bottom line indicates which shell is activated.
 
 
 We now want to emulate a continous data flow, where two reviews are submitted (to kafka) per second.
-The data of the movie reviews is stored in ``data/sorted_reviews_100000.json``. Type::
-  $ cd data
+The data of the movie reviews is stored in ``$PEACHBOX/tutorial/data/sorted_reviews_100000.json``. Type::
+  $ cd $PEACHBOX/tutorial/data
   $ ./simple_kafka_producer.py
 
-This small script then reads the reviews and passes two reviews to kafka every second.
+This small script then reads the reviews and passes two reviews to kafka every second. 
+The data file contains entries of the form (`$ head -3 sorted_reviews_100000.json`)::
 
+  {"user_id":"A37I5QIHD9UMPD","product_id":"6302967538","review":"&quot;The Cruel Sea&quot; gives an excellent account of the real war at sea, the everyday lives of sailors and the situations they were up against both at sea and at home.  The reader feels the fear, the anguish, the camaradarie of the crew.<br \/><p> There is no glamour in war, there is the ordinary man doing his best to win the battle and when it is won, to go home to continue with his life","summary":"The everyday man at war","profile_name":"dmunns@yancey.main.nc.us","helpfulness":"2\/2","time":872035200,"score":5.0}
+  {"user_id":"A37I5QIHD9UMPD","product_id":"B00004CILW","review":"&quot;The Cruel Sea&quot; gives an excellent account of the real war at sea, the everyday lives of sailors and the situations they were up against both at sea and at home.  The reader feels the fear, the anguish, the camaradarie of the crew.<br \/><p> There is no glamour in war, there is the ordinary man doing his best to win the battle and when it is won, to go home to continue with his life","summary":"The everyday man at war","profile_name":"dmunns@yancey.main.nc.us","helpfulness":"2\/2","time":872035200,"score":5.0}
+  {"user_id":"A37I5QIHD9UMPD","product_id":"B00008V6YR","review":"&quot;The Cruel Sea&quot; gives an excellent account of the real war at sea, the everyday lives of sailors and the situations they were up against both at sea and at home.  The reader feels the fear, the anguish, the camaradarie of the crew.<br \/><p> There is no glamour in war, there is the ordinary man doing his best to win the battle and when it is won, to go home to continue with his life","summary":"The everyday man at war","profile_name":"dmunns@yancey.main.nc.us","helpfulness":"2\/2","time":872035200,"score":5.0}
+  {"user_id":"A37I5QIHD9UMPD","product_id":"6302763770","review":"&quot;The Cruel Sea&quot; gives an excellent account of the real war at sea, the everyday lives of sailors and the situations they were up against both at sea and at home.  The reader feels the fear, the anguish, the camaradarie of the crew.<br \/><p> There is no glamour in war, there is the ordinary man doing his best to win the battle and when it is won, to go home to continue with his life","summary":"The everyday man at war","profile_name":"dmunns@yancey.main.nc.us","helpfulness":"2\/2","time":872035200,"score":5.0}
+  {"user_id":"A2XBTS97FERY2Q","product_id":"B004J1A72C","review":"This is a wide ranging musical comedy done in the style of post-depression era musicals, including brilliant performances from Steve Martin, Bernadette Peters, and Christopher Walken.  One might take the movie literally as a love story, but upon further consideration we see that it's actually a movie dedicated to the upbeat songs and movies of days long gone by.  I recommend movie highly as it is sometimes boisterous, and other times delicately romantic, but all the while very entertaining.  @see-also &quot;Radio Days&quot; END","summary":"A clever take on an old genre","profile_name":"ron@6dos.com","helpfulness":"6\/7","time":872294400,"score":5.0}
 
-
-
+The `simple_kafka_produces` passes each row to the topic `movie_reviews` to kafka.
 
 
 
