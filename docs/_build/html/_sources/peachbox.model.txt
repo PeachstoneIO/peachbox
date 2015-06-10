@@ -4,6 +4,14 @@ peachbox.model package
 Submodules
 ----------
 
+peachbox.model.batch_view module
+--------------------------------
+
+.. automodule:: peachbox.model.batch_view
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 peachbox.model.file_format module
 ---------------------------------
 
@@ -28,10 +36,26 @@ peachbox.model.model module
     :undoc-members:
     :show-inheritance:
 
+peachbox.model.real_time_view module
+------------------------------------
+
+.. automodule:: peachbox.model.real_time_view
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 peachbox.model.types module
 ---------------------------
 
 .. automodule:: peachbox.model.types
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+peachbox.model.view module
+--------------------------
+
+.. automodule:: peachbox.model.view
     :members:
     :undoc-members:
     :show-inheritance:

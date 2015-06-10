@@ -28,6 +28,9 @@ class KafkaJSON(peachbox.connector.Connector):
     def emit(self):
         sc = peachbox.Spark.Instance().context()
 
+        peachbox.Spark.Instanz = peachbox.Spark.Instance()
+        sc = peachbox.Spark.Instanz.context()
+
         kafka_client = kafka.KafkaClient('localhost:9092')
 
         reqs = [OffsetRequest(self.topic, 0, -1, 10)]

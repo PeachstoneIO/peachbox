@@ -26,10 +26,26 @@ peachbox.app module
     :undoc-members:
     :show-inheritance:
 
+peachbox.cassandra_driver module
+--------------------------------
+
+.. automodule:: peachbox.cassandra_driver
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 peachbox.dwh module
 -------------------
 
 .. automodule:: peachbox.dwh
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+peachbox.hbase_driver module
+----------------------------
+
+.. automodule:: peachbox.hbase_driver
     :members:
     :undoc-members:
     :show-inheritance:

@@ -36,9 +36,6 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="right" >
           <a href="peachbox.gen.html" title="peachbox.gen package"
              accesskey="N">next</a> |</li>
         <li class="right" >
@@ -59,130 +56,17 @@
 <div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="module-peachbox.fs.fs">
-<span id="peachbox-fs-fs-module"></span><h2>peachbox.fs.fs module<a class="headerlink" href="#module-peachbox.fs.fs" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
-<dt id="peachbox.fs.fs.Fs">
-<em class="property">class </em><tt class="descclassname">peachbox.fs.fs.</tt><tt class="descname">Fs</tt><a class="reference internal" href="_modules/peachbox/fs/fs.html#Fs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.fs.fs.Fs" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
-<p>Base class of the file system.</p>
-<dl class="method">
-<dt id="peachbox.fs.fs.Fs.dir_utime">
-<tt class="descname">dir_utime</tt><big>(</big><em>path</em><big>)</big><a class="reference internal" href="_modules/peachbox/fs/fs.html#Fs.dir_utime"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.fs.fs.Fs.dir_utime" title="Permalink to this definition">¶</a></dt>
-<dd><p>Unix time of a directory. Directory name must be an integer.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="peachbox.fs.fs.Fs.dirs_of_period">
-<tt class="descname">dirs_of_period</tt><big>(</big><em>mart</em>, <em>path</em>, <em>from_utime</em>, <em>before_utime</em><big>)</big><a class="reference internal" href="_modules/peachbox/fs/fs.html#Fs.dirs_of_period"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.fs.fs.Fs.dirs_of_period" title="Permalink to this definition">¶</a></dt>
-<dd><p>Lists directories of a given time period.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="peachbox.fs.fs.Fs.ls">
-<tt class="descname">ls</tt><big>(</big><em>mart</em>, <em>path=''</em><big>)</big><a class="reference internal" href="_modules/peachbox/fs/fs.html#Fs.ls"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.fs.fs.Fs.ls" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="peachbox.fs.fs.Fs.ls_d">
-<tt class="descname">ls_d</tt><big>(</big><em>mart</em>, <em>path=''</em><big>)</big><a class="reference internal" href="_modules/peachbox/fs/fs.html#Fs.ls_d"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.fs.fs.Fs.ls_d" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="peachbox.fs.fs.Fs.test_path_exists">
-<tt class="descname">test_path_exists</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/peachbox/fs/fs.html#Fs.test_path_exists"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.fs.fs.Fs.test_path_exists" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
+<div class="section" id="peachbox-fs-fs-module">
+<h2>peachbox.fs.fs module<a class="headerlink" href="#peachbox-fs-fs-module" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="module-peachbox.fs.local">
-<span id="peachbox-fs-local-module"></span><h2>peachbox.fs.local module<a class="headerlink" href="#module-peachbox.fs.local" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
-<dt id="peachbox.fs.local.Local">
-<em class="property">class </em><tt class="descclassname">peachbox.fs.local.</tt><tt class="descname">Local</tt><a class="reference internal" href="_modules/peachbox/fs/local.html#Local"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.fs.local.Local" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#peachbox.fs.fs.Fs" title="peachbox.fs.fs.Fs"><tt class="xref py py-class docutils literal"><span class="pre">peachbox.fs.fs.Fs</span></tt></a></p>
-<p>Interface to the local filesystem. Filesystem operations work on &lt;self.dwh_path&gt;/&lt;mart&gt;/.</p>
-<dl class="method">
-<dt id="peachbox.fs.local.Local.ls">
-<tt class="descname">ls</tt><big>(</big><em>mart</em>, <em>path</em><big>)</big><a class="reference internal" href="_modules/peachbox/fs/local.html#Local.ls"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.fs.local.Local.ls" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="peachbox.fs.local.Local.ls_a">
-<tt class="descname">ls_a</tt><big>(</big><em>path</em><big>)</big><a class="reference internal" href="_modules/peachbox/fs/local.html#Local.ls_a"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.fs.local.Local.ls_a" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="peachbox.fs.local.Local.ls_d">
-<tt class="descname">ls_d</tt><big>(</big><em>mart</em>, <em>path</em><big>)</big><a class="reference internal" href="_modules/peachbox/fs/local.html#Local.ls_d"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.fs.local.Local.ls_d" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="peachbox.fs.local.Local.path_exists">
-<tt class="descname">path_exists</tt><big>(</big><em>mart</em>, <em>path</em><big>)</big><a class="reference internal" href="_modules/peachbox/fs/local.html#Local.path_exists"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.fs.local.Local.path_exists" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="peachbox.fs.local.Local.rm_r">
-<tt class="descname">rm_r</tt><big>(</big><em>mart</em>, <em>path</em><big>)</big><a class="reference internal" href="_modules/peachbox/fs/local.html#Local.rm_r"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.fs.local.Local.rm_r" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="peachbox.fs.local.Local.uri">
-<tt class="descname">uri</tt><big>(</big><em>mart</em>, <em>filename</em><big>)</big><a class="reference internal" href="_modules/peachbox/fs/local.html#Local.uri"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.fs.local.Local.uri" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
+<div class="section" id="peachbox-fs-local-module">
+<h2>peachbox.fs.local module<a class="headerlink" href="#peachbox-fs-local-module" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="module-peachbox.fs.s3">
-<span id="peachbox-fs-s3-module"></span><h2>peachbox.fs.s3 module<a class="headerlink" href="#module-peachbox.fs.s3" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
-<dt id="peachbox.fs.s3.S3">
-<em class="property">class </em><tt class="descclassname">peachbox.fs.s3.</tt><tt class="descname">S3</tt><a class="reference internal" href="_modules/peachbox/fs/s3.html#S3"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.fs.s3.S3" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#peachbox.fs.fs.Fs" title="peachbox.fs.fs.Fs"><tt class="xref py py-class docutils literal"><span class="pre">peachbox.fs.fs.Fs</span></tt></a></p>
-<p>Interface to Amazon S3. Operations work on s3n://&lt;mart&gt;/, where &lt;mart&gt; is a bucket on S3.</p>
-<dl class="method">
-<dt id="peachbox.fs.s3.S3.bucket">
-<tt class="descname">bucket</tt><big>(</big><em>mart</em><big>)</big><a class="reference internal" href="_modules/peachbox/fs/s3.html#S3.bucket"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.fs.s3.S3.bucket" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="peachbox.fs.s3.S3.connection">
-<tt class="descname">connection</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/peachbox/fs/s3.html#S3.connection"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.fs.s3.S3.connection" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="peachbox.fs.s3.S3.ls">
-<tt class="descname">ls</tt><big>(</big><em>mart</em>, <em>path=''</em><big>)</big><a class="reference internal" href="_modules/peachbox/fs/s3.html#S3.ls"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.fs.s3.S3.ls" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="peachbox.fs.s3.S3.ls_d">
-<tt class="descname">ls_d</tt><big>(</big><em>mart</em>, <em>path=''</em><big>)</big><a class="reference internal" href="_modules/peachbox/fs/s3.html#S3.ls_d"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.fs.s3.S3.ls_d" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="peachbox.fs.s3.S3.path_exists">
-<tt class="descname">path_exists</tt><big>(</big><em>mart</em>, <em>path</em><big>)</big><a class="reference internal" href="_modules/peachbox/fs/s3.html#S3.path_exists"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.fs.s3.S3.path_exists" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="peachbox.fs.s3.S3.rm_r">
-<tt class="descname">rm_r</tt><big>(</big><em>mart</em>, <em>path</em><big>)</big><a class="reference internal" href="_modules/peachbox/fs/s3.html#S3.rm_r"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.fs.s3.S3.rm_r" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="peachbox.fs.s3.S3.uri">
-<tt class="descname">uri</tt><big>(</big><em>mart</em>, <em>filename</em><big>)</big><a class="reference internal" href="_modules/peachbox/fs/s3.html#S3.uri"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.fs.s3.S3.uri" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
+<div class="section" id="peachbox-fs-s3-module">
+<h2>peachbox.fs.s3 module<a class="headerlink" href="#peachbox-fs-s3-module" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="module-peachbox.fs">
-<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-peachbox.fs" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-contents">
+<h2>Module contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
 </div>
 </div>
 
@@ -196,10 +80,10 @@
   <ul>
 <li><a class="reference internal" href="#">peachbox.fs package</a><ul>
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
-<li><a class="reference internal" href="#module-peachbox.fs.fs">peachbox.fs.fs module</a></li>
-<li><a class="reference internal" href="#module-peachbox.fs.local">peachbox.fs.local module</a></li>
-<li><a class="reference internal" href="#module-peachbox.fs.s3">peachbox.fs.s3 module</a></li>
-<li><a class="reference internal" href="#module-peachbox.fs">Module contents</a></li>
+<li><a class="reference internal" href="#peachbox-fs-fs-module">peachbox.fs.fs module</a></li>
+<li><a class="reference internal" href="#peachbox-fs-local-module">peachbox.fs.local module</a></li>
+<li><a class="reference internal" href="#peachbox-fs-s3-module">peachbox.fs.s3 module</a></li>
+<li><a class="reference internal" href="#module-contents">Module contents</a></li>
 </ul>
 </li>
 </ul>
@@ -239,9 +123,6 @@
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="right" >
           <a href="peachbox.gen.html" title="peachbox.gen package"
              >next</a> |</li>
         <li class="right" >
@@ -253,7 +134,7 @@
     </div>
     <div class="footer">
         &copy; Copyright 2015, Philipp Pahl, Sven Schubert.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
     </div>
   </body>
 </html>

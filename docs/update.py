@@ -1,5 +1,12 @@
-import fnmatch
-import os
+#!/usr/bin/env python
+#
+##################################################
+#
+# Generate documentation for peachbox
+#
+##################################################
+
+import fnmatch, os
 
 def test_dirs():
     matches = []
@@ -8,11 +15,11 @@ def test_dirs():
         matches.append(os.path.join(root, dirnames))
     return ' '.join(matches)
 
-print "rm -fr peachbox.* modules.rst _build"
-os.system("rm -fr peachbox.* modules.rst _build")
+xcute = "rm -fr peachbox.* modules.rst _build"
+print xcute
+os.system(xcute)
 
 exclude_paths = test_dirs()
 os.system("sphinx-apidoc -o . ../peachbox " + exclude_paths)
-
 os.system("make html")
 

@@ -36,9 +36,6 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="right" >
           <a href="peachbox.connector.sink.html" title="peachbox.connector.sink package"
              accesskey="N">next</a> |</li>
         <li class="right" >
@@ -62,14 +59,19 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="peachbox.connector.sink.html">peachbox.connector.sink package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="peachbox.connector.sink.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="peachbox.connector.sink.html#module-peachbox.connector.sink.master_data">peachbox.connector.sink.master_data module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="peachbox.connector.sink.html#module-peachbox.connector.sink">Module contents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="peachbox.connector.sink.html#peachbox-connector-sink-batch-view-module">peachbox.connector.sink.batch_view module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="peachbox.connector.sink.html#peachbox-connector-sink-master-data-module">peachbox.connector.sink.master_data module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="peachbox.connector.sink.html#peachbox-connector-sink-real-time-view-module">peachbox.connector.sink.real_time_view module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="peachbox.connector.sink.html#module-contents">Module contents</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="peachbox.connector.source.html">peachbox.connector.source package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="peachbox.connector.source.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="peachbox.connector.source.html#module-peachbox.connector.source.json">peachbox.connector.source.json module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="peachbox.connector.source.html#module-peachbox.connector.source">Module contents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="peachbox.connector.source.html#peachbox-connector-source-dwh-module">peachbox.connector.source.dwh module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="peachbox.connector.source.html#peachbox-connector-source-json-module">peachbox.connector.source.json module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="peachbox.connector.source.html#peachbox-connector-source-kafka-json-module">peachbox.connector.source.kafka_json module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="peachbox.connector.source.html#peachbox-connector-source-kafka-json-stream-module">peachbox.connector.source.kafka_json_stream module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="peachbox.connector.source.html#module-contents">Module contents</a></li>
 </ul>
 </li>
 </ul>
@@ -78,46 +80,14 @@
 <div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="module-peachbox.connector.connector">
-<span id="peachbox-connector-connector-module"></span><h2>peachbox.connector.connector module<a class="headerlink" href="#module-peachbox.connector.connector" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
-<dt id="peachbox.connector.connector.Connector">
-<em class="property">class </em><tt class="descclassname">peachbox.connector.connector.</tt><tt class="descname">Connector</tt><a class="reference internal" href="_modules/peachbox/connector/connector.html#Connector"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.connector.connector.Connector" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
-<p>Base class for all connectors</p>
-<dl class="method">
-<dt id="peachbox.connector.connector.Connector.set_param">
-<tt class="descname">set_param</tt><big>(</big><em>param</em><big>)</big><a class="reference internal" href="_modules/peachbox/connector/connector.html#Connector.set_param"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.connector.connector.Connector.set_param" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
+<div class="section" id="peachbox-connector-connector-module">
+<h2>peachbox.connector.connector module<a class="headerlink" href="#peachbox-connector-connector-module" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="module-peachbox.connector.pail">
-<span id="peachbox-connector-pail-module"></span><h2>peachbox.connector.pail module<a class="headerlink" href="#module-peachbox.connector.pail" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
-<dt id="peachbox.connector.pail.Pail">
-<em class="property">class </em><tt class="descclassname">peachbox.connector.pail.</tt><tt class="descname">Pail</tt><a class="reference internal" href="_modules/peachbox/connector/pail.html#Pail"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.connector.pail.Pail" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
-<p>Pail for data. Contains data, a model and vertical partition key to determine where to store it.</p>
-<dl class="staticmethod">
-<dt id="peachbox.connector.pail.Pail.create_pails">
-<em class="property">static </em><tt class="descname">create_pails</tt><big>(</big><em>data</em>, <em>model</em><big>)</big><a class="reference internal" href="_modules/peachbox/connector/pail.html#Pail.create_pails"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.connector.pail.Pail.create_pails" title="Permalink to this definition">¶</a></dt>
-<dd><p>Creates a list of pails for given data set and model.
-The data is partitioned with respect to the partition_key and granularity as defined 
-in the model.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="peachbox.connector.pail.Pail.target">
-<tt class="descname">target</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/peachbox/connector/pail.html#Pail.target"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.connector.pail.Pail.target" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
+<div class="section" id="peachbox-connector-pail-module">
+<h2>peachbox.connector.pail module<a class="headerlink" href="#peachbox-connector-pail-module" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="module-peachbox.connector">
-<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-peachbox.connector" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-contents">
+<h2>Module contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
 </div>
 </div>
 
@@ -132,9 +102,9 @@ in the model.</p>
 <li><a class="reference internal" href="#">peachbox.connector package</a><ul>
 <li><a class="reference internal" href="#subpackages">Subpackages</a></li>
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
-<li><a class="reference internal" href="#module-peachbox.connector.connector">peachbox.connector.connector module</a></li>
-<li><a class="reference internal" href="#module-peachbox.connector.pail">peachbox.connector.pail module</a></li>
-<li><a class="reference internal" href="#module-peachbox.connector">Module contents</a></li>
+<li><a class="reference internal" href="#peachbox-connector-connector-module">peachbox.connector.connector module</a></li>
+<li><a class="reference internal" href="#peachbox-connector-pail-module">peachbox.connector.pail module</a></li>
+<li><a class="reference internal" href="#module-contents">Module contents</a></li>
 </ul>
 </li>
 </ul>
@@ -174,9 +144,6 @@ in the model.</p>
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="right" >
           <a href="peachbox.connector.sink.html" title="peachbox.connector.sink package"
              >next</a> |</li>
         <li class="right" >
@@ -188,7 +155,7 @@ in the model.</p>
     </div>
     <div class="footer">
         &copy; Copyright 2015, Philipp Pahl, Sven Schubert.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
     </div>
   </body>
 </html>

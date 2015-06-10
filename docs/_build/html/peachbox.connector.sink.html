@@ -36,9 +36,6 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="right" >
           <a href="peachbox.connector.source.html" title="peachbox.connector.source package"
              accesskey="N">next</a> |</li>
         <li class="right" >
@@ -60,39 +57,17 @@
 <div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="module-peachbox.connector.sink.master_data">
-<span id="peachbox-connector-sink-master-data-module"></span><h2>peachbox.connector.sink.master_data module<a class="headerlink" href="#module-peachbox.connector.sink.master_data" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
-<dt id="peachbox.connector.sink.master_data.MasterData">
-<em class="property">class </em><tt class="descclassname">peachbox.connector.sink.master_data.</tt><tt class="descname">MasterData</tt><a class="reference internal" href="_modules/peachbox/connector/sink/master_data.html#MasterData"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.connector.sink.master_data.MasterData" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="peachbox.connector.html#peachbox.connector.connector.Connector" title="peachbox.connector.connector.Connector"><tt class="xref py py-class docutils literal"><span class="pre">peachbox.connector.connector.Connector</span></tt></a></p>
-<p>Absorbs data into the master data set</p>
-<dl class="method">
-<dt id="peachbox.connector.sink.master_data.MasterData.absorb">
-<tt class="descname">absorb</tt><big>(</big><em>data_descriptor</em><big>)</big><a class="reference internal" href="_modules/peachbox/connector/sink/master_data.html#MasterData.absorb"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.connector.sink.master_data.MasterData.absorb" title="Permalink to this definition">¶</a></dt>
-<dd><p>Absorbs data corresponding to target and partition key of model.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="peachbox.connector.sink.master_data.MasterData.create_pails">
-<tt class="descname">create_pails</tt><big>(</big><em>df</em>, <em>model</em><big>)</big><a class="reference internal" href="_modules/peachbox/connector/sink/master_data.html#MasterData.create_pails"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.connector.sink.master_data.MasterData.create_pails" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="peachbox.connector.sink.master_data.MasterData.data_frame">
-<tt class="descname">data_frame</tt><big>(</big><em>data</em>, <em>schema</em><big>)</big><a class="reference internal" href="_modules/peachbox/connector/sink/master_data.html#MasterData.data_frame"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.connector.sink.master_data.MasterData.data_frame" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="peachbox.connector.sink.master_data.MasterData.set_param">
-<tt class="descname">set_param</tt><big>(</big><em>param</em><big>)</big><a class="reference internal" href="_modules/peachbox/connector/sink/master_data.html#MasterData.set_param"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.connector.sink.master_data.MasterData.set_param" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
+<div class="section" id="peachbox-connector-sink-batch-view-module">
+<h2>peachbox.connector.sink.batch_view module<a class="headerlink" href="#peachbox-connector-sink-batch-view-module" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="module-peachbox.connector.sink">
-<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-peachbox.connector.sink" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="peachbox-connector-sink-master-data-module">
+<h2>peachbox.connector.sink.master_data module<a class="headerlink" href="#peachbox-connector-sink-master-data-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="peachbox-connector-sink-real-time-view-module">
+<h2>peachbox.connector.sink.real_time_view module<a class="headerlink" href="#peachbox-connector-sink-real-time-view-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-contents">
+<h2>Module contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
 </div>
 </div>
 
@@ -106,8 +81,10 @@
   <ul>
 <li><a class="reference internal" href="#">peachbox.connector.sink package</a><ul>
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
-<li><a class="reference internal" href="#module-peachbox.connector.sink.master_data">peachbox.connector.sink.master_data module</a></li>
-<li><a class="reference internal" href="#module-peachbox.connector.sink">Module contents</a></li>
+<li><a class="reference internal" href="#peachbox-connector-sink-batch-view-module">peachbox.connector.sink.batch_view module</a></li>
+<li><a class="reference internal" href="#peachbox-connector-sink-master-data-module">peachbox.connector.sink.master_data module</a></li>
+<li><a class="reference internal" href="#peachbox-connector-sink-real-time-view-module">peachbox.connector.sink.real_time_view module</a></li>
+<li><a class="reference internal" href="#module-contents">Module contents</a></li>
 </ul>
 </li>
 </ul>
@@ -147,9 +124,6 @@
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="right" >
           <a href="peachbox.connector.source.html" title="peachbox.connector.source package"
              >next</a> |</li>
         <li class="right" >
@@ -162,7 +136,7 @@
     </div>
     <div class="footer">
         &copy; Copyright 2015, Philipp Pahl, Sven Schubert.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
     </div>
   </body>
 </html>

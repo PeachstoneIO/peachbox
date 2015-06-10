@@ -36,9 +36,6 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="right" >
           <a href="peachbox.model.html" title="peachbox.model package"
              accesskey="N">next</a> |</li>
         <li class="right" >
@@ -59,97 +56,17 @@
 <div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="module-peachbox.gen.app">
-<span id="peachbox-gen-app-module"></span><h2>peachbox.gen.app module<a class="headerlink" href="#module-peachbox.gen.app" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
-<dt id="peachbox.gen.app.App">
-<em class="property">class </em><tt class="descclassname">peachbox.gen.app.</tt><tt class="descname">App</tt><a class="reference internal" href="_modules/peachbox/gen/app.html#App"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.gen.app.App" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#peachbox.gen.generator.Generator" title="peachbox.gen.generator.Generator"><tt class="xref py py-class docutils literal"><span class="pre">peachbox.gen.generator.Generator</span></tt></a></p>
-<p>Sets up a new project: Creates project folders and sample code.</p>
-<dl class="method">
-<dt id="peachbox.gen.app.App.create_app">
-<tt class="descname">create_app</tt><big>(</big><em>name</em><big>)</big><a class="reference internal" href="_modules/peachbox/gen/app.html#App.create_app"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.gen.app.App.create_app" title="Permalink to this definition">¶</a></dt>
-<dd><p>Create a template of the app.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="peachbox.gen.app.App.create_dirs">
-<tt class="descname">create_dirs</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/peachbox/gen/app.html#App.create_dirs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.gen.app.App.create_dirs" title="Permalink to this definition">¶</a></dt>
-<dd><p>Create the project folders.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="peachbox.gen.app.App.create_init_files">
-<tt class="descname">create_init_files</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/peachbox/gen/app.html#App.create_init_files"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.gen.app.App.create_init_files" title="Permalink to this definition">¶</a></dt>
-<dd><p>Create the init files in created dirs.</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="function">
-<dt id="peachbox.gen.app.create_app">
-<tt class="descclassname">peachbox.gen.app.</tt><tt class="descname">create_app</tt><big>(</big><em>name</em>, <em>project_home='.'</em><big>)</big><a class="reference internal" href="_modules/peachbox/gen/app.html#create_app"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.gen.app.create_app" title="Permalink to this definition">¶</a></dt>
-<dd><p>Create app with name in project_home. Default is current work directory.</p>
-</dd></dl>
-
+<div class="section" id="peachbox-gen-app-module">
+<h2>peachbox.gen.app module<a class="headerlink" href="#peachbox-gen-app-module" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="module-peachbox.gen.generator">
-<span id="peachbox-gen-generator-module"></span><h2>peachbox.gen.generator module<a class="headerlink" href="#module-peachbox.gen.generator" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
-<dt id="peachbox.gen.generator.Generator">
-<em class="property">class </em><tt class="descclassname">peachbox.gen.generator.</tt><tt class="descname">Generator</tt><a class="reference internal" href="_modules/peachbox/gen/generator.html#Generator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.gen.generator.Generator" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
-<p>Base class of generators.</p>
-<dl class="attribute">
-<dt id="peachbox.gen.generator.Generator.PROJECT_HOME">
-<tt class="descname">PROJECT_HOME</tt><em class="property"> = '.'</em><a class="headerlink" href="#peachbox.gen.generator.Generator.PROJECT_HOME" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="peachbox.gen.generator.Generator.path">
-<tt class="descname">path</tt><big>(</big><em>name</em>, <em>module</em><big>)</big><a class="reference internal" href="_modules/peachbox/gen/generator.html#Generator.path"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.gen.generator.Generator.path" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="peachbox.gen.generator.Generator.project_home">
-<tt class="descname">project_home</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/peachbox/gen/generator.html#Generator.project_home"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.gen.generator.Generator.project_home" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="peachbox.gen.generator.Generator.underscore">
-<tt class="descname">underscore</tt><big>(</big><em>name</em><big>)</big><a class="reference internal" href="_modules/peachbox/gen/generator.html#Generator.underscore"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.gen.generator.Generator.underscore" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="peachbox.gen.generator.Generator.write_class">
-<tt class="descname">write_class</tt><big>(</big><em>name</em>, <em>module</em>, <em>input</em><big>)</big><a class="reference internal" href="_modules/peachbox/gen/generator.html#Generator.write_class"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.gen.generator.Generator.write_class" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
+<div class="section" id="peachbox-gen-generator-module">
+<h2>peachbox.gen.generator module<a class="headerlink" href="#peachbox-gen-generator-module" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="module-peachbox.gen.substitutor">
-<span id="peachbox-gen-substitutor-module"></span><h2>peachbox.gen.substitutor module<a class="headerlink" href="#module-peachbox.gen.substitutor" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
-<dt id="peachbox.gen.substitutor.Substitutor">
-<em class="property">class </em><tt class="descclassname">peachbox.gen.substitutor.</tt><tt class="descname">Substitutor</tt><a class="reference internal" href="_modules/peachbox/gen/substitutor.html#Substitutor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.gen.substitutor.Substitutor" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
-<p>Reads template files and substitutes fields.</p>
-<dl class="method">
-<dt id="peachbox.gen.substitutor.Substitutor.read_template">
-<tt class="descname">read_template</tt><big>(</big><em>name</em><big>)</big><a class="reference internal" href="_modules/peachbox/gen/substitutor.html#Substitutor.read_template"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.gen.substitutor.Substitutor.read_template" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="peachbox.gen.substitutor.Substitutor.substitute">
-<tt class="descname">substitute</tt><big>(</big><em>name</em>, <em>mapping</em><big>)</big><a class="reference internal" href="_modules/peachbox/gen/substitutor.html#Substitutor.substitute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#peachbox.gen.substitutor.Substitutor.substitute" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
+<div class="section" id="peachbox-gen-substitutor-module">
+<h2>peachbox.gen.substitutor module<a class="headerlink" href="#peachbox-gen-substitutor-module" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="module-peachbox.gen">
-<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-peachbox.gen" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-contents">
+<h2>Module contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
 </div>
 </div>
 
@@ -163,10 +80,10 @@
   <ul>
 <li><a class="reference internal" href="#">peachbox.gen package</a><ul>
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
-<li><a class="reference internal" href="#module-peachbox.gen.app">peachbox.gen.app module</a></li>
-<li><a class="reference internal" href="#module-peachbox.gen.generator">peachbox.gen.generator module</a></li>
-<li><a class="reference internal" href="#module-peachbox.gen.substitutor">peachbox.gen.substitutor module</a></li>
-<li><a class="reference internal" href="#module-peachbox.gen">Module contents</a></li>
+<li><a class="reference internal" href="#peachbox-gen-app-module">peachbox.gen.app module</a></li>
+<li><a class="reference internal" href="#peachbox-gen-generator-module">peachbox.gen.generator module</a></li>
+<li><a class="reference internal" href="#peachbox-gen-substitutor-module">peachbox.gen.substitutor module</a></li>
+<li><a class="reference internal" href="#module-contents">Module contents</a></li>
 </ul>
 </li>
 </ul>
@@ -206,9 +123,6 @@
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="right" >
           <a href="peachbox.model.html" title="peachbox.model package"
              >next</a> |</li>
         <li class="right" >
@@ -220,7 +134,7 @@
     </div>
     <div class="footer">
         &copy; Copyright 2015, Philipp Pahl, Sven Schubert.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
     </div>
   </body>
 </html>
