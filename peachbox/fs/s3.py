@@ -18,7 +18,7 @@ from peachbox.fs import Fs
 import boto
 import os.path
 from boto.s3.key import Key
-import conf.aws_s3
+#import conf.aws_s3
 
 class S3(Fs):
     """Interface to Amazon S3. Operations work on s3n://<mart>/, where <mart> is a bucket on S3."""
@@ -28,8 +28,8 @@ class S3(Fs):
 
     def connection(self):
         if not self._connection:
-            key_id =     conf.aws_s3.AWS_ACCESS_KEY_ID 
-            access_key = conf.aws_s3.AWS_SECRET_ACCESS_KEY
+            key_id =     ''  #conf.aws_s3.AWS_ACCESS_KEY_ID 
+            access_key = ''  #conf.aws_s3.AWS_SECRET_ACCESS_KEY
             self._connection = boto.connect_s3(aws_access_key_id=key_id, aws_secret_access_key=access_key)
         return self._connection
 

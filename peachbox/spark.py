@@ -16,7 +16,7 @@ import pyspark
 
 class Spark(object):
     """ Interface to Apache Spark. Singleton. After initialization use peachbox.spark.Instance()
-    to access the existing instance.::
+    to access the existing instance::
 
         class HelloWorld()
             def __init__():

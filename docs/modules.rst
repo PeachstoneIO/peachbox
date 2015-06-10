@@ -1,7 +1,7 @@
-peachbox
-========
+tutorial_movie_reviews
+======================
 
 .. toctree::
    :maxdepth: 4
 
-   peachbox
+   model
