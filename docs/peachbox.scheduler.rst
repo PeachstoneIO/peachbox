@@ -12,22 +12,6 @@ peachbox.scheduler.event module
     :undoc-members:
     :show-inheritance:
 
-peachbox.scheduler.old_event module
------------------------------------
-
-.. automodule:: peachbox.scheduler.old_event
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-peachbox.scheduler.old_scheduler module
----------------------------------------
-
-.. automodule:: peachbox.scheduler.old_scheduler
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
 peachbox.scheduler.scheduler module
 -----------------------------------
 

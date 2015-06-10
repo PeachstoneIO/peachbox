@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 import pyspark.streaming.kafka
 from pyspark.streaming.kafka import OffsetRange
 import pyspark.streaming
