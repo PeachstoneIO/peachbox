@@ -13,9 +13,7 @@ import sys
 #----------------------------------------------------------#
 # --- User input
 #----------------------------------------------------------#
-#docdirs = [ 'peachbox', 'tutorial_movie_reviews', 'tutorial' ] 
-docdirs = [ 'peachbox' ] 
-#docdirs = []
+docdirs = [ 'peachbox', 'tutorials' ] 
 
 #----------------------------------------------------------#
 # --- useful functions
@@ -29,7 +27,6 @@ def exclude_dirs(fdir):
             for dirnames in fnmatch.filter(dirnames, tag):
                 matches.append(os.path.join(root, dirnames))
     return ' '.join(matches)
-
 
 def cleardoc(ddir):
     """remove doc-files generated for a single directory"""
@@ -46,12 +43,28 @@ def clearall():
 
 def makeapidoc(fdir):
     """ Make documentation for API, i.e. for all directories specified in docdirs"""
-    xphinx = "sphinx-apidoc -f -o . "+fdir+" "+exclude_dirs(fdir)
+    xphinx = "sphinx-apidoc -f -T -o . "+fdir+" "+exclude_dirs(fdir)
     xpath  = "export PYTHONPATH="+fdir+":$PYTHONPATH"
     xcute  = xpath+";"+xphinx
     print "\n[update.py] Generating api-doc for directory "+fdir
+    apidir = "api"
+    xcute  = "cd "+apidir+"; "+xcute
     os.system(xcute)
 
+def askuser():
+    """Request user input"""
+    # raw_input returns the empty string for "enter"
+    yes = set(['yes','y', 'ye', ''])
+    no = set(['no','n'])
+
+    choice = raw_input().lower()
+    if choice in yes:
+        return True
+    elif choice in no:
+        return False
+    else:
+        sys.stdout.write("Please respond with 'yes' or 'no'. Return false.\n")
+        return False
 
 #----------------------------------------------------------#
 # --- generate doc
@@ -60,11 +73,20 @@ def makeapidoc(fdir):
 #clearall()
 
 # --- api doc (each entry in docdirs)
-for ddir in docdirs:
-    cleardoc(ddir)
-    ddir=os.path.expandvars("$PEACHBOX/"+ddir)
-    makeapidoc(ddir)
-
+print "Do you want to (re-)build the API doc? [y/n]: "
+if askuser():
+    if not os.path.exists('api'):
+        os.makedirs('api')
+    mymod = 'api/mymodules.txt'
+    mf = open(mymod, 'w+').close()
+    for ddir in docdirs:
+        cleardoc(ddir)
+        fdir=os.path.expandvars("$PEACHBOX/"+ddir)
+        makeapidoc(fdir)
+        # add module to api/mymodules.txt
+        with open(mymod, "a") as myfile:
+            myfile.write("   api/"+ddir+"\n")
+            
 # --- user manual
 # todo
 

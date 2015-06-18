@@ -29,10 +29,10 @@ This documentation contains:
    :numbered:
 
    index
-   about
-   docu
-   tutorial
-   glossary
+   docu/about.rst
+   docu/docu.rst
+   docu/tutorial.rst
+   docu/glossary.rst
 
    
 Full index
@@ -42,22 +42,25 @@ Full index
    :maxdepth: 3
    :numbered:
 
-   about.rst
-   docu.rst
-   tutorial.rst
-   glossary.rst
+   docu/about.rst
+   docu/docu.rst
+   docu/tutorial.rst
+   docu/glossary.rst
 
    
 API
 ===
 
 .. toctree::
-   :maxdepth: 3
+   :maxdepth: 4
 
-   peachbox.rst
+   api/peachbox.rst
+   api/tutorials.rst
+.. peachbox.rst
 .. tutorial.rst
 .. tutorials.rst
 .. tutorial_movie_reviews.rst
+
 
 
 Indices and tables
