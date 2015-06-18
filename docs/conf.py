@@ -47,7 +47,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'peachbox'
-copyright = u'2015, Philipp Pahl, Sven Schubert'
+copyright = u'2015, D. Britzger, P. Pahl, S. Schubert'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -100,8 +100,8 @@ pygments_style = 'sphinx'
 # -- Options for HTML output ----------------------------------------------
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
-# a list of builtin themes.
-html_theme = 'default'
+# a list of builtin themes (e.g. default, alabaster, classic [http://sphinx-doc.org/theming.html])
+html_theme = 'bizstyle'
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
