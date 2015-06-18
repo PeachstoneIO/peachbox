@@ -41,7 +41,7 @@ class ProductReviewEdge(peachbox.model.MasterDataSet):
               {'field':'product_id', 'type':'StringType'}]
 
 class ReviewProperties(peachbox.model.MasterDataSet):
-    """A particular realization of properties. Here: the review properties """
+    """A particular realization of a node, containing several properties. Here: the review properties """
     data_unit_index = 2
     partition_key = 'true_as_of_seconds'
     partition_granularity = 60*60*24*360 
@@ -51,5 +51,13 @@ class ReviewProperties(peachbox.model.MasterDataSet):
               {'field':'score', 'type':'IntegerType'},
               {'field':'summary', 'type':'StringType'},
               {'field':'text', 'type':'StringType'}]
+
+class UserProperties(peachbox.model.MasterDataSet):
+    """A particular realization of properties. Here: the user properties """
+    data_unit_index = 3
+    partition_key = 'true_as_seconds'
+    partition_granularity = 60*60*24*360 
+    schema = [{'field':'user_id', 'type':'StringType'},
+              {'field':'profile_name', 'type':'StringType'}]
 
 

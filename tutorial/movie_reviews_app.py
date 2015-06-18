@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 
-<<<<<<< HEAD
 # general
 from os import path
 # peachbox
@@ -8,8 +7,6 @@ import peachbox
 # tutorial
 from tasks import importer, streams, batch_views
 
-=======
->>>>>>> 1d0a4a3e4fabaa6c59ce9c9d5c0ebc87babd3f30
 movies_app = peachbox.App("MovieReviews")
 
 # Set up the data warehouse with local file system and path

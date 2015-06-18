@@ -31,7 +31,7 @@ for line in datafile:
             print str(counter)+' events sent in '+str(now-timestamp)+' seconds: '+str(1000.0/(now-timestamp))+' evts/sec'
             timestamp = now
     except:
-        print 'Something went wrong'
+        print 'New topic created, or something went wrong.'
     # SLEEP 1/2 second
     time.sleep(0.5)
 
