@@ -1,0 +1,58 @@
+# Copyright 2015 Philipp Pahl, Sven Schubert, Daniel Britzger
+# 
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+# 
+#     http://www.apache.org/licenses/LICENSE-2.0
+# 
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+   """
+   Model definition for the master data set.
+   The entities of the master data set consist of 'edges' and 'properties' and conform to the
+   fact based model. <Reference>
+   Every entity has a unique data_unit_index. It is horizontally partitioned wrt. the 
+   partition key and a granularity.
+
+   An edge or property must define a unique data_unit_index, the partition key and granularity. 
+
+   The schema contains the edges and properties of an entity and the entities which are related by the edge.
+   """
+
+
+import peachbox.model
+
+class UserReviewEdge(peachbox.model.MasterDataSet):
+    """A particular realization of an 'edge'. Here: the user review edge """
+    data_unit_index = 0
+    partition_key = 'true_as_of_seconds'
+    partition_granularity = 60*60*24*360 
+    schema = [{'field':'user_id', 'type':'StringType'},
+              {'field':'review_id', 'type':'StringType'}]
+
+class ProductReviewEdge(peachbox.model.MasterDataSet):
+    """A particular realization of an 'edge'. Here: the product review edge """
+    data_unit_index = 1
+    partition_key = 'true_as_of_seconds'
+    partition_granularity = 60*60*24*360 
+    schema = [{'field':'review_id', 'type':'StringType'},
+              {'field':'product_id', 'type':'StringType'}]
+
+class ReviewProperties(peachbox.model.MasterDataSet):
+    """A particular realization of properties. Here: the review properties """
+    data_unit_index = 2
+    partition_key = 'true_as_of_seconds'
+    partition_granularity = 60*60*24*360 
+    schema = [{'field':'review_id', 'type':'StringType'},
+              {'field':'helpful', 'type':'IntegerType'},
+              {'field':'nothelpful', 'type':'IntegerType'},
+              {'field':'score', 'type':'IntegerType'},
+              {'field':'summary', 'type':'StringType'},
+              {'field':'text', 'type':'StringType'}]
+
+
