@@ -32,6 +32,16 @@ git and github
 Kafka
 +++++
 
+Nose
+++++
+A discovery-based unittest extension for python.
+
+http://pythontesting.net/framework/nose/nose-introduction/
+
+Execute `$ nosetests` in `$PEACHBOX` directory, or::
+
+  $ nosetest --nologcapture --nocapture
+
 NumPy
 +++++
 

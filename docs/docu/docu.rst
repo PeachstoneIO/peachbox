@@ -59,7 +59,7 @@ Apache Cassandra was initially developed at Facebook.
 Cassandra supports integrated caching and Apache Hadoop MapReduce (https://hadoop.apache.org/).
 
 git and github
-----------
+--------------
 git (https://git-scm.com/) is used to as code repository and version control system. The git repository itsself is located at github (https://github.com/). The usage of github requires an account at github.com.
 
 Apache Spark
@@ -162,6 +162,7 @@ How-to: Implement a new use-case
   b. master model
   c. batch_views
   d. streams
+
 2. Define tasks
 3. Define pipelines
 4. Schedule tasks
