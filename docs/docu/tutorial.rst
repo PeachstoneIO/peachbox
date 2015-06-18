@@ -15,6 +15,9 @@ Peachbox' examples
 
 Tutorial: Movie reviews
 =======================
+
+Peachbox setup
+++++++++++++++
 Start docker environment from the peachbox main directory::
 
   $ ./docker/run_docker.sh
@@ -37,14 +40,99 @@ When typing ``Ctrl+b c``, a new `tab` is opened. Change between tabs with ``Ctrl
 The bottom line indicates which shell is activated.
 
 
+Emulate data stream
++++++++++++++++++++
 We now want to emulate a continous data flow, where two reviews are submitted (to kafka) per second.
-The data of the movie reviews is stored in ``data/sorted_reviews_100000.json``. Type::
+First go to the tutorial directory::
+
+  $ cd $PEACHBOX/tutorials/tutorial_movie_reviews/
+
+The data of the movie reviews is stored in ``data/sorted_reviews_100000.json`` and a simple script reads the data file and passes two reviews per second to kafka. Type::
   
   $ cd data
   $ ./simple_kafka_producer.py
 
-This small script then reads the reviews and passes two reviews to kafka every second.
+The ``simple_kafka_producer.py`` script passes each line of the input file (in ``.json``-format) to kafka. kafka buffers the input data in a durable and fault-tolerant way. 
 
+The input data events are of the form::
+
+  {"user_id":"A37I5QIHD9UMPD","product_id":"6302967538","review":"&quot;The Cruel Sea&quot; gives an excellent account of the real war at sea, the everyday lives of sailors and the situations they were up against both at sea and at home.  The reader feels the fear, the anguish, the camaradarie of the crew.<br \/><p> There is no glamour in war, there is the ordinary man doing his best to win the battle and when it is won, to go home to continue with his life","summary":"The everyday man at war","profile_name":"dmunns@yancey.main.nc.us","helpfulness":"2\/2","time":872035200,"score":5.0}
+  {"user_id":"A37I5QIHD9UMPD","product_id":"B00004CILW","review":"&quot;The Cruel Sea&quot; gives an excellent account of the real war at sea, the everyday lives of sailors and the situations they were up against both at sea and at home.  The reader feels the fear, the anguish, the camaradarie of the crew.<br \/><p> There is no glamour in war, there is the ordinary man doing his best to win the battle and when it is won, to go home to continue with his life","summary":"The everyday man at war","profile_name":"dmunns@yancey.main.nc.us","helpfulness":"2\/2","time":872035200,"score":5.0}
+  {"user_id":"A37I5QIHD9UMPD","product_id":"B00008V6YR","review":"&quot;The Cruel Sea&quot; gives an excellent account of the real war at sea, the everyday lives of sailors and the situations they were up against both at sea and at home.  The reader feels the fear, the anguish, the camaradarie of the crew.<br \/><p> There is no glamour in war, there is the ordinary man doing his best to win the battle and when it is won, to go home to continue with his life","summary":"The everyday man at war","profile_name":"dmunns@yancey.main.nc.us","helpfulness":"2\/2","time":872035200,"score":5.0}
+  {"user_id":"A37I5QIHD9UMPD","product_id":"6302763770","review":"&quot;The Cruel Sea&quot; gives an excellent account of the real war at sea, the everyday lives of sailors and the situations they were up against both at sea and at home.  The reader feels the fear, the anguish, the camaradarie of the crew.<br \/><p> There is no glamour in war, there is the ordinary man doing his best to win the battle and when it is won, to go home to continue with his life","summary":"The everyday man at war","profile_name":"dmunns@yancey.main.nc.us","helpfulness":"2\/2","time":872035200,"score":5.0}
+  {"user_id":"A2XBTS97FERY2Q","product_id":"B004J1A72C","review":"This is a wide ranging musical comedy done in the style of post-depression era musicals, including brilliant performances from Steve Martin, Bernadette Peters, and Christopher Walken.  One might take the movie literally as a love story, but upon further consideration we see that it's actually a movie dedicated to the upbeat songs and movies of days long gone by.  I recommend movie highly as it is sometimes boisterous, and other times delicately romantic, but all the while very entertaining.  @see-also &quot;Radio Days&quot; END","summary":"A clever take on an old genre","profile_name":"ron@6dos.com","helpfulness":"6\/7","time":872294400,"score":5.0}
+
+  
+
+Define the master model
++++++++++++++++++++++++
+The data stream arrives in a particular stream-schema, where each event/entity has its particular attributes.
+Now we want to normalize the stream-schema to avoid reduncance and allow for extensibility.
+Conveniently the entity-relantionship model is applied and the `master model` has to be defined.
+This means, that all relevant tables (relationships[edges] and entities[nodes]) have to be defined.
+
+Each `entity`(=node) and `relationship`(=edge) must inhert from ``peachbox.model.MasterDataSet``
+
+
+Entities (or nodes)
+-------------------
+An entity(=node) is represented within peachbox as class which inherits from ``peachbox.model.MasterDataSet`` and consists of:
+
+* A unique name (i.e. the class name: e.g. `ReviewProperties`) 
+* A unique `data_unit_index` 
+* It holds one or more attributes(=property) 
+* The partition key and granularity for horizontal partitioning
+
+Each property/attribute consists of:
+* A name, here called `field`: e.g. ``'field':'review_id'``
+* A type: ``'type':'StringType'``
+
+An entity could look like:
+
+.. code-block:: python
+
+   class ReviewProperties(peachbox.model.MasterDataSet):                                                                   
+       """A particular realization of a node, containing several properties. Here: the review properties """
+       data_unit_index = 2                
+       partition_key = 'true_as_of_seconds'  
+       partition_granularity = 60*60*24*360   
+       schema = [{'field':'review_id', 'type':'StringType'},
+                 {'field':'helpful', 'type':'IntegerType'},
+                 {'field':'nothelpful', 'type':'IntegerType'},
+                 {'field':'score', 'type':'IntegerType'},
+                 {'field':'summary', 'type':'StringType'}, 
+                 {'field':'text', 'type':'StringType'}] 
+
+
+Relationships (or edges)
+------------------------
+A relationship (=edge) is represented within peachbox as a class which inherits from ``peachbox.model.MasterDataSet`` and consists of:
+
+* A unique name (i.e. the class name: e.g. `ReviewProperties`)
+* A unique `data_unit_index`
+* It relates exactly two entities/nodes
+* The partitionkey andgranularity forhorizontal partitioning
+
+.. code-block:: python
+
+   class UserReviewEdge(peachbox.model.MasterDataSet):
+       """A particular realization of an 'edge'. Here: the user review edge """
+       data_unit_index = 0
+       partition_key = 'true_as_of_seconds'
+       partition_granularity = 60*60*24*360
+       schema = [{'field':'user_id', 'type':'StringType'},
+                 {'field':'review_id', 'type':'StringType'}]
+
+
+
+Task
+++++
+
+Scheduler
++++++++++
+
+Define app
+++++++++++
 
 
 
