@@ -17,22 +17,22 @@ Unofficial internal documenation for peachbox.
 
 Contact
 =======
-For more details contact P. Pahl (ph.pahl@gmail.com).
+For more details contact P. Pahl (ph.pahl<at>gmail).
 
 
-Short index
-===========
-This documentation contains:
-
-.. toctree::
-   :maxdepth: 1
-   :numbered:
-
-   index
-   docu/about.rst
-   docu/docu.rst
-   docu/tutorial.rst
-   docu/glossary.rst
+.. Short index
+.. ===========
+.. This documentation contains:
+.. 
+.. .. toctree::
+..    :maxdepth: 1
+..    :numbered:
+.. 
+..    index
+..    docu/about.rst
+..    docu/docu.rst
+..    docu/tutorial.rst
+..    docu/glossary.rst
 
    
 Full index
