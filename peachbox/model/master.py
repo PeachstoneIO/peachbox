@@ -75,6 +75,15 @@ class MasterDataSet():
         cls._types = types
 
     @classmethod
+    def get_field_index(cls, field_name):
+        return cls._spark_indices[field_name]
+
+
+    @classmethod 
+    def generate_indices(cls):
+        
+
+    @classmethod
     def generate_spark_row_definition(cls):
         names = [field.name for field in cls.spark_schema().fields]
         cls._spark_row = pyspark.sql.Row(*names)

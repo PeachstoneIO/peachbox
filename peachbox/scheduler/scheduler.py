@@ -50,7 +50,7 @@ class Scheduler(object):
         else:
             self._events.append(event)
 
-        pub.subscribe(task.execute, event.name())
+        pub.subscribe(task.run_scheduled_task, event.name())
 
     def get_event_status(self, event_name):
         s = {}

@@ -4,8 +4,8 @@ import pubsub.pub
 import multiprocessing
 import peachbox.task
 
-class MockTask(peachbox.task.Task):
-    def execute(self, param):
+class MockTask(peachbox.task.ScheduledTask):
+    def run_scheduled_task(self, param):
         pass
 
 class TestScheduler(unittest.TestCase):
@@ -124,7 +124,7 @@ class TestScheduler(unittest.TestCase):
         self.s.publish(e2)
 
     def test_subscribe_event_registration(self):
-        t = peachbox.task.Task()
+        t = peachbox.task.ScheduledTask()
         self.s.subscribe(t, peachbox.scheduler.Event('e1'))
         self.s.subscribe(t, peachbox.scheduler.Event('e2'))
         self.s.subscribe(t, peachbox.scheduler.PeriodicEvent('p1', 2))

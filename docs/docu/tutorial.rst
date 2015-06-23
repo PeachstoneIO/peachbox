@@ -125,14 +125,24 @@ A relationship (=edge) is represented within peachbox as a class which inherits 
 
 
 
-Task
-++++
+Define `peachbox-app` for movie reviews
+++++++++++++++++++++++++++++++
+The `peachbox-app` defines the scheduling of the tasks and provides the executable of the use case. 
+
+To define the `peachbox-app`, write within an exectuable python script:
+
+.. code-block:: python
+
+   import peachbox
+   movies_app = peachbox.App("MovieReviews")
+
+
+Tasks
+-----
+
 
 Scheduler
-+++++++++
-
-Define app
-++++++++++
+---------
 
 
 
