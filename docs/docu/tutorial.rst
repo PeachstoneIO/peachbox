@@ -67,15 +67,15 @@ The input data events are of the form::
 Define the master model
 +++++++++++++++++++++++
 The data stream arrives in a particular stream-schema, where each event/entity has its particular attributes.
-Now we want to normalize the stream-schema to avoid reduncance and allow for extensibility.
+Now we want to normalize the stream-schema to avoid reduncancy and allow for extensibility.
 Conveniently the entity-relantionship model is applied and the `master model` has to be defined.
 This means, that all relevant tables (relationships[edges] and entities[nodes]) have to be defined.
 
 Each `entity`(=node) and `relationship`(=edge) must inhert from ``peachbox.model.MasterDataSet``
 
 
-Entities (or nodes)
--------------------
+Entities (or nodes) containing the attributes (properties)
+----------------------------------------------------------
 An entity(=node) is represented within peachbox as class which inherits from ``peachbox.model.MasterDataSet`` and consists of:
 
 * A unique name (i.e. the class name: e.g. `ReviewProperties`) 
@@ -104,8 +104,8 @@ An entity could look like:
                  {'field':'text', 'type':'StringType'}] 
 
 
-Relationships (or edges)
-------------------------
+Relationships (or edges), relating entities (or nodes)
+------------------------------------------------------
 A relationship (=edge) is represented within peachbox as a class which inherits from ``peachbox.model.MasterDataSet`` and consists of:
 
 * A unique name (i.e. the class name: e.g. `ReviewProperties`)
@@ -124,15 +124,59 @@ A relationship (=edge) is represented within peachbox as a class which inherits 
                  {'field':'review_id', 'type':'StringType'}]
 
 
+Peachbox technical implementation
+---------------------------------
+Each relation (relationship or entity) inherits from the ``MasterDataSet``.
+In order to allow horizontal partitioning, every relation has an additional attribute as partition key, similar to something like: ``'field':'true_as_of_seconds':'type':'IntegerType'``.
+This involves that the required storage space is increased, the more relations are set up. 
 
-Task
-++++
+Therefore, there is a tradeof between required disksize and flexibility/speed of the master schema.
 
-Scheduler
-+++++++++
+
+
+Tipps for schema defintions
+---------------------------
+Following the idea of the fact-based model, the highest granular model offers full extensibility/flexibility and best performance, since any property can be accessed separately and a new property can be related to any existing property.
+This would suggest, that each attribute of the stream-schema would be represented as an individual relation to some key-like property.
+Since peachbox incorporates horizontal partitioning, which requires an additional unique element as partition key, a large number of these partition keys are stored somewhat redundantly. In addition, for each attribute a full relation has to be stored, which may require disk space due to the redundant relation to the initial key. 
+
+Take as example following stream-schema (we drop the type for simplicity, and imagine that every person has a (unique) name, email address, taxID, amazonID and appleID)::
+
+  Name, emailAddress, TaxID, amazonID, appleID
+
+The highest granular master model would require to choose one attribute as node (actually a key). 
+Since all attributes are unique, any may be chosen as a key, for instance `TaxID`, and we add the partition key explicitly::
+
+  true_as_of_seconds, TaxID, Name
+  true_as_of_seconds, TaxID, emailAddress
+  true_as_of_seconds, TaxID, amazonID
+  true_as_of_seconds, TaxID, appleID
+
+or alternatively::
+
+  true_as_of_seconds, Name, emailAddress, TaxID, amazonID, appleID
+
+
+Apparently, the first implementation allows full extensibility, for instance if one wants to relate in the future buys to the amazonID. 
+However, this optional flexibility requires apparently, that `true_as_of_seconds` and `TaxID` is stored repeatedly.
+The second implementation requires only half the disk space compared to the former (if all attributes are of the same-sized type), but it does not allow for a flexible extension.
+
+
+There are further advises available:
+https://en.wikipedia.org/wiki/Database_schema#Ideal_requirements_for_schema_integration
+
 
 Define app
 ++++++++++
+
+
+Task
+----
+The 
+
+
+Scheduler
+---------
 
 
 
