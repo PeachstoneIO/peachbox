@@ -24,13 +24,32 @@
 
 import peachbox.model
 
-class UserReviewEdge(peachbox.model.MasterDataSet):
+class UserReviewEdge(peachbox.model.MasterDataSet,TaskImportModel):
     """A particular realization of an 'edge'. Here: the user review edge """
     data_unit_index = 0
     partition_key = 'true_as_of_seconds'
     partition_granularity = 60*60*24*360 
     schema = [{'field':'user_id', 'type':'StringType'},
               {'field':'review_id', 'type':'StringType'}]
+
+
+    def lhs_node(self, row):
+        pass
+
+    def calc_value(self,field,row):
+        field = 'review_id'
+        val = 4*3*row.review_id
+        self.set_value(field,val)
+
+
+    def import(row):
+        self.lhs_node(row.user_id)
+        self.rhs_node(row.review_id)
+        self.partition_key(row.time)
+
+class UserReviewEdgeImporter(UserReviewEdge,TaskBuildEdge):
+    
+
 
 class ProductReviewEdge(peachbox.model.MasterDataSet):
     """A particular realization of an 'edge'. Here: the product review edge """
@@ -45,12 +64,32 @@ class ReviewProperties(peachbox.model.MasterDataSet):
     data_unit_index = 2
     partition_key = 'true_as_of_seconds'
     partition_granularity = 60*60*24*360 
-    schema = [{'field':'review_id', 'type':'StringType'},
-              {'field':'helpful', 'type':'IntegerType'},
-              {'field':'nothelpful', 'type':'IntegerType'},
-              {'field':'score', 'type':'IntegerType'},
-              {'field':'summary', 'type':'StringType'},
-              {'field':'text', 'type':'StringType'}]
+    time_fill_method = fill_name('time')
+    model = [{'field':'review_id', 'type':'StringType', 'fill_method': fill_review_id},
+             {'field':'helpful', 'type':'IntegerType', 'fill_method': helpful},
+             {'field':'nothelpful', 'type':'IntegerType', 'fill_method':fill_nothelpful},
+             {'field':'score', 'type':'IntegerType'},
+             {'field':'summary', 'type':'StringType'},
+             {'field':'text', 'type':'StringType'}]
+
+    def __init__(self):
+        self.build_model()
+
+    def helpful(self, row, field=''):
+        lambda row: int(row['helpfulness'].split('/')[0])
+
+    def fill_review_id(self, row, field):
+        user_id = row['user_id']
+        product_id = row['product_id']
+        true_as_of_seconds = row['time']
+        return unicode(hash(user_id+product_id+str(true_as_of_seconds)))
+
+    def fill_nothelpful(self, row, field):
+        return int(row['helpfulness'].split('/')[1]) - fill_method['helpful'](row,'helpful')
+
+
+
+
 
 class UserProperties(peachbox.model.MasterDataSet):
     """A particular realization of properties. Here: the user properties """

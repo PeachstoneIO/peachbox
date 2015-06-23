@@ -17,7 +17,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 """
 
-class TaskImportEdge(Task):
+class ImportEdge(Task):
     """
     Import attributes to define an edge.
     An edge (or also called `relationship`) relates two nodes (also called entity) with each other.
