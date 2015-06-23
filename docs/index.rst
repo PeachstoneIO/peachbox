@@ -55,7 +55,7 @@ API
    :maxdepth: 4
 
    api/peachbox.rst
-   api/tutorials.rst
+..   api/tutorials.rst
 .. peachbox.rst
 .. tutorial.rst
 .. tutorials.rst

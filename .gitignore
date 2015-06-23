@@ -5,3 +5,4 @@
 
 conf/aws_s3.py
 docs/_build
+docs/api

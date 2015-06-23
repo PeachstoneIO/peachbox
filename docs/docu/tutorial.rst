@@ -130,6 +130,7 @@ Each relation (relationship or entity) inherits from the ``MasterDataSet``.
 In order to allow horizontal partitioning, every relation has an additional attribute as partition key, similar to something like: ``'field':'true_as_of_seconds':'type':'IntegerType'``.
 This involves that the required storage space is increased, the more relations are set up. 
 
+<<<<<<< HEAD
 Therefore, there is a tradeof between required disksize and flexibility/speed of the master schema.
 
 
@@ -165,9 +166,26 @@ The second implementation requires only half the disk space compared to the form
 There are further advises available:
 https://en.wikipedia.org/wiki/Database_schema#Ideal_requirements_for_schema_integration
 
+=======
+Define `peachbox-app` for movie reviews
+++++++++++++++++++++++++++++++
+The `peachbox-app` defines the scheduling of the tasks and provides the executable of the use case. 
 
-Define app
-++++++++++
+To define the `peachbox-app`, write within an exectuable python script:
+
+.. code-block:: python
+
+   import peachbox
+   movies_app = peachbox.App("MovieReviews")
+>>>>>>> 014b181846fedf8178a2dc2de6b05c3872a471eb
+
+
+Tasks
+-----
+
+
+Scheduler
+---------
 
 
 Task
