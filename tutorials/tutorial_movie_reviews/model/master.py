@@ -47,9 +47,6 @@ class UserReviewEdge(peachbox.model.MasterDataSet,TaskImportModel):
         self.rhs_node(row.review_id)
         self.partition_key(row.time)
 
-class UserReviewEdgeImporter(UserReviewEdge,TaskBuildEdge):
-    
-
 
 class ProductReviewEdge(peachbox.model.MasterDataSet):
     """A particular realization of an 'edge'. Here: the product review edge """
@@ -72,6 +69,10 @@ class ReviewProperties(peachbox.model.MasterDataSet):
              {'field':'summary', 'type':'StringType'},
              {'field':'text', 'type':'StringType'}]
 
+    source_fields = [{'field:review_id','type:StringType','validation:notempty'},
+                    {'field':'text','validation:notempty'}]
+
+
     def __init__(self):
         self.build_model()
 
@@ -86,8 +87,6 @@ class ReviewProperties(peachbox.model.MasterDataSet):
 
     def fill_nothelpful(self, row, field):
         return int(row['helpfulness'].split('/')[1]) - fill_method['helpful'](row,'helpful')
-
-
 
 
 

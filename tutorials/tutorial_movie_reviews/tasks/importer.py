@@ -8,13 +8,13 @@ from peachbox.pipeline import Chain, Validator
 from pipelines.importer import UserReviewEdge, ProductReviewEdge, ReviewProperties
 import model.master
 
-class ImportMovieReviews(Task):
+class ImportMovieReviews(ScheduledTask):
     def __init__(self):
         super(ImportMovieReviews, self).__init__()
         self.source = source.KafkaJSON(topic='movie_reviews')
         self.sink   = sink.MasterData()
 
-    def _execute(self):
+    def execute(self):
         input = self.source.emit()['data']
 
         # Import 'review by user edges'

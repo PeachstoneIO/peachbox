@@ -1,3 +1,4 @@
+from .schema import MasterSchema
 from .master import MasterDataSet
 from .view import View
 from .real_time_view import RealTimeView

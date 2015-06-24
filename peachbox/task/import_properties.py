@@ -1,8 +1,7 @@
 import ujson as json
 from peachbox.task import Task
 
-"""
-Copyright 2015 D. Britzger, P. Pahl, S. Schubert
+"""Copyright 2015 D. Britzger, P. Pahl, S. Schubert
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -24,18 +23,17 @@ class ImportProperties(Task):
     Abstract class. Edged must implement functions: `rh_side`, `lh_side` and `partition_key`.
     """
     
+
     def __init__(self):
         """Model defines schema of edge and must inhert from `peachbox.model.MasterDataSet`."""
-        pass
+        self.ms = None
+
+    def set_master_schema(self, master_schema):
+        self.ms = master_schema
 
     def execute(self, rdd):
-        return rdd.map(lambda row: self.fill_properties(row))
-
-    def fill_properties(self, row):
-        values = {}
-        for entry in mastermodel:
-            field = entry['field']
-            values[field] = entry['fill_method'](row, field)
-        return self.spark_row(**values)
- 
+        if not self.ms:
+            raise AttributeError
+        return self.ms.fill_properties(rdd)
+#        return rdd.map(lambda row: self.fill_properties(row))
 
